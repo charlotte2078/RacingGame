@@ -103,6 +103,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CarRace_22072024.cpp" />
+    <ClCompile Include="CVector2D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CVector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

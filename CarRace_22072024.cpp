@@ -6,6 +6,9 @@
 #include <iostream>		// std::cout for debug to console
 #include <fstream>		// for reading in level files
 #include <vector>		// std::vector for storing level items
+
+#include "CVector2D.h"
+
 using namespace tle;
 
 //////////////////// STATES SETUP //////////////////////////////////////////
@@ -94,6 +97,7 @@ struct SVector3D
 	float z;
 };
 
+// Will be replaced by CVector2D
 struct SVector2D
 {
 	float x;
@@ -105,12 +109,14 @@ struct SVector2D
 };
 
 // adds two Vector2D together and returns the result
+// WILL BE REPLACED BY OPERATOR OVERLOADING IN CVECTOR2D
 SVector2D Vector2DAddition(const SVector2D& vec1, const SVector2D& vec2)
 {
 	return { vec1.x + vec2.x, vec1.y + vec2.y };
 }
 
 // subtracts Vector2D vec2 from Vector2D vec1 and returns the result
+// WILL BE REPLACED BY OPERATOR OVERLOADING IN CVECTOR2D
 SVector2D Vector2DSubtraction(const SVector2D& vec1, const SVector2D& vec2)
 {
 	return { vec1.x - vec2.x, vec1.y - vec2.y };
