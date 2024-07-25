@@ -12,6 +12,7 @@ public:
 	CVector2D(const float&, const float&);
 
 	// Destructors
+	~CVector2D(); // Default destructor
 
 	// Getters
 	float GetX() const { return X; }
@@ -24,14 +25,15 @@ public:
 	// Magnitude functions
 	float Magnitude() const;
 	float SquareMagnitude() const;
+	CVector2D Normalise() const;
 
 	// Operators for adding, subtracting, scalar multiplication
 	CVector2D operator+(CVector2D const& Vec);
 	CVector2D operator-(CVector2D const& Vec);
 	CVector2D operator*(float const& K);
 
-	// Dot product function
+	// Other functions interacting with other vectors
 	float DotProduct(const CVector2D&) const;
-	CVector2D Normalise() const;
+	CVector2D ReflectInVector(const CVector2D&);
 };
 

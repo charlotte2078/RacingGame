@@ -14,6 +14,10 @@ CVector2D::CVector2D(const float& NewX, const float& NewY) :
 {
 }
 
+CVector2D::~CVector2D()
+{
+}
+
 float CVector2D::Magnitude() const
 {
     return sqrt(X*X + Y*Y);
@@ -56,13 +60,23 @@ float CVector2D::DotProduct(const CVector2D& OtherVec) const
     return (X * OtherVec.GetX() + Y * OtherVec.GetY()) ;
 }
 
+CVector2D CVector2D::ReflectInVector(const CVector2D& OtherVec)
+{
+    CVector2D ThisVec(X, Y);
+    CVector2D OtherVecNormalised = OtherVec.Normalise();
+    const float CoefficientOfReflection = 2.0f * DotProduct(OtherVecNormalised);
+    CVector2D Reflection = ThisVec - (OtherVecNormalised * CoefficientOfReflection);
+    
+    return Reflection;
+}
+
 CVector2D CVector2D::Normalise() const
 {
-    float Length = Magnitude();
+    const float Length = Magnitude();
 
     CVector2D Res;
-    Res.SetX(X / Length);
-    Res.SetY(Y / Length);
+    Res.X = X / Length;
+    Res.Y = Y / Length;
 
     return Res;
 }
