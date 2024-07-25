@@ -150,13 +150,14 @@ SVector2D NormaliseVector2D(SVector2D vec)
 	return vec;
 }
 
-// TO BE DEPRECATED BY CCollider_Box
+// DEPRECATED BY CCollider_Box
 struct SBoxCollider
 {
 	SVector2D posXZ;
 	SVector2D widthDepth;
 };
 
+// TO BE DEPRECATED BY CCross
 struct SCross
 {
 	IModel* model;
