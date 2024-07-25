@@ -123,6 +123,7 @@ SVector2D Vector2DSubtraction(const SVector2D& vec1, const SVector2D& vec2)
 }
 
 // multiplies a Vector2D by a scalar float and returns the result
+// DEPRECATED BY CVector2D
 SVector2D ScalarMultiplication(const float& k, SVector2D vec)
 {
 	vec.x *= k;
@@ -132,12 +133,14 @@ SVector2D ScalarMultiplication(const float& k, SVector2D vec)
 }
 
 // calculates the dot product of two Vector2D and returns the result
+// DEPRECATED BY CVector2D
 float DotProduct(const SVector2D& vec1, const SVector2D& vec2)
 {
 	return vec1.x * vec2.x + vec1.y * vec2.y;
 }
 
 // normalises a Vector2D and returns the result
+// DEPRECATED BY CVector2D
 SVector2D NormaliseVector2D(SVector2D vec)
 {
 	const float length = vec.magnitude();
@@ -147,6 +150,7 @@ SVector2D NormaliseVector2D(SVector2D vec)
 	return vec;
 }
 
+// TO BE DEPRECATED BY CCollider_Box
 struct SBoxCollider
 {
 	SVector2D posXZ;
@@ -1637,6 +1641,7 @@ void ReadWholeFileLineByLine(std::ifstream& readFile, std::vector <SLevelItem>& 
 }
 
 // Returns the vec1 reflected in vec2.
+// WILL BE DEPRECATED BY CVector2D
 SVector2D ReflectVectorInVector(const SVector2D& vec1, const SVector2D& vec2)
 {
 	SVector2D vec2Normalised = NormaliseVector2D(vec2);

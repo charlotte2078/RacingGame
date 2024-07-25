@@ -103,9 +103,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CarRace_22072024.cpp" />
+    <ClCompile Include="CCollider.cpp" />
+    <ClCompile Include="CCollider_Box.cpp" />
+    <ClCompile Include="CCollider_Sphere.cpp" />
+    <ClCompile Include="CHoverCar.cpp" />
     <ClCompile Include="CVector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CCollider.h" />
+    <ClInclude Include="CCollider_Box.h" />
+    <ClInclude Include="CCollider_Sphere.h" />
+    <ClInclude Include="CHoverCar.h" />
     <ClInclude Include="CVector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
