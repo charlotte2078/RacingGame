@@ -110,6 +110,7 @@
     <ClCompile Include="CHoverCar.cpp" />
     <ClCompile Include="CLevelItem.cpp" />
     <ClCompile Include="CVector2D.cpp" />
+    <ClCompile Include="CWallSection_LI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCollider.h" />
@@ -119,6 +120,7 @@
     <ClInclude Include="CHoverCar.h" />
     <ClInclude Include="CLevelItem.h" />
     <ClInclude Include="CVector2D.h" />
+    <ClInclude Include="CWallSection_LI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
