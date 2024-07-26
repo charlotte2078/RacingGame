@@ -8,6 +8,7 @@
     <ClCompile Include="CCollider_Box.cpp" />
     <ClCompile Include="CCollider_Sphere.cpp" />
     <ClCompile Include="CCross.cpp" />
+    <ClCompile Include="CLevelItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CVector2D.h" />
@@ -16,5 +17,6 @@
     <ClInclude Include="CCollider_Box.h" />
     <ClInclude Include="CCollider_Sphere.h" />
     <ClInclude Include="CCross.h" />
+    <ClInclude Include="CLevelItem.h" />
   </ItemGroup>
 </Project>

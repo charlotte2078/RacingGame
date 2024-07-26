@@ -8,6 +8,7 @@
 #include <vector>		// std::vector for storing level items
 
 #include "CVector2D.h"
+#include "CLevelItem.h"
 
 using namespace tle;
 
@@ -157,7 +158,7 @@ struct SBoxCollider
 	SVector2D widthDepth;
 };
 
-// TO BE DEPRECATED BY CCross
+// DEPRECATED BY CCross
 struct SCross
 {
 	IModel* model;
@@ -165,6 +166,7 @@ struct SCross
 	bool isVisible;
 };
 
+// TO BE DEPRECATED BY CCheckpoint
 struct SCheckpoint
 {
 	SVector2D position;
@@ -176,6 +178,7 @@ struct SCheckpoint
 	float depth;
 };
 
+// TO BE DEPRECATED BY CWaypoint
 struct SWaypoint
 {
 	IModel* dummyModel;
@@ -967,6 +970,10 @@ void CPlayerCar::Reset()
 
 void main()
 {
+	// testing
+	CVector2D NewVec(5, 6);
+	CLevelItem TestItem(NewVec, 5.0f);
+
 	// Create a 3D engine (using TLX engine here) and open a window for it
 	TLEngine* myEngine = New3DEngine(kTLX);
 	myEngine->StartWindowed(kDisplayX, kDisplayY);

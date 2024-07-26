@@ -108,6 +108,7 @@
     <ClCompile Include="CCollider_Sphere.cpp" />
     <ClCompile Include="CCross.cpp" />
     <ClCompile Include="CHoverCar.cpp" />
+    <ClCompile Include="CLevelItem.cpp" />
     <ClCompile Include="CVector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +117,7 @@
     <ClInclude Include="CCollider_Sphere.h" />
     <ClInclude Include="CCross.h" />
     <ClInclude Include="CHoverCar.h" />
+    <ClInclude Include="CLevelItem.h" />
     <ClInclude Include="CVector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
