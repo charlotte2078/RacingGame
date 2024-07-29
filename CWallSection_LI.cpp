@@ -53,6 +53,8 @@ CWallSection_LI::CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh
 
 	// Rotate dummy model by rotation
 	DummyModel->RotateY(RotationY);
+
+	// Initialise box collider - to do later!!!!
 }
 
 // Does nothing

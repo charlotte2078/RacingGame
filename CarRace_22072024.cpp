@@ -66,12 +66,15 @@ const float kNpcWaypointPrecision = 1.0f;
 const float kTankSinkHeight = -8.0f;
 const float kTankRadius = 3.0f;
 
+// MOVED TO CCheckpoint_LI
 // checkpoint constants
 const float kStrutRadius = 1.3f;
 const float kDistCpToStrut = 8.56f;
 const int kNumStrutsPerCheckpoint = 2;
 const float kCpWidth = 14.52f;
 const float kCpDepth = 2.6f;
+
+// MOVED TO CCross
 const float kCrossLifeTimer = 2.0f;
 const float kCrossVisibleHeight = 5.0f;
 const float kCrossHiddenHeight = -20.0f;
@@ -166,7 +169,7 @@ struct SCross
 	bool isVisible;
 };
 
-// TO BE DEPRECATED BY CCheckpoint
+// DEPRECATED BY CCheckpoint
 struct SCheckpoint
 {
 	SVector2D position;
