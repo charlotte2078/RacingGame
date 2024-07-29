@@ -110,6 +110,7 @@
     <ClCompile Include="CCross.cpp" />
     <ClCompile Include="CHoverCar.cpp" />
     <ClCompile Include="CLevelItem.cpp" />
+    <ClCompile Include="CTank_LI.cpp" />
     <ClCompile Include="CVector2D.cpp" />
     <ClCompile Include="CWallSection_LI.cpp" />
   </ItemGroup>
@@ -121,6 +122,7 @@
     <ClInclude Include="CCross.h" />
     <ClInclude Include="CHoverCar.h" />
     <ClInclude Include="CLevelItem.h" />
+    <ClInclude Include="CTank_LI.h" />
     <ClInclude Include="CVector2D.h" />
     <ClInclude Include="CWallSection_LI.h" />
   </ItemGroup>

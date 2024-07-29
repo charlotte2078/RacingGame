@@ -11,6 +11,7 @@
     <ClCompile Include="CLevelItem.cpp" />
     <ClCompile Include="CWallSection_LI.cpp" />
     <ClCompile Include="CCheckpoint_LI.cpp" />
+    <ClCompile Include="CTank_LI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CVector2D.h" />
@@ -22,5 +23,6 @@
     <ClInclude Include="CLevelItem.h" />
     <ClInclude Include="CWallSection_LI.h" />
     <ClInclude Include="CCheckpoint_LI.h" />
+    <ClInclude Include="CTank_LI.h" />
   </ItemGroup>
 </Project>
