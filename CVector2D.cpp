@@ -80,6 +80,22 @@ CVector2D CVector2D::ReflectInVector(const CVector2D& OtherVec)
     return Reflection;
 }
 
+float CVector2D::Distance(const CVector2D& OtherVec) const
+{
+    const float DistX = X - OtherVec.X;
+    const float DistY = Y - OtherVec.Y;
+
+    return sqrt(DistX*DistX + DistY*DistY);
+}
+
+float CVector2D::SquareDistance(const CVector2D& OtherVec) const
+{
+    const float DistX = X - OtherVec.X;
+    const float DistY = Y - OtherVec.Y;
+
+    return DistX * DistX + DistY * DistY;
+}
+
 // Returns normalised vector.
 CVector2D CVector2D::Normalise() const
 {

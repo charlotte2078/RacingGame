@@ -20,6 +20,7 @@ public:
     // getters
     float GetRadius() const;
 
-
+    // collision functions
+    bool SphereToSphere(CCollider_Sphere);
 };
 

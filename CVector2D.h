@@ -35,5 +35,7 @@ public:
 	// Other functions interacting with other vectors
 	float DotProduct(const CVector2D&) const;
 	CVector2D ReflectInVector(const CVector2D&);
+	float Distance(const CVector2D&) const;
+	float SquareDistance(const CVector2D&) const;
 };
 
