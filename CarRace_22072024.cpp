@@ -81,6 +81,7 @@ const float kCrossHiddenHeight = -20.0f;
 const float kCrossScaleFactor = 0.5f;
 
 // wall/isle constants
+// MOVED TO CWallSection_LI
 const float kWallColliderWidth = 5.0f;
 const float kWallColliderDepth = 38.3f;
 
