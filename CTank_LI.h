@@ -21,8 +21,11 @@ private:
 public:
     // constructors
     CTank_LI();
+    CTank_LI(IMesh*);
+    CTank_LI(IMesh*, const CVector2D&, const float&);
 
     // destructors
+    ~CTank_LI();
 
     // setters
 
