@@ -62,6 +62,7 @@ const float npcMaxBounceTime = 1.0f;
 const float npcAcc = 10.0f;
 const float kNpcWaypointPrecision = 1.0f;
 
+// MOVED TO CTank_LI
 // tank constants
 const float kTankSinkHeight = -8.0f;
 const float kTankRadius = 3.0f;
