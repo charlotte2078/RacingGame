@@ -11,8 +11,12 @@ private:
 
 public:
     // Constructors
+    CCollider_Box();
+    CCollider_Box(const CVector2D&);
+    CCollider_Box(const CVector2D&, const CVector2D&);
 
     // Destructor
+    ~CCollider_Box();
 
     // Setters
     void SetWidthDepth(const CVector2D&);
