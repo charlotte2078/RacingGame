@@ -10,6 +10,7 @@ public:
     // constructors
     CCollider_Sphere();
     CCollider_Sphere(const float&);
+    CCollider_Sphere(const float&, const CVector2D&);
 
     // destructors
     ~CCollider_Sphere();

@@ -7,8 +7,14 @@ CCollider_Sphere::CCollider_Sphere() :
 }
 
 // Constructor with radius passed in
-CCollider_Sphere::CCollider_Sphere(const float& Rad) :
-	Radius(Rad)
+CCollider_Sphere::CCollider_Sphere(const float& NewRad) :
+	Radius(NewRad)
+{
+}
+
+CCollider_Sphere::CCollider_Sphere(const float& NewRad, const CVector2D& NewPos) :
+	Radius(NewRad),
+	CCollider(NewPos)
 {
 }
 

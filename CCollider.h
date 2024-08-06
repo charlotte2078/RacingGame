@@ -8,6 +8,10 @@ protected:
 	CVector2D PositionXZ;
 
 public:
+	// Constructors
+	CCollider();
+	CCollider(const CVector2D&);
+
 	// Setters
 	void SetPos(const CVector2D&);
 
