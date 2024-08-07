@@ -975,9 +975,6 @@ void CPlayerCar::Reset()
 
 void main()
 {
-	// testing
-	CVector2D NewVec(5, 6);
-	CLevelItem TestItem(NewVec, 5.0f);
 
 	// Create a 3D engine (using TLX engine here) and open a window for it
 	TLEngine* myEngine = New3DEngine(kTLX);
@@ -1000,163 +997,6 @@ void main()
 	IMesh* dummyMesh = myEngine->LoadMesh("Dummy.x");
 	IMesh* crossMesh = myEngine->LoadMesh("Cross.x");
 
-	// read checkpoints, walls, isles, from file into a vector of <SLevelItem>
-	std::vector <SLevelItem> levelItemsVec;
-	const std::string level1FileName = "level1.txt";
-	std::ifstream level1ReadFile;
-	OpenFile(level1ReadFile, level1FileName);
-	ReadWholeFileLineByLine(level1ReadFile, levelItemsVec);
-	CloseFile(level1ReadFile);
-
-	// vectors for checkpoints, walls, isles
-	std::vector <SCheckpoint> checkpointsVec;
-	std::vector <IModel*> wallsVec;
-	std::vector <IModel*> islesVec;
-	std::vector <IModel*> tanksVec;
-	std::vector <SWaypoint> levelWaypointsVec;
-	std::vector <SBoxCollider> wallColliders;
-
-	// for reading in from file
-	SVector2D playerInitialPos;
-	float playerInitialRot;
-	SVector2D npcInitialPos;
-	float npcInitialRot;
-
-	// use levelItemsVec to load items into the game
-	for (int i = 0; i < levelItemsVec.size(); i++)
-	{
-		if (levelItemsVec.at(i).type == "Checkpoint")
-		{
-			// add to checkpointsVec with SCheckpoint
-			checkpointsVec.push_back({ {levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos},
-											levelItemsVec.at(i).yRotation,
-											checkpointMesh->CreateModel() });
-
-			const int cpIndex = checkpointsVec.size() - 1;
-
-			// move checkpoint to correct position
-			checkpointsVec.at(cpIndex).model->SetX(checkpointsVec.at(cpIndex).position.x);
-			checkpointsVec.at(cpIndex).model->SetZ(checkpointsVec.at(cpIndex).position.y);
-
-			// rotate checkpoint
-			checkpointsVec.at(cpIndex).model->RotateY(checkpointsVec.at(cpIndex).rotation);
-
-			// create struts
-			checkpointsVec.at(cpIndex).strutsPos[0].x = checkpointsVec.at(cpIndex).position.x -
-				kDistCpToStrut * cos(checkpointsVec.at(cpIndex).rotation * kDegreesToRadians);
-			checkpointsVec.at(cpIndex).strutsPos[1].x = checkpointsVec.at(cpIndex).position.x +
-				kDistCpToStrut * cos(checkpointsVec.at(cpIndex).rotation * kDegreesToRadians);
-			checkpointsVec.at(cpIndex).strutsPos[0].y = checkpointsVec.at(cpIndex).position.y +
-				kDistCpToStrut * sin(checkpointsVec.at(cpIndex).rotation * kDegreesToRadians);
-			checkpointsVec.at(cpIndex).strutsPos[1].y = checkpointsVec.at(cpIndex).position.y -
-				kDistCpToStrut * sin(checkpointsVec.at(cpIndex).rotation * kDegreesToRadians);
-
-			// add to checkpointsWidthDepth and struts
-			if (levelItemsVec.at(i).yRotation == 90.0f)
-			{
-				checkpointsVec.at(cpIndex).width = kCpDepth;
-				checkpointsVec.at(cpIndex).depth = kCpWidth;
-			}
-			else
-			{
-				checkpointsVec.at(cpIndex).width = kCpWidth;
-				checkpointsVec.at(cpIndex).depth = kCpDepth;
-			}
-
-			// create cross
-			checkpointsVec.at(cpIndex).cross.model = crossMesh->CreateModel(checkpointsVec.at(cpIndex).position.x, kCrossHiddenHeight, checkpointsVec.at(cpIndex).position.y);
-			checkpointsVec.at(cpIndex).cross.model->RotateY(checkpointsVec.at(cpIndex).rotation);
-			checkpointsVec.at(cpIndex).cross.model->Scale(kCrossScaleFactor);
-			checkpointsVec.at(cpIndex).cross.isVisible = false;
-			checkpointsVec.at(cpIndex).cross.lifeTimer = 0.0f;
-		}
-		else if (levelItemsVec.at(i).type == "Isle")
-		{
-			// add new isle to islesVec
-			islesVec.push_back(isleMesh->CreateModel());
-
-			const int islesIndex = islesVec.size() - 1;
-
-			// move isle to correct position
-			islesVec.at(islesIndex)->SetX(levelItemsVec.at(i).xPos);
-			islesVec.at(islesIndex)->SetZ(levelItemsVec.at(i).zPos);
-
-			// rotate isle
-			islesVec.at(islesIndex)->RotateY(levelItemsVec.at(i).yRotation);
-		}
-		else if (levelItemsVec.at(i).type == "Wall")
-		{
-			// add new wall to wallsVec
-			wallsVec.push_back(wallMesh->CreateModel());
-
-			const int wallsIndex = wallsVec.size() - 1;
-
-			// move wall to correct position
-			wallsVec.at(wallsIndex)->SetX(levelItemsVec.at(i).xPos);
-			wallsVec.at(wallsIndex)->SetZ(levelItemsVec.at(i).zPos);
-
-			// rotate wall
-			wallsVec.at(wallsIndex)->RotateY(levelItemsVec.at(i).yRotation);
-		}
-		else if (levelItemsVec.at(i).type == "TankSmall1")
-		{
-			// add new tank to tanksVec
-			tanksVec.push_back(waterTankMesh->CreateModel());
-
-			const int tanksIndex = tanksVec.size() - 1;
-
-			tanksVec.at(tanksIndex)->SetX(levelItemsVec.at(i).xPos);
-			tanksVec.at(tanksIndex)->SetZ(levelItemsVec.at(i).zPos);
-
-			// obstacle tanks
-			if (levelItemsVec.at(i).yRotation != 0.0f)
-			{
-				tanksVec.at(tanksIndex)->RotateX(levelItemsVec.at(i).yRotation);
-				tanksVec.at(tanksIndex)->SetY(kTankSinkHeight);
-			}
-		}
-		else if (levelItemsVec.at(i).type == "Waypoint")
-		{
-			// add new waypoint to waypointsVec
-			SWaypoint newWaypoint;
-			newWaypoint.dummyModel = dummyMesh->CreateModel();
-			newWaypoint.dummyModel->SetX(levelItemsVec.at(i).xPos);
-			newWaypoint.dummyModel->SetZ(levelItemsVec.at(i).zPos);
-			newWaypoint.position = { levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos };
-			newWaypoint.speed = levelItemsVec.at(i).yRotation;
-
-			levelWaypointsVec.push_back(newWaypoint);
-		}
-		else if (levelItemsVec.at(i).type == "WallCollider")
-		{
-			// add new BoxCollider to wallColliders vector
-			SBoxCollider newCollider;
-			newCollider.posXZ = { levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos };
-			if (levelItemsVec.at(i).yRotation == 90.0f)
-			{
-				newCollider.widthDepth = { kWallColliderDepth, kWallColliderWidth };
-			}
-			else
-			{
-				newCollider.widthDepth = { kWallColliderWidth, kWallColliderDepth };
-			}
-
-			wallColliders.push_back(newCollider);
-		}
-		else if (levelItemsVec.at(i).type == "Player")
-		{
-			// get player initial position and rotation
-			playerInitialPos = { levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos };
-			playerInitialRot = levelItemsVec.at(i).yRotation;
-		}
-		else if (levelItemsVec.at(i).type == "NPC")
-		{
-			// get npc initial position and rotation
-			npcInitialPos = { levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos };
-			npcInitialRot = levelItemsVec.at(i).yRotation;
-		}
-	}
-
 	// skybox setup
 	SVector3D skyboxPos = { 0.0f, -960.0f, 0.0f };
 	IModel* skybox = skyboxMesh->CreateModel();
@@ -1165,367 +1005,532 @@ void main()
 	// floor setup
 	IModel* floor = floorMesh->CreateModel();
 
-	// ui backdrop setup
-	const SVector2D backdropPos = { 0.0f, 620.0f };
-	ISprite* uiBackground = myEngine->CreateSprite("ui_background.jpg", backdropPos.x, backdropPos.y);
+	//// read checkpoints, walls, isles, from file into a vector of <SLevelItem>
+	//std::vector <SLevelItem> levelItemsVec;
+	//const std::string level1FileName = "level1.txt";
+	//std::ifstream level1ReadFile;
+	//OpenFile(level1ReadFile, level1FileName);
+	//ReadWholeFileLineByLine(level1ReadFile, levelItemsVec);
+	//CloseFile(level1ReadFile);
 
-	// ui text setup
-	IFont* myFont = myEngine->LoadFont("Comic Sans MS", 36);
-	const std::string preRaceString = "Hit space to start";
-	const std::string timerString[] = { "GO!", "1", "2", "3" };
-	const std::string raceOverString = "Race complete";
-	const std::string carDiedString = "YOU DIED";
-	const std::string restartString = "Press R to Restart";
-	const SVector2D gameStateTextPos = { 640.0f, 670.0f };
-	const SVector2D timerTextPos = { 640.0f, 700.0f };
-	const SVector2D speedReadoutTextPos = { 262.0f, 620.0f };
-	const SVector2D healthTextPos = { 262.0f, 670.0f };
-	const SVector2D boostReadoutTextPos = { 1164.0f, 645.0f };
-	const SVector2D boostWarningTextPos = { 1164.0f, 695.0f };
-	const SVector2D lapTextPos = { 10.0f, 620.0f };
-	const SVector2D cpTextPos = { 10.0f, 670.0f };
-	const SVector2D posTextPos = { 962.0f, 670.0f };
-	const SVector2D restartStringPos = { 640.0f, 640.0f };
+	//// vectors for checkpoints, walls, isles
+	//std::vector <SCheckpoint> checkpointsVec;
+	//std::vector <IModel*> wallsVec;
+	//std::vector <IModel*> islesVec;
+	//std::vector <IModel*> tanksVec;
+	//std::vector <SWaypoint> levelWaypointsVec;
+	//std::vector <SBoxCollider> wallColliders;
 
-	// camera
-	ICamera* camera = myEngine->CreateCamera(kManual);
-	const SVector3D camChaseLocalPos = { 0.0f, 10.0f, -20.0f };
-	const SVector3D camFirstPersonLocalPos = { 0.0f, 6.0f, 0.0f };
-	const float cameraSpeed = 5.0f;
-	const float cameraRotationSpeed = 180.0f; // in degrees / sec
-	const float cameraInitialXRotation = 15.0f; // in degrees
-	const float cameraXRotationLimitLower = -90.0f;
-	const float cameraXRotationLimitUpper = 90.0f;
-	float cameraXRotation = cameraInitialXRotation;
-	float cameraYRotation = 0.0f;
-	camera->RotateX(cameraInitialXRotation);
-	bool isMouseCapture = true;
-	myEngine->StartMouseCapture();
+	//// for reading in from file
+	//SVector2D playerInitialPos;
+	//float playerInitialRot;
+	//SVector2D npcInitialPos;
+	//float npcInitialRot;
 
-	// player car setup
-	CPlayerCar playerCar(dummyMesh, carMesh, playerInitialPos, playerInitialRot);
-	playerCar.SetWaypointsVec(levelWaypointsVec);
+	//// use levelItemsVec to load items into the game
+	//for (int i = 0; i < levelItemsVec.size(); i++)
+	//{
+	//	if (levelItemsVec.at(i).type == "Checkpoint")
+	//	{
+	//		// add to checkpointsVec with SCheckpoint
+	//		checkpointsVec.push_back({ {levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos},
+	//										levelItemsVec.at(i).yRotation,
+	//										checkpointMesh->CreateModel() });
 
-	// attach camera to player car
-	camera->AttachToParent(playerCar.GetDummyModel());
-	camera->SetLocalPosition(camChaseLocalPos.x, camChaseLocalPos.y, camChaseLocalPos.z);
-	ECameraState cameraState = camChase;
+	//		const int cpIndex = checkpointsVec.size() - 1;
 
-	// npc player car setup
-	CNpcCar npcCar(dummyMesh, carMesh, npcInitialPos, npcInitialRot);
-	npcCar.SetWaypointsVec(levelWaypointsVec);
+	//		// move checkpoint to correct position
+	//		checkpointsVec.at(cpIndex).model->SetX(checkpointsVec.at(cpIndex).position.x);
+	//		checkpointsVec.at(cpIndex).model->SetZ(checkpointsVec.at(cpIndex).position.y);
 
-	// control keys
-	const EKeyCode quitKey = Key_Escape;
-	const EKeyCode cameraForwardKey = Key_Up;
-	const EKeyCode cameraBackwardKey = Key_Down;
-	const EKeyCode cameraRightKey = Key_Right;
-	const EKeyCode cameraLeftKey = Key_Left;
-	const EKeyCode carForwardKey = Key_W;
-	const EKeyCode carBackwardKey = Key_S;
-	const EKeyCode carRightKey = Key_D;
-	const EKeyCode carLeftKey = Key_A;
-	const EKeyCode mouseCaptureKey = Key_Tab;
-	const EKeyCode cameraChaseKey = Key_1;
-	const EKeyCode cameraFirstPersonKey = Key_2;
-	const EKeyCode startKey = Key_Space;
-	const EKeyCode boostKey = Key_Space;
-	const EKeyCode restartKey = Key_R;
+	//		// rotate checkpoint
+	//		checkpointsVec.at(cpIndex).model->RotateY(checkpointsVec.at(cpIndex).rotation);
 
-	// initialise game states and countdowns
-	EGameState gameState = gPreRace;
-	EPreRaceStates preRaceState = prInitial;
-	int preRaceCountdownInt = 0;
-	const float preRaceMaxCountdown = 3.0f;
-	float preRaceCountdown = preRaceMaxCountdown;
-	const int numLaps = 3;
+	//		// create struts
+	//		checkpointsVec.at(cpIndex).strutsPos[0].x = checkpointsVec.at(cpIndex).position.x -
+	//			kDistCpToStrut * cos(checkpointsVec.at(cpIndex).rotation * kDegreesToRadians);
+	//		checkpointsVec.at(cpIndex).strutsPos[1].x = checkpointsVec.at(cpIndex).position.x +
+	//			kDistCpToStrut * cos(checkpointsVec.at(cpIndex).rotation * kDegreesToRadians);
+	//		checkpointsVec.at(cpIndex).strutsPos[0].y = checkpointsVec.at(cpIndex).position.y +
+	//			kDistCpToStrut * sin(checkpointsVec.at(cpIndex).rotation * kDegreesToRadians);
+	//		checkpointsVec.at(cpIndex).strutsPos[1].y = checkpointsVec.at(cpIndex).position.y -
+	//			kDistCpToStrut * sin(checkpointsVec.at(cpIndex).rotation * kDegreesToRadians);
 
-	// timing
-	float raceTimer = 0.0f;
-	myEngine->Timer();
+	//		// add to checkpointsWidthDepth and struts
+	//		if (levelItemsVec.at(i).yRotation == 90.0f)
+	//		{
+	//			checkpointsVec.at(cpIndex).width = kCpDepth;
+	//			checkpointsVec.at(cpIndex).depth = kCpWidth;
+	//		}
+	//		else
+	//		{
+	//			checkpointsVec.at(cpIndex).width = kCpWidth;
+	//			checkpointsVec.at(cpIndex).depth = kCpDepth;
+	//		}
 
-	// The main game loop, repeat until engine is stopped
-	while (myEngine->IsRunning())
-	{
-		// Draw the scene
-		myEngine->DrawScene();
+	//		// create cross
+	//		checkpointsVec.at(cpIndex).cross.model = crossMesh->CreateModel(checkpointsVec.at(cpIndex).position.x, kCrossHiddenHeight, checkpointsVec.at(cpIndex).position.y);
+	//		checkpointsVec.at(cpIndex).cross.model->RotateY(checkpointsVec.at(cpIndex).rotation);
+	//		checkpointsVec.at(cpIndex).cross.model->Scale(kCrossScaleFactor);
+	//		checkpointsVec.at(cpIndex).cross.isVisible = false;
+	//		checkpointsVec.at(cpIndex).cross.lifeTimer = 0.0f;
+	//	}
+	//	else if (levelItemsVec.at(i).type == "Isle")
+	//	{
+	//		// add new isle to islesVec
+	//		islesVec.push_back(isleMesh->CreateModel());
 
-		/**** Update your scene each frame here ****/
+	//		const int islesIndex = islesVec.size() - 1;
 
-		// timing
-		const float deltaTime = myEngine->Timer();
+	//		// move isle to correct position
+	//		islesVec.at(islesIndex)->SetX(levelItemsVec.at(i).xPos);
+	//		islesVec.at(islesIndex)->SetZ(levelItemsVec.at(i).zPos);
 
-		if (gameState == gPreRace)
-		{
-			// tell player to press start button to start. then countdown and move to racing state
+	//		// rotate isle
+	//		islesVec.at(islesIndex)->RotateY(levelItemsVec.at(i).yRotation);
+	//	}
+	//	else if (levelItemsVec.at(i).type == "Wall")
+	//	{
+	//		// add new wall to wallsVec
+	//		wallsVec.push_back(wallMesh->CreateModel());
 
-			if (preRaceState == prInitial)
-			{
-				// initial dialogue
-				myFont->Draw(preRaceString, gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
+	//		const int wallsIndex = wallsVec.size() - 1;
 
-				// hit space -> timer
-				if (myEngine->KeyHit(startKey))	preRaceState = prTimer;
-			}
-			else if (preRaceState == prTimer)
-			{
-				preRaceCountdown -= deltaTime;
-				preRaceCountdownInt = preRaceCountdown + 1;
-				myFont->Draw(timerString[preRaceCountdownInt], gameStateTextPos.x, gameStateTextPos.y, kBlack,
-					kCentre, kVCentre);
+	//		// move wall to correct position
+	//		wallsVec.at(wallsIndex)->SetX(levelItemsVec.at(i).xPos);
+	//		wallsVec.at(wallsIndex)->SetZ(levelItemsVec.at(i).zPos);
 
-				if (preRaceCountdownInt == 0)
-				{
-					gameState = gRacing;
+	//		// rotate wall
+	//		wallsVec.at(wallsIndex)->RotateY(levelItemsVec.at(i).yRotation);
+	//	}
+	//	else if (levelItemsVec.at(i).type == "TankSmall1")
+	//	{
+	//		// add new tank to tanksVec
+	//		tanksVec.push_back(waterTankMesh->CreateModel());
 
-					// stop a sudden mouse moevment jump when the race starts
-					myEngine->GetMouseMovementX();
-					myEngine->GetMouseMovementY();
-				}
-			}
-		}
-		else if (gameState == gRacing)
-		{
-			// allow player to move car, control camera. npc car moves around track
+	//		const int tanksIndex = tanksVec.size() - 1;
 
-			// increase racing timer
-			raceTimer += deltaTime;
+	//		tanksVec.at(tanksIndex)->SetX(levelItemsVec.at(i).xPos);
+	//		tanksVec.at(tanksIndex)->SetZ(levelItemsVec.at(i).zPos);
 
-			// decrease life time for any visible crosses
-			for (int i = 0; i < checkpointsVec.size(); i++)
-			{
-				if (checkpointsVec.at(i).cross.isVisible)
-				{
-					checkpointsVec.at(i).cross.lifeTimer -= deltaTime;
+	//		// obstacle tanks
+	//		if (levelItemsVec.at(i).yRotation != 0.0f)
+	//		{
+	//			tanksVec.at(tanksIndex)->RotateX(levelItemsVec.at(i).yRotation);
+	//			tanksVec.at(tanksIndex)->SetY(kTankSinkHeight);
+	//		}
+	//	}
+	//	else if (levelItemsVec.at(i).type == "Waypoint")
+	//	{
+	//		// add new waypoint to waypointsVec
+	//		SWaypoint newWaypoint;
+	//		newWaypoint.dummyModel = dummyMesh->CreateModel();
+	//		newWaypoint.dummyModel->SetX(levelItemsVec.at(i).xPos);
+	//		newWaypoint.dummyModel->SetZ(levelItemsVec.at(i).zPos);
+	//		newWaypoint.position = { levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos };
+	//		newWaypoint.speed = levelItemsVec.at(i).yRotation;
 
-					if (checkpointsVec.at(i).cross.lifeTimer <= 0.0f)
-					{
-						checkpointsVec.at(i).cross.lifeTimer = 0.0f;
-						checkpointsVec.at(i).cross.model->SetY(kCrossHiddenHeight);
-						checkpointsVec.at(i).cross.isVisible = false;
-					}
-				}
-			}
+	//		levelWaypointsVec.push_back(newWaypoint);
+	//	}
+	//	else if (levelItemsVec.at(i).type == "WallCollider")
+	//	{
+	//		// add new BoxCollider to wallColliders vector
+	//		SBoxCollider newCollider;
+	//		newCollider.posXZ = { levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos };
+	//		if (levelItemsVec.at(i).yRotation == 90.0f)
+	//		{
+	//			newCollider.widthDepth = { kWallColliderDepth, kWallColliderWidth };
+	//		}
+	//		else
+	//		{
+	//			newCollider.widthDepth = { kWallColliderWidth, kWallColliderDepth };
+	//		}
 
-			//////////////////////////////////////// NPC MOVEMENT ///////////////////////////////////////////
+	//		wallColliders.push_back(newCollider);
+	//	}
+	//	else if (levelItemsVec.at(i).type == "Player")
+	//	{
+	//		// get player initial position and rotation
+	//		playerInitialPos = { levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos };
+	//		playerInitialRot = levelItemsVec.at(i).yRotation;
+	//	}
+	//	else if (levelItemsVec.at(i).type == "NPC")
+	//	{
+	//		// get npc initial position and rotation
+	//		npcInitialPos = { levelItemsVec.at(i).xPos, levelItemsVec.at(i).zPos };
+	//		npcInitialRot = levelItemsVec.at(i).yRotation;
+	//	}
+	//}
 
-			// npc car movement
-			npcCar.ProcessMovement(deltaTime);
+	//// skybox setup
+	//SVector3D skyboxPos = { 0.0f, -960.0f, 0.0f };
+	//IModel* skybox = skyboxMesh->CreateModel();
+	//skybox->SetPosition(skyboxPos.x, skyboxPos.y, skyboxPos.z);
 
-			// check for collisions with player car
-			if (SphereToSphereXZModel(playerCar.GetModel(), npcCar.GetModel(), kCarRadius, kCarRadius))
-			{
-				npcCar.Bounce(deltaTime);
-			}
+	//// floor setup
+	//IModel* floor = floorMesh->CreateModel();
 
-			//////////////////////////////////////// CAMERA CONTROL ///////////////////////////////////////////
+	//// ui backdrop setup
+	//const SVector2D backdropPos = { 0.0f, 620.0f };
+	//ISprite* uiBackground = myEngine->CreateSprite("ui_background.jpg", backdropPos.x, backdropPos.y);
 
-			// camera control
-			if (myEngine->KeyHeld(cameraForwardKey))	camera->MoveLocalZ(cameraSpeed * deltaTime);
-			if (myEngine->KeyHeld(cameraBackwardKey))	camera->MoveLocalZ(-cameraSpeed * deltaTime);
-			if (myEngine->KeyHeld(cameraLeftKey))		camera->MoveLocalX(-cameraSpeed * deltaTime);
-			if (myEngine->KeyHeld(cameraRightKey))		camera->MoveLocalX(cameraSpeed * deltaTime);
+	//// ui text setup
+	//IFont* myFont = myEngine->LoadFont("Comic Sans MS", 36);
+	//const std::string preRaceString = "Hit space to start";
+	//const std::string timerString[] = { "GO!", "1", "2", "3" };
+	//const std::string raceOverString = "Race complete";
+	//const std::string carDiedString = "YOU DIED";
+	//const std::string restartString = "Press R to Restart";
+	//const SVector2D gameStateTextPos = { 640.0f, 670.0f };
+	//const SVector2D timerTextPos = { 640.0f, 700.0f };
+	//const SVector2D speedReadoutTextPos = { 262.0f, 620.0f };
+	//const SVector2D healthTextPos = { 262.0f, 670.0f };
+	//const SVector2D boostReadoutTextPos = { 1164.0f, 645.0f };
+	//const SVector2D boostWarningTextPos = { 1164.0f, 695.0f };
+	//const SVector2D lapTextPos = { 10.0f, 620.0f };
+	//const SVector2D cpTextPos = { 10.0f, 670.0f };
+	//const SVector2D posTextPos = { 962.0f, 670.0f };
+	//const SVector2D restartStringPos = { 640.0f, 640.0f };
 
-			// rotate camera left and right - no limits
-			const int mouseMovementX = myEngine->GetMouseMovementX();
-			cameraYRotation += mouseMovementX * cameraRotationSpeed * deltaTime;
+	//// camera
+	//ICamera* camera = myEngine->CreateCamera(kManual);
+	//const SVector3D camChaseLocalPos = { 0.0f, 10.0f, -20.0f };
+	//const SVector3D camFirstPersonLocalPos = { 0.0f, 6.0f, 0.0f };
+	//const float cameraSpeed = 5.0f;
+	//const float cameraRotationSpeed = 180.0f; // in degrees / sec
+	//const float cameraInitialXRotation = 15.0f; // in degrees
+	//const float cameraXRotationLimitLower = -90.0f;
+	//const float cameraXRotationLimitUpper = 90.0f;
+	//float cameraXRotation = cameraInitialXRotation;
+	//float cameraYRotation = 0.0f;
+	//camera->RotateX(cameraInitialXRotation);
+	//bool isMouseCapture = true;
+	//myEngine->StartMouseCapture();
 
-			// rotate camera up and down
-			const int mouseMovementY = myEngine->GetMouseMovementY();
-			// check camera rotation limit
-			if (cameraXRotation >= cameraXRotationLimitLower && cameraXRotation <= cameraXRotationLimitUpper)
-			{
-				cameraXRotation += mouseMovementY * cameraRotationSpeed * deltaTime;
-			}
-			else if (cameraXRotation < cameraXRotationLimitLower)
-			{
-				cameraXRotation = cameraXRotationLimitLower;
-			}
-			else if (cameraXRotation > cameraXRotationLimitUpper)
-			{
-				cameraXRotation = cameraXRotationLimitUpper;
-			}
-			// rotate camera
-			CameraRotation(camera, cameraXRotation, cameraYRotation);
+	//// player car setup
+	//CPlayerCar playerCar(dummyMesh, carMesh, playerInitialPos, playerInitialRot);
+	//playerCar.SetWaypointsVec(levelWaypointsVec);
 
-			// toggle mouse capture
-			if (myEngine->KeyHit(mouseCaptureKey))
-			{
-				isMouseCapture = !isMouseCapture;
+	//// attach camera to player car
+	//camera->AttachToParent(playerCar.GetDummyModel());
+	//camera->SetLocalPosition(camChaseLocalPos.x, camChaseLocalPos.y, camChaseLocalPos.z);
+	//ECameraState cameraState = camChase;
 
-				if (isMouseCapture) myEngine->StartMouseCapture();
-				else				myEngine->StopMouseCapture();
-			}
+	//// npc player car setup
+	//CNpcCar npcCar(dummyMesh, carMesh, npcInitialPos, npcInitialRot);
+	//npcCar.SetWaypointsVec(levelWaypointsVec);
 
-			// reset chase camera position
-			if (myEngine->KeyHit(cameraChaseKey))
-			{
-				camera->SetLocalPosition(camChaseLocalPos.x, camChaseLocalPos.y, camChaseLocalPos.z);
-				cameraXRotation = cameraInitialXRotation;
-				cameraYRotation = 0.0f;
-				CameraRotation(camera, cameraXRotation, cameraYRotation);
-				cameraState = camChase;
-			}
-			// reset first person cam position
-			else if (myEngine->KeyHit(cameraFirstPersonKey))
-			{
-				camera->SetLocalPosition(camFirstPersonLocalPos.x, camFirstPersonLocalPos.y, camFirstPersonLocalPos.z);
-				cameraXRotation = 0.0f;
-				cameraYRotation = 0.0f;
-				CameraRotation(camera, cameraXRotation, cameraYRotation);
-				cameraState = camFirstPerson;
-			}
+	//// control keys
+	//const EKeyCode quitKey = Key_Escape;
+	//const EKeyCode cameraForwardKey = Key_Up;
+	//const EKeyCode cameraBackwardKey = Key_Down;
+	//const EKeyCode cameraRightKey = Key_Right;
+	//const EKeyCode cameraLeftKey = Key_Left;
+	//const EKeyCode carForwardKey = Key_W;
+	//const EKeyCode carBackwardKey = Key_S;
+	//const EKeyCode carRightKey = Key_D;
+	//const EKeyCode carLeftKey = Key_A;
+	//const EKeyCode mouseCaptureKey = Key_Tab;
+	//const EKeyCode cameraChaseKey = Key_1;
+	//const EKeyCode cameraFirstPersonKey = Key_2;
+	//const EKeyCode startKey = Key_Space;
+	//const EKeyCode boostKey = Key_Space;
+	//const EKeyCode restartKey = Key_R;
 
-			//////////////////////////////////////// PLAYER MOVEMENT ///////////////////////////////////////////
+	//// initialise game states and countdowns
+	//EGameState gameState = gPreRace;
+	//EPreRaceStates preRaceState = prInitial;
+	//int preRaceCountdownInt = 0;
+	//const float preRaceMaxCountdown = 3.0f;
+	//float preRaceCountdown = preRaceMaxCountdown;
+	//const int numLaps = 3;
 
-			// check for key presses
-			bool leftRotateKeyPress = false;
-			bool rightRotateKeyPress = false;
+	//// timing
+	//float raceTimer = 0.0f;
+	//myEngine->Timer();
 
-			// car rotation control
-			if (myEngine->KeyHeld(carLeftKey))		leftRotateKeyPress = true;
-			if (myEngine->KeyHeld(carRightKey))		rightRotateKeyPress = true;
+	//// The main game loop, repeat until engine is stopped
+	//while (myEngine->IsRunning())
+	//{
+	//	// Draw the scene
+	//	myEngine->DrawScene();
 
-			// car movement
-			float thrustFactor = 0.0f;
-			if (myEngine->KeyHeld(carForwardKey))
-			{
-				if (myEngine->KeyHeld(carBackwardKey))
-				{
-					thrustFactor = 0.5f;
-				}
-				else
-				{
-					thrustFactor = 1.0f;
-				}
-			}
-			else if (myEngine->KeyHeld(carBackwardKey))
-			{
-				thrustFactor = -0.5f;
-			}
+	//	/**** Update your scene each frame here ****/
 
-			// process car boost
-			bool boostKeyPress = false;
-			if (myEngine->KeyHeld(boostKey))
-			{
-				boostKeyPress = true;
-			}
+	//	// timing
+	//	const float deltaTime = myEngine->Timer();
 
-			playerCar.MovementEachFrame(deltaTime, leftRotateKeyPress, rightRotateKeyPress, boostKeyPress, thrustFactor,
-				checkpointsVec, numLaps, gameState, wallColliders, tanksVec, npcCar);
+	//	if (gameState == gPreRace)
+	//	{
+	//		// tell player to press start button to start. then countdown and move to racing state
 
-			///////////////////////////////////////////// UI UPDATE///////////////////////////////////////////////////
+	//		if (preRaceState == prInitial)
+	//		{
+	//			// initial dialogue
+	//			myFont->Draw(preRaceString, gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
 
-			// UI text update
-			if (playerCar.GetCheckpointCounter() == 0)
-			{
-				if (playerCar.GetLapCounter() == 0)
-				{
-					myFont->Draw(timerString[preRaceCountdownInt], gameStateTextPos.x, gameStateTextPos.y, kBlack,
-						kCentre, kVCentre);
-				}
-				else
-				{
-					std::stringstream stageText;
-					stageText << "Lap " << playerCar.GetLapCounter() << " complete";
-					myFont->Draw(stageText.str(), gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
-				}
-			}
-			else
-			{
-				// draw text "stage <counter> completed
-				std::stringstream stageText;
-				stageText << "Stage " << playerCar.GetCheckpointCounter() << " complete";
-				myFont->Draw(stageText.str(), gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
-			}
+	//			// hit space -> timer
+	//			if (myEngine->KeyHit(startKey))	preRaceState = prTimer;
+	//		}
+	//		else if (preRaceState == prTimer)
+	//		{
+	//			preRaceCountdown -= deltaTime;
+	//			preRaceCountdownInt = preRaceCountdown + 1;
+	//			myFont->Draw(timerString[preRaceCountdownInt], gameStateTextPos.x, gameStateTextPos.y, kBlack,
+	//				kCentre, kVCentre);
 
-			// lap counter text 
-			std::stringstream lapText;
-			lapText << "Lap: " << playerCar.GetLapCounter() + 1 << "/" << numLaps;
-			myFont->Draw(lapText.str(), lapTextPos.x, lapTextPos.y, kBlack);
+	//			if (preRaceCountdownInt == 0)
+	//			{
+	//				gameState = gRacing;
 
-			// checkpoint counter text
-			std::stringstream cpText;
-			cpText << "Checkpoint: " << playerCar.GetCheckpointCounter() << "/" << checkpointsVec.size();
-			myFont->Draw(cpText.str(), cpTextPos.x, cpTextPos.y, kBlack);
+	//				// stop a sudden mouse moevment jump when the race starts
+	//				myEngine->GetMouseMovementX();
+	//				myEngine->GetMouseMovementY();
+	//			}
+	//		}
+	//	}
+	//	else if (gameState == gRacing)
+	//	{
+	//		// allow player to move car, control camera. npc car moves around track
 
-			// show boost on the UI
-			if (playerCar.GetIsBoosting())
-			{
-				std::stringstream boostReadoutText;
-				boostReadoutText << "BOOSTING!!!!";
-				myFont->Draw(boostReadoutText.str(), boostReadoutTextPos.x, boostReadoutTextPos.y, kBlack, kCentre, kVCentre);
+	//		// increase racing timer
+	//		raceTimer += deltaTime;
 
-				if (playerCar.GetBoostTimer() > (kCarMaxBoostTime - kCarBoostWarningTime))
-				{
-					std::stringstream boostWarningText;
-					boostWarningText << "WARNING!";
-					myFont->Draw(boostWarningText.str(), boostWarningTextPos.x, boostWarningTextPos.y, kBlack, kCentre, kVCentre);
-				}
-			}
-			else if (playerCar.GetBoostIsCooldown())
-			{
-				const int boostIntTimer = playerCar.GetBoostCooldownTimer();
-				std::stringstream boostWarningText;
-				boostWarningText << "Boost ready in: " << boostIntTimer + 1;
-				myFont->Draw(boostWarningText.str(), boostWarningTextPos.x, boostWarningTextPos.y, kBlack, kCentre, kVCentre);
-			}
+	//		// decrease life time for any visible crosses
+	//		for (int i = 0; i < checkpointsVec.size(); i++)
+	//		{
+	//			if (checkpointsVec.at(i).cross.isVisible)
+	//			{
+	//				checkpointsVec.at(i).cross.lifeTimer -= deltaTime;
 
-			// show speed on the UI
-			std::stringstream speedReadoutText;
-			const float speed = playerCar.GetMomentumVec().magnitude() * kModelScale * kKmPerHourFactor;
-			const int speedInt = speed;
-			speedReadoutText << "Speed: " << speedInt << " km/h";
-			myFont->Draw(speedReadoutText.str(), speedReadoutTextPos.x, speedReadoutTextPos.y, kBlack);
-			speedReadoutText.str("");
+	//				if (checkpointsVec.at(i).cross.lifeTimer <= 0.0f)
+	//				{
+	//					checkpointsVec.at(i).cross.lifeTimer = 0.0f;
+	//					checkpointsVec.at(i).cross.model->SetY(kCrossHiddenHeight);
+	//					checkpointsVec.at(i).cross.isVisible = false;
+	//				}
+	//			}
+	//		}
 
-			// show health on the UI
-			std::stringstream healthText;
-			healthText << "Health: " << playerCar.GetHealth();
-			myFont->Draw(healthText.str(), healthTextPos.x, healthTextPos.y, kBlack);
+	//		//////////////////////////////////////// NPC MOVEMENT ///////////////////////////////////////////
 
-		}
-		else if (gameState == gRaceOver)
-		{
-			// show race complete/you died on the UI
-			if (playerCar.GetIsAlive())
-			{
-				myFont->Draw(raceOverString, gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
+	//		// npc car movement
+	//		npcCar.ProcessMovement(deltaTime);
 
-				std::stringstream timerText;
-				timerText << "You finished the race in " << trunc(raceTimer) << " seconds!";
-				myFont->Draw(timerText.str(), timerTextPos.x, timerTextPos.y, kBlack, kCentre, kVCentre);
-			}
-			else
-			{
-				myFont->Draw(carDiedString, gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
-			}
+	//		// check for collisions with player car
+	//		if (SphereToSphereXZModel(playerCar.GetModel(), npcCar.GetModel(), kCarRadius, kCarRadius))
+	//		{
+	//			npcCar.Bounce(deltaTime);
+	//		}
 
-			// show restart info on screen
-			myFont->Draw(restartString, restartStringPos.x, restartStringPos.y, kBlack, kCentre, kVCentre);
+	//		//////////////////////////////////////// CAMERA CONTROL ///////////////////////////////////////////
 
-			if (myEngine->KeyHit(restartKey))
-			{
-				// change game state
-				gameState = gPreRace;
+	//		// camera control
+	//		if (myEngine->KeyHeld(cameraForwardKey))	camera->MoveLocalZ(cameraSpeed * deltaTime);
+	//		if (myEngine->KeyHeld(cameraBackwardKey))	camera->MoveLocalZ(-cameraSpeed * deltaTime);
+	//		if (myEngine->KeyHeld(cameraLeftKey))		camera->MoveLocalX(-cameraSpeed * deltaTime);
+	//		if (myEngine->KeyHeld(cameraRightKey))		camera->MoveLocalX(cameraSpeed * deltaTime);
 
-				// race timer
-				raceTimer = 0.0f;
+	//		// rotate camera left and right - no limits
+	//		const int mouseMovementX = myEngine->GetMouseMovementX();
+	//		cameraYRotation += mouseMovementX * cameraRotationSpeed * deltaTime;
 
-				// pre-race timer and pre-race state
-				preRaceCountdown = preRaceMaxCountdown;
-				preRaceState = prInitial;
+	//		// rotate camera up and down
+	//		const int mouseMovementY = myEngine->GetMouseMovementY();
+	//		// check camera rotation limit
+	//		if (cameraXRotation >= cameraXRotationLimitLower && cameraXRotation <= cameraXRotationLimitUpper)
+	//		{
+	//			cameraXRotation += mouseMovementY * cameraRotationSpeed * deltaTime;
+	//		}
+	//		else if (cameraXRotation < cameraXRotationLimitLower)
+	//		{
+	//			cameraXRotation = cameraXRotationLimitLower;
+	//		}
+	//		else if (cameraXRotation > cameraXRotationLimitUpper)
+	//		{
+	//			cameraXRotation = cameraXRotationLimitUpper;
+	//		}
+	//		// rotate camera
+	//		CameraRotation(camera, cameraXRotation, cameraYRotation);
 
-				// player car reset
-				playerCar.Reset();
-				// npc car reset
-				npcCar.Reset();
-			}
-		}
+	//		// toggle mouse capture
+	//		if (myEngine->KeyHit(mouseCaptureKey))
+	//		{
+	//			isMouseCapture = !isMouseCapture;
 
-		// close when hit quit key
-		if (myEngine->KeyHit(quitKey))	myEngine->Stop();
-	}
+	//			if (isMouseCapture) myEngine->StartMouseCapture();
+	//			else				myEngine->StopMouseCapture();
+	//		}
+
+	//		// reset chase camera position
+	//		if (myEngine->KeyHit(cameraChaseKey))
+	//		{
+	//			camera->SetLocalPosition(camChaseLocalPos.x, camChaseLocalPos.y, camChaseLocalPos.z);
+	//			cameraXRotation = cameraInitialXRotation;
+	//			cameraYRotation = 0.0f;
+	//			CameraRotation(camera, cameraXRotation, cameraYRotation);
+	//			cameraState = camChase;
+	//		}
+	//		// reset first person cam position
+	//		else if (myEngine->KeyHit(cameraFirstPersonKey))
+	//		{
+	//			camera->SetLocalPosition(camFirstPersonLocalPos.x, camFirstPersonLocalPos.y, camFirstPersonLocalPos.z);
+	//			cameraXRotation = 0.0f;
+	//			cameraYRotation = 0.0f;
+	//			CameraRotation(camera, cameraXRotation, cameraYRotation);
+	//			cameraState = camFirstPerson;
+	//		}
+
+	//		//////////////////////////////////////// PLAYER MOVEMENT ///////////////////////////////////////////
+
+	//		// check for key presses
+	//		bool leftRotateKeyPress = false;
+	//		bool rightRotateKeyPress = false;
+
+	//		// car rotation control
+	//		if (myEngine->KeyHeld(carLeftKey))		leftRotateKeyPress = true;
+	//		if (myEngine->KeyHeld(carRightKey))		rightRotateKeyPress = true;
+
+	//		// car movement
+	//		float thrustFactor = 0.0f;
+	//		if (myEngine->KeyHeld(carForwardKey))
+	//		{
+	//			if (myEngine->KeyHeld(carBackwardKey))
+	//			{
+	//				thrustFactor = 0.5f;
+	//			}
+	//			else
+	//			{
+	//				thrustFactor = 1.0f;
+	//			}
+	//		}
+	//		else if (myEngine->KeyHeld(carBackwardKey))
+	//		{
+	//			thrustFactor = -0.5f;
+	//		}
+
+	//		// process car boost
+	//		bool boostKeyPress = false;
+	//		if (myEngine->KeyHeld(boostKey))
+	//		{
+	//			boostKeyPress = true;
+	//		}
+
+	//		playerCar.MovementEachFrame(deltaTime, leftRotateKeyPress, rightRotateKeyPress, boostKeyPress, thrustFactor,
+	//			checkpointsVec, numLaps, gameState, wallColliders, tanksVec, npcCar);
+
+	//		///////////////////////////////////////////// UI UPDATE///////////////////////////////////////////////////
+
+	//		// UI text update
+	//		if (playerCar.GetCheckpointCounter() == 0)
+	//		{
+	//			if (playerCar.GetLapCounter() == 0)
+	//			{
+	//				myFont->Draw(timerString[preRaceCountdownInt], gameStateTextPos.x, gameStateTextPos.y, kBlack,
+	//					kCentre, kVCentre);
+	//			}
+	//			else
+	//			{
+	//				std::stringstream stageText;
+	//				stageText << "Lap " << playerCar.GetLapCounter() << " complete";
+	//				myFont->Draw(stageText.str(), gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			// draw text "stage <counter> completed
+	//			std::stringstream stageText;
+	//			stageText << "Stage " << playerCar.GetCheckpointCounter() << " complete";
+	//			myFont->Draw(stageText.str(), gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
+	//		}
+
+	//		// lap counter text 
+	//		std::stringstream lapText;
+	//		lapText << "Lap: " << playerCar.GetLapCounter() + 1 << "/" << numLaps;
+	//		myFont->Draw(lapText.str(), lapTextPos.x, lapTextPos.y, kBlack);
+
+	//		// checkpoint counter text
+	//		std::stringstream cpText;
+	//		cpText << "Checkpoint: " << playerCar.GetCheckpointCounter() << "/" << checkpointsVec.size();
+	//		myFont->Draw(cpText.str(), cpTextPos.x, cpTextPos.y, kBlack);
+
+	//		// show boost on the UI
+	//		if (playerCar.GetIsBoosting())
+	//		{
+	//			std::stringstream boostReadoutText;
+	//			boostReadoutText << "BOOSTING!!!!";
+	//			myFont->Draw(boostReadoutText.str(), boostReadoutTextPos.x, boostReadoutTextPos.y, kBlack, kCentre, kVCentre);
+
+	//			if (playerCar.GetBoostTimer() > (kCarMaxBoostTime - kCarBoostWarningTime))
+	//			{
+	//				std::stringstream boostWarningText;
+	//				boostWarningText << "WARNING!";
+	//				myFont->Draw(boostWarningText.str(), boostWarningTextPos.x, boostWarningTextPos.y, kBlack, kCentre, kVCentre);
+	//			}
+	//		}
+	//		else if (playerCar.GetBoostIsCooldown())
+	//		{
+	//			const int boostIntTimer = playerCar.GetBoostCooldownTimer();
+	//			std::stringstream boostWarningText;
+	//			boostWarningText << "Boost ready in: " << boostIntTimer + 1;
+	//			myFont->Draw(boostWarningText.str(), boostWarningTextPos.x, boostWarningTextPos.y, kBlack, kCentre, kVCentre);
+	//		}
+
+	//		// show speed on the UI
+	//		std::stringstream speedReadoutText;
+	//		const float speed = playerCar.GetMomentumVec().magnitude() * kModelScale * kKmPerHourFactor;
+	//		const int speedInt = speed;
+	//		speedReadoutText << "Speed: " << speedInt << " km/h";
+	//		myFont->Draw(speedReadoutText.str(), speedReadoutTextPos.x, speedReadoutTextPos.y, kBlack);
+	//		speedReadoutText.str("");
+
+	//		// show health on the UI
+	//		std::stringstream healthText;
+	//		healthText << "Health: " << playerCar.GetHealth();
+	//		myFont->Draw(healthText.str(), healthTextPos.x, healthTextPos.y, kBlack);
+
+	//	}
+	//	else if (gameState == gRaceOver)
+	//	{
+	//		// show race complete/you died on the UI
+	//		if (playerCar.GetIsAlive())
+	//		{
+	//			myFont->Draw(raceOverString, gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
+
+	//			std::stringstream timerText;
+	//			timerText << "You finished the race in " << trunc(raceTimer) << " seconds!";
+	//			myFont->Draw(timerText.str(), timerTextPos.x, timerTextPos.y, kBlack, kCentre, kVCentre);
+	//		}
+	//		else
+	//		{
+	//			myFont->Draw(carDiedString, gameStateTextPos.x, gameStateTextPos.y, kBlack, kCentre, kVCentre);
+	//		}
+
+	//		// show restart info on screen
+	//		myFont->Draw(restartString, restartStringPos.x, restartStringPos.y, kBlack, kCentre, kVCentre);
+
+	//		if (myEngine->KeyHit(restartKey))
+	//		{
+	//			// change game state
+	//			gameState = gPreRace;
+
+	//			// race timer
+	//			raceTimer = 0.0f;
+
+	//			// pre-race timer and pre-race state
+	//			preRaceCountdown = preRaceMaxCountdown;
+	//			preRaceState = prInitial;
+
+	//			// player car reset
+	//			playerCar.Reset();
+	//			// npc car reset
+	//			npcCar.Reset();
+	//		}
+	//	}
+
+	//	// close when hit quit key
+	//	if (myEngine->KeyHit(quitKey))	myEngine->Stop();
+	//}
 
 	// Delete the 3D engine now we are finished with it
 	myEngine->Delete();
