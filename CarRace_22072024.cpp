@@ -1008,6 +1008,18 @@ void main()
 	// Camera for testing
 	Camera* TestCam = myEngine->CreateCamera(FPSCamera);
 
+	// Main game loop
+	while (myEngine->IsRunning())
+	{
+		// Draw frame
+		myEngine->DrawScene();
+
+		if (myEngine->KeyHit(Key_Escape))
+		{
+			myEngine->Stop();
+		}
+	}
+
 	//// read checkpoints, walls, isles, from file into a vector of <SLevelItem>
 	//std::vector <SLevelItem> levelItemsVec;
 	//const std::string level1FileName = "level1.txt";
