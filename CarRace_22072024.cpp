@@ -1010,7 +1010,7 @@ void main()
 	Camera* TestCam = myEngine->CreateCamera(FPSCamera);
 
 	// Tank constructor testing
-	CTank_LI();
+	CTank_LI Tank1(waterTankMesh, CVector2D(0, 95), 10.0f);
 
 	// Main game loop
 	while (myEngine->IsRunning())

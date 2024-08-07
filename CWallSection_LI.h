@@ -6,6 +6,7 @@
 
 using namespace tle;
 
+// Wall section constants
 const float WallOffset = 8.0f;
 const float IsleOffset = 16.0f;
 const int NumIsles = 3;

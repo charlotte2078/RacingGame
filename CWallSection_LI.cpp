@@ -1,8 +1,20 @@
 #include "CWallSection_LI.h"
 
 // Defualt constructor - dont want to use, does nothing
-CWallSection_LI::CWallSection_LI()
+CWallSection_LI::CWallSection_LI() :
+	DummyModel(nullptr)
 {
+	// Initialise IslesArr to null
+	for (int i = 0; i < NumIsles; i++)
+	{
+		IslesArr[i] = nullptr;
+	}
+
+	// Initialise WallsArr to null
+	for (int i = 0; i < NumWalls; i++)
+	{
+		WallsArr[i] = nullptr;
+	}
 }
 
 CWallSection_LI::CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh, const CVector2D& Pos, const float& Rot)  :
