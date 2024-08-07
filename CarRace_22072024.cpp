@@ -10,6 +10,7 @@
 //#include "CVector2D.h"
 //#include "CLevelItem.h"
 #include "CTank_LI.h"
+#include "CWallSection_LI.h"
 
 using namespace tle;
 
@@ -1009,8 +1010,14 @@ void main()
 	// Camera for testing
 	Camera* TestCam = myEngine->CreateCamera(FPSCamera);
 
-	// Tank constructor testing
-	CTank_LI Tank1(waterTankMesh, CVector2D(0, 95), 10.0f);
+	// Wall section testing
+	CVector2D WallPosition1(-10, 56); // no rotation
+	CVector2D WallPosition2(106, 46); // 90 degree rotation
+	CVector2D WallPosition3(50, 20);
+
+	CWallSection_LI Wall1(dummyMesh, wallMesh, isleMesh, WallPosition1, 0.0f);
+	CWallSection_LI Wall2(dummyMesh, wallMesh, isleMesh, WallPosition2, 90.0f);
+	CWallSection_LI Wall3(dummyMesh, wallMesh, isleMesh, WallPosition3, 50.0f);
 
 	// Main game loop
 	while (myEngine->IsRunning())
