@@ -7,8 +7,9 @@
 #include <fstream>		// for reading in level files
 #include <vector>		// std::vector for storing level items
 
-#include "CVector2D.h"
-#include "CLevelItem.h"
+//#include "CVector2D.h"
+//#include "CLevelItem.h"
+#include "CTank_LI.h"
 
 using namespace tle;
 
@@ -1008,12 +1009,18 @@ void main()
 	// Camera for testing
 	Camera* TestCam = myEngine->CreateCamera(FPSCamera);
 
+	// Tank constructor testing
+	CTank_LI();
+
 	// Main game loop
 	while (myEngine->IsRunning())
 	{
 		// Draw frame
 		myEngine->DrawScene();
 
+		// Game logic!
+
+		// Quit game
 		if (myEngine->KeyHit(Key_Escape))
 		{
 			myEngine->Stop();

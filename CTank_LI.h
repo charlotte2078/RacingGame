@@ -21,8 +21,8 @@ private:
 public:
     // constructors
     CTank_LI();
-    CTank_LI(IMesh*);
-    CTank_LI(IMesh*, const CVector2D&, const float&);
+    CTank_LI(IMesh* TankMesh);
+    CTank_LI(IMesh* TankMesh, const CVector2D& Position, const float& XRotation);
 
     // destructors
     ~CTank_LI();
