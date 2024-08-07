@@ -1005,6 +1005,9 @@ void main()
 	// floor setup
 	IModel* floor = floorMesh->CreateModel();
 
+	// Camera for testing
+	Camera* TestCam = myEngine->CreateCamera(FPSCamera);
+
 	//// read checkpoints, walls, isles, from file into a vector of <SLevelItem>
 	//std::vector <SLevelItem> levelItemsVec;
 	//const std::string level1FileName = "level1.txt";
