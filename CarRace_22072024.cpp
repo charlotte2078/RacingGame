@@ -11,6 +11,7 @@
 //#include "CLevelItem.h"
 #include "CTank_LI.h"
 #include "CWallSection_LI.h"
+#include "CCheckpoint_LI.h"
 
 using namespace tle;
 
@@ -1020,7 +1021,13 @@ void main()
 	CWallSection_LI Wall3(dummyMesh, wallMesh, isleMesh, WallPosition3, 50.0f);
 
 	// Checkpoint constructor testing
+	CVector2D CheckpointPos1(10, 120); // 90 degree rotation
+	CVector2D CheckpointPos2(25, 56); // 0 degree rotation
+	CVector2D CheckpointPos3(100, 100); // 45 degree rotation
 
+	CCheckpoint_LI CP1(checkpointMesh, CheckpointPos1, 90.0f, crossMesh);
+	CCheckpoint_LI CP2(checkpointMesh, CheckpointPos2, 0.0f, crossMesh);
+	CCheckpoint_LI CP3(checkpointMesh, CheckpointPos3, 45.0f, crossMesh);
 
 	// Main game loop
 	while (myEngine->IsRunning())
