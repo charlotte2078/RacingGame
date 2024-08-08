@@ -1019,6 +1019,9 @@ void main()
 	CWallSection_LI Wall2(dummyMesh, wallMesh, isleMesh, WallPosition2, 90.0f);
 	CWallSection_LI Wall3(dummyMesh, wallMesh, isleMesh, WallPosition3, 50.0f);
 
+	// Checkpoint constructor testing
+
+
 	// Main game loop
 	while (myEngine->IsRunning())
 	{

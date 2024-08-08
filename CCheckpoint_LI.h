@@ -22,5 +22,11 @@ private:
 	CVector2D StrutsPos[NumStrutsPerCheckpoint];
 	CCross CheckpointCross;
 	CCollider_Box TriggerZone;
+public:
+	// Constructors
+	CCheckpoint_LI();
+	CCheckpoint_LI(IMesh* CPMesh, const CVector2D& CPPos, const CVector2D& CPRot);
+
+	// Destructors
 };
 
