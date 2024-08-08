@@ -13,6 +13,7 @@ CCross::CCross(IMesh* CrossMesh) :
 	bIsVisible(false)
 {
 	CrossModel = CrossMesh->CreateModel();
+	CrossModel->Scale(CrossScaleFactor);
 }
 
 // Destructor - does nothing
