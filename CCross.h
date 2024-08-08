@@ -35,5 +35,7 @@ public:
 
 	// Other functions
 	void AttachToCheckpoint(Model* ParentCP);
+	void MoveToHiddenHeight();
+	void MoveToVisibleHeight();
 };
 

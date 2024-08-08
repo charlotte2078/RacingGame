@@ -46,3 +46,15 @@ void CCross::AttachToCheckpoint(Model* ParentCP)
 {
 	CrossModel->AttachToParent(ParentCP);
 }
+
+// Changes local Z position to hide cross under the ground.
+void CCross::MoveToHiddenHeight()
+{
+	CrossModel->SetLocalZ(CrossHiddenHeight);
+}
+
+// Changes local Z position to reveal cross above ground.
+void CCross::MoveToVisibleHeight()
+{
+	CrossModel->SetLocalZ(CrossVisibleHeight);
+}
