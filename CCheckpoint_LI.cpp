@@ -20,10 +20,9 @@ CCheckpoint_LI::CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float
 	CheckpointModel = CPMesh->CreateModel(PosXZ.GetX(), 0.0f, PosXZ.GetY());
 	CheckpointModel->RotateY(CPRot);
 
-	// Attach cross to checkpoint
+	// Attach cross to checkpoint and hide it
 	CheckpointCross.AttachToCheckpoint(CheckpointModel);
-
-	// Move cross to sunken height
+	CheckpointCross.MoveToHiddenHeight();
 }
 
 
