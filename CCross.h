@@ -33,6 +33,7 @@ public:
 	float GetLifeTimer() const;
 	bool GetVisibility() const;
 
-	// 
+	// Other functions
+	void AttachToCheckpoint(Model* ParentCP);
 };
 

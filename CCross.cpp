@@ -39,3 +39,9 @@ bool CCross::GetVisibility() const
 {
 	return bIsVisible;
 }
+
+// Attach the cross to the passed in model.
+void CCross::AttachToCheckpoint(Model* ParentCP)
+{
+	CrossModel->AttachToParent(ParentCP);
+}
