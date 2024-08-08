@@ -6,23 +6,24 @@ CCheckpoint_LI::CCheckpoint_LI() :
 {
 }
 
-// Constructor to use
-// Create checpoint model at correct position and rotation.
-// Then create cross and attach it to checkpoint.
-// Move cross to sunken height.
+// Constructor that creates checkpoint at position and rotation with sunken cross.
 CCheckpoint_LI::CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float& CPRot, Mesh* CrossMesh) :
-	CLevelItem(CPPos, CPRot),
-	CheckpointCross(CrossMesh)
+	CLevelItem(CPPos, CPRot),	// initialise position and rotation
+	CheckpointCross(CrossMesh)	// create cross
 {
 	/*IModel* CheckpointModel;
 	CVector2D StrutsPos[NumStrutsPerCheckpoint];
 	CCross CheckpointCross;
 	CCollider_Box TriggerZone;*/
 
+	// Create checpoint model at correct position and rotation.
 	CheckpointModel = CPMesh->CreateModel(PosXZ.GetX(), 0.0f, PosXZ.GetY());
 	CheckpointModel->RotateY(CPRot);
 
-	
+	// Attach cross to checkpoint
+	CheckpointCross.AttachToCheckpoint(CheckpointModel);
+
+	// Move cross to sunken height
 }
 
 
