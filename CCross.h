@@ -20,12 +20,12 @@ private:
 public:
 	// constructors
 	CCross();
+	CCross(IMesh* CrossMesh);
 
 	// deconstructor
 	~CCross();
 
 	// setters
-	void CreateModel(Mesh*);
 	void SetLifeTimer(const float&);
 	void SetVisibility(const bool&);
 

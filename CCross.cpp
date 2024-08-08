@@ -8,14 +8,16 @@ CCross::CCross() :
 {
 }
 
+CCross::CCross(IMesh* CrossMesh) :
+	LifeTimer(0.0f),
+	bIsVisible(false)
+{
+	CrossModel = CrossMesh->CreateModel();
+}
+
 // Destructor - does nothing
 CCross::~CCross()
 {
-}
-
-void CCross::CreateModel(Mesh* CrossMesh)
-{
-	CrossModel = CrossMesh->CreateModel();
 }
 
 void CCross::SetLifeTimer(const float& NewTimer)
