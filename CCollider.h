@@ -1,21 +1,24 @@
 #pragma once
 
-#include "CVector2D.h"
+#include <TL-Engine11.h>
+
+using namespace tle;
 
 class CCollider
 {
 protected:
-	CVector2D PositionXZ;
+	Model* ColliderCentre;
 
 public:
 	// Constructors
 	CCollider();
-	CCollider(const CVector2D&);
+	CCollider(Mesh* DummyMesh, Model* BaseObject);
+
+	// Destructors
+	~CCollider();
 
 	// Setters
-	void SetPos(const CVector2D&);
 
 	// Getters
-	CVector2D GetPos() const;
 };
 
