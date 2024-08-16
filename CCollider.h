@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CVector2D.h"
 #include <TL-Engine11.h>
 
 using namespace tle;
@@ -20,5 +21,6 @@ public:
 	// Setters
 
 	// Getters
+	CVector2D GetPosition() const;
 };
 

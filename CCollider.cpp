@@ -18,4 +18,10 @@ CCollider::~CCollider()
 {
 }
 
+// Returns the position of the collider centre (X,Z) as a CVector2D.
+CVector2D CCollider::GetPosition() const
+{
+	return CVector2D(ColliderCentre->GetX(), ColliderCentre->GetZ());
+}
+
 
