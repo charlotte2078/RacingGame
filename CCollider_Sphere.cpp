@@ -2,19 +2,15 @@
 
 // Default constructor - sets Radius to 0.0f
 CCollider_Sphere::CCollider_Sphere() :
-	Radius(0.0f)
+	Radius(0.0f),
+	CCollider()
 {
 }
 
 // Constructor with radius passed in
-CCollider_Sphere::CCollider_Sphere(const float& NewRad) :
-	Radius(NewRad)
-{
-}
-
-CCollider_Sphere::CCollider_Sphere(const float& NewRad, const CVector2D& NewPos) :
-	Radius(NewRad),
-	CCollider(NewPos)
+CCollider_Sphere::CCollider_Sphere(const float& NewRadius, Mesh* DummyMesh, Model* BaseObject) :
+	Radius(NewRadius),
+	CCollider(DummyMesh, BaseObject)
 {
 }
 

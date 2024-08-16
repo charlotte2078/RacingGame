@@ -1,7 +1,8 @@
 #include "CCollider.h"
 
-// Default constructor
-CCollider::CCollider()
+// Default constructor - do not use
+CCollider::CCollider() :
+	ColliderCentre(nullptr)
 {
 }
 

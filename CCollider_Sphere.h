@@ -9,8 +9,7 @@ private:
 public:
     // constructors
     CCollider_Sphere();
-    CCollider_Sphere(const float&);
-    CCollider_Sphere(const float&, const CVector2D&);
+    CCollider_Sphere(const float& NewRadius, Mesh* DummyMesh, Model* BaseObject);
 
     // destructors
     ~CCollider_Sphere();
