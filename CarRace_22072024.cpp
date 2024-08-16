@@ -1029,9 +1029,14 @@ void main()
 	CCheckpoint_LI CP2(checkpointMesh, CheckpointPos2, 0.0f, crossMesh);
 	CCheckpoint_LI CP3(checkpointMesh, CheckpointPos3, 45.0f, crossMesh);
 
-	// Testing box collider using a cube mesh !
-	Mesh* CubeMesh = myEngine->LoadMesh("Cube.x");
-	Model* TestCube = CubeMesh->CreateModel();
+	//// Testing box collider using a cube mesh !
+	//Mesh* CubeMesh = myEngine->LoadMesh("Cube.fbx");
+	//Model* TestCube = CubeMesh->CreateModel();
+
+	// Testing box colliders
+	Model* TankTest = waterTankMesh->CreateModel(-10.0f, 0.0f, -25.0f);
+	CVector2D TestWidthDepth(20.0f, 50.0f);
+	CCollider_Box TankBoxColliderTest(TestWidthDepth, crossMesh, TankTest);
 
 	// Main game loop
 	while (myEngine->IsRunning())
