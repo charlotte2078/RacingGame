@@ -33,10 +33,8 @@ float CCollider_Sphere::GetRadius() const
 bool CCollider_Sphere::SphereToSphere(CCollider_Sphere OtherSphere)
 {
 	// Collision if the distance between two positions is less than the sum of the radii.
-	//const float SquareDistance = 
+	const float SquareDistance = GetPosition().SquareDistance(OtherSphere.GetPosition());
+	const float RadiiSumSquared = (Radius + OtherSphere.GetRadius()) * (Radius + OtherSphere.GetRadius());
 
-	//const float Distance = PositionXZ.Distance(OtherSphere.PositionXZ);
-	//const float RadiiSum = Radius + OtherSphere.Radius;
-
-	return true;
+	return SquareDistance < RadiiSumSquared;
 }
