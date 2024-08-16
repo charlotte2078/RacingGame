@@ -1029,6 +1029,10 @@ void main()
 	CCheckpoint_LI CP2(checkpointMesh, CheckpointPos2, 0.0f, crossMesh);
 	CCheckpoint_LI CP3(checkpointMesh, CheckpointPos3, 45.0f, crossMesh);
 
+	// Testing box collider using a cube mesh !
+	Mesh* CubeMesh = myEngine->LoadMesh("Cube.fbx");
+	Model* TestCube = CubeMesh->CreateModel();
+
 	// Main game loop
 	while (myEngine->IsRunning())
 	{
