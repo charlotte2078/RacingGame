@@ -3,13 +3,13 @@
 // Default constructor
 CTank_LI::CTank_LI() :
 	TankModel(nullptr),
-	SphereCollider(TankRadius)
+	SphereCollider()
 {
 }
 
 // Constructor with tank mesh passed in - creates tank model and sinks it
 CTank_LI::CTank_LI(IMesh* TankMesh) :
-	SphereCollider(TankRadius)
+	SphereCollider()
 {
 	TankModel = TankMesh->CreateModel();
 	TankModel->MoveZ(TankSinkHeight);
@@ -18,7 +18,7 @@ CTank_LI::CTank_LI(IMesh* TankMesh) :
 // Constructor with tank mesh, position, and rotation passed in
 // Creates tank model at correct position and sinks it
 CTank_LI::CTank_LI(IMesh* TankMesh, const CVector2D& NewPos, const float& NewRot) :
-	SphereCollider(TankRadius, NewPos),
+	SphereCollider(),
 	CLevelItem(NewPos, NewRot)
 {
 	TankModel = TankMesh->CreateModel(PosXZ.GetX(), TankSinkHeight, PosXZ.GetY());
