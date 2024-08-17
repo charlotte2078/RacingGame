@@ -79,3 +79,22 @@ bool CCollider_Box::BoxToSphere(const CCollider_Sphere& Sphere)
 
 	return ((SpherePos.GetX() <= XMax && SpherePos.GetX() >= XMin) && (SpherePos.GetY() <= ZMax && SpherePos.GetY() >= ZMin));
 }
+
+// Returns true if the point is colliding with the box.
+bool CCollider_Box::BoxToPoint(const CCollider& Point)
+{
+	// Collision if the point is within the box bounds.
+	const float BoxX = ColliderCentre->GetX();
+	const float BoxZ = ColliderCentre->GetZ();
+	const CVector2D PointPos = Point.GetPosition();
+
+	// Calculate XMin and XMax
+	const float XMin = BoxX - HalfWidthDepth.GetX();
+	const float XMax = BoxX + HalfWidthDepth.GetX();
+
+	// Calculate ZMin and ZMax
+	const float ZMin = BoxZ - HalfWidthDepth.GetY();
+	const float ZMax = BoxZ + HalfWidthDepth.GetY();
+	
+	return ((PointPos.GetX() <= XMax && PointPos.GetX() >= XMin) && (PointPos.GetY() <= ZMax && PointPos.GetY() >= ZMin));
+}

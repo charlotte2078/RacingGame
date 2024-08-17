@@ -30,6 +30,6 @@ public:
 
     // Collision functions
     bool BoxToSphere(const CCollider_Sphere& Sphere);
-
+    bool BoxToPoint(const CCollider& Point);
 };
 
