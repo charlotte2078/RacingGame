@@ -2,6 +2,7 @@
 
 #include "CCollider.h"
 #include "CVector2D.h"
+#include "CCollider_Sphere.h"
 
 const int NumBoxCorners = 4;
 
@@ -10,6 +11,7 @@ class CCollider_Box :
 {
 private:
     CVector2D WidthDepth;
+    CVector2D HalfWidthDepth;
     Model* CornersArray[NumBoxCorners]; // 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
 
 public:
@@ -26,7 +28,8 @@ public:
     // Getters
     CVector2D GetWidthDepth() const;
 
-    // 
+    // Collision functions
+    bool BoxToSphere(const CCollider_Sphere& Sphere);
 
 };
 

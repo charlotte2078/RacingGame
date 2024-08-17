@@ -15,8 +15,9 @@ CCollider_Box::CCollider_Box(const CVector2D& NewWD, Mesh* DummyMesh, Model* Bas
 	CCollider(DummyMesh, BaseObject)
 {
 	// Calculate half width and depth.
-	const float HalfWidth = 0.5f * NewWD.GetX();
-	const float HalfDepth = 0.5f * NewWD.GetY();
+	//HalfWidthDepth = NewWD * 0.5f;
+	HalfWidthDepth.SetX(0.5f * NewWD.GetX());
+	HalfWidthDepth.SetY(0.5f * NewWD.GetY());
 	
 	for (int i = 0; i < NumBoxCorners; i++)
 	{
@@ -28,17 +29,17 @@ CCollider_Box::CCollider_Box(const CVector2D& NewWD, Mesh* DummyMesh, Model* Bas
 	}
 
 	// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
-	CornersArray[0]->SetLocalX(-HalfWidth);
-	CornersArray[0]->SetLocalZ(HalfDepth);
+	CornersArray[0]->SetLocalX(-HalfWidthDepth.GetX());
+	CornersArray[0]->SetLocalZ(HalfWidthDepth.GetY());
 
-	CornersArray[1]->SetLocalX(HalfWidth);
-	CornersArray[1]->SetLocalZ(HalfDepth);
+	CornersArray[1]->SetLocalX(HalfWidthDepth.GetX());
+	CornersArray[1]->SetLocalZ(HalfWidthDepth.GetY());
 
-	CornersArray[2]->SetLocalX(-HalfWidth);
-	CornersArray[2]->SetLocalZ(-HalfDepth);
+	CornersArray[2]->SetLocalX(-HalfWidthDepth.GetX());
+	CornersArray[2]->SetLocalZ(-HalfWidthDepth.GetY());
 
-	CornersArray[3]->SetLocalX(HalfWidth);
-	CornersArray[3]->SetLocalZ(-HalfDepth);
+	CornersArray[3]->SetLocalX(HalfWidthDepth.GetX());
+	CornersArray[3]->SetLocalZ(-HalfWidthDepth.GetY());
 }
 
 // Destructor
@@ -49,9 +50,32 @@ CCollider_Box::~CCollider_Box()
 void CCollider_Box::SetWidthDepth(const CVector2D& NewWD)
 {
 	WidthDepth = NewWD;
+
+	// Update half width depth
+	HalfWidthDepth = WidthDepth * 0.5f;
 }
 
 CVector2D CCollider_Box::GetWidthDepth() const
 {
 	return WidthDepth;
+}
+
+// Returns true if the box is colliding with the sphere
+bool CCollider_Box::BoxToSphere(const CCollider_Sphere& Sphere)
+{
+	// Collision if sphere x and sphere z are within bounds of box + sphere radius.
+	const float BoxX = ColliderCentre->GetX();
+	const float BoxZ = ColliderCentre->GetZ();
+	const float Radius = Sphere.GetRadius();
+	const CVector2D SpherePos = Sphere.GetPosition();
+
+	// Calculate XMin and XMax
+	const float XMin = BoxX - HalfWidthDepth.GetX() - Radius;
+	const float XMax = BoxX + HalfWidthDepth.GetX() + Radius;
+
+	// Calculate ZMin and ZMax
+	const float ZMin = BoxZ - HalfWidthDepth.GetY() - Radius;
+	const float ZMax = BoxZ + HalfWidthDepth.GetY() + Radius;
+
+	return ((SpherePos.GetX() <= XMax && SpherePos.GetX() >= XMin) && (SpherePos.GetY() <= ZMax && SpherePos.GetY() >= ZMin));
 }
