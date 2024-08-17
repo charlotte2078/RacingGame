@@ -1009,7 +1009,7 @@ void main()
 	IModel* floor = floorMesh->CreateModel();
 
 	// Camera for testing
-	Camera* TestCam = myEngine->CreateCamera(FPSCamera);
+	//Camera* TestCam = myEngine->CreateCamera(FPSCamera);
 
 	// Wall section testing
 	CVector2D WallPosition1(-10, 56); // no rotation
@@ -1038,13 +1038,47 @@ void main()
 	CVector2D TestWidthDepth(20.0f, 50.0f);
 	CCollider_Box TankBoxColliderTest(TestWidthDepth, crossMesh, TankTest);
 
+	Model* CarTest = carMesh->CreateModel();
+	CCollider_Sphere CarSphereColliderTest(kCarRadius, crossMesh, CarTest);
+	const float TestCarSpeed = 10.0f;
+	const float TestCarRotate = 90.0f;
+	Camera* CarTestCam = myEngine->CreateCamera(ManualCamera);
+	CarTestCam->AttachToParent(CarTest);
+	CarTestCam->RotateX(20.0f);
+
 	// Main game loop
 	while (myEngine->IsRunning())
 	{
 		// Draw frame
 		myEngine->DrawScene();
 
+		const float DeltaTime = myEngine->FrameTime();
+
 		// Game logic!
+		if (myEngine->KeyHeld(Key_W))
+		{
+			CarTest->MoveLocalZ(TestCarSpeed * DeltaTime);
+		}
+
+		if (myEngine->KeyHeld(Key_A))
+		{
+			CarTest->RotateY(-TestCarRotate * DeltaTime);
+		}
+
+		if (myEngine->KeyHeld(Key_D))
+		{
+			CarTest->RotateY(TestCarRotate * DeltaTime);
+		}
+
+		// collision test
+		if (TankBoxColliderTest.BoxToSphere(CarSphereColliderTest))
+		{
+			CarTest->SetSkin(npcCarSkinName);
+		}
+		else
+		{
+			CarTest->SetSkin("sp02_02.jpg");
+		}
 
 		// Quit game
 		if (myEngine->KeyHit(Key_Escape))
