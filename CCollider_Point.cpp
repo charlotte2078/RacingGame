@@ -18,7 +18,10 @@ CCollider_Point::~CCollider_Point()
 {
 }
 
+// Returns true if the point is colliding with the box.
 bool CCollider_Point::PointToBox(const CCollider_Box& Box)
 {
+	
+
 	return false;
 }
