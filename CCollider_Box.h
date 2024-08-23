@@ -3,6 +3,7 @@
 #include "CCollider.h"
 #include "CVector2D.h"
 #include "CCollider_Sphere.h"
+#include "CCollider_Point.h"
 
 const int NumBoxCorners = 4;
 
@@ -30,6 +31,6 @@ public:
 
     // Collision functions
     bool BoxToSphere(const CCollider_Sphere& Sphere);
-    bool BoxToPoint(const CCollider& Point);
+    bool BoxToPoint(const CCollider_Point& Point);
 };
 

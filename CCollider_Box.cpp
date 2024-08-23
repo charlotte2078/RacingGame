@@ -81,7 +81,7 @@ bool CCollider_Box::BoxToSphere(const CCollider_Sphere& Sphere)
 }
 
 // Returns true if the point is colliding with the box.
-bool CCollider_Box::BoxToPoint(const CCollider& Point)
+bool CCollider_Box::BoxToPoint(const CCollider_Point& Point)
 {
 	// Collision if the point is within the box bounds.
 	const float BoxX = ColliderCentre->GetX();
