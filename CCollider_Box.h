@@ -28,6 +28,7 @@ public:
 
     // Getters
     CVector2D GetWidthDepth() const;
+    CVector2D GetHalfWidthDepth() const;
 
     // Collision functions
     bool BoxToSphere(const CCollider_Sphere& Sphere);

@@ -60,6 +60,11 @@ CVector2D CCollider_Box::GetWidthDepth() const
 	return WidthDepth;
 }
 
+CVector2D CCollider_Box::GetHalfWidthDepth() const
+{
+	return HalfWidthDepth;
+}
+
 // Returns true if the box is colliding with the sphere
 bool CCollider_Box::BoxToSphere(const CCollider_Sphere& Sphere)
 {
