@@ -21,26 +21,18 @@ CCollider_Point::~CCollider_Point()
 // Returns true if the point is colliding with the box.
 bool CCollider_Point::PointToBox(const CCollider_Box& Box)
 {
-	//// Collision if the point is within the box bounds.
-	//const float BoxX = ColliderCentre->GetX();
-	//const float BoxZ = ColliderCentre->GetZ();
-	//const CVector2D PointPos = Point.GetPosition();
-
-	//// Calculate XMin and XMax
-	//const float XMin = BoxX - HalfWidthDepth.GetX();
-	//const float XMax = BoxX + HalfWidthDepth.GetX();
-
-	//// Calculate ZMin and ZMax
-	//const float ZMin = BoxZ - HalfWidthDepth.GetY();
-	//const float ZMax = BoxZ + HalfWidthDepth.GetY();
-
 	// Collision if point is within the box bounds.
 	const CVector2D BoxPos = Box.GetPosition();
 	const CVector2D PointPos = GetPosition();
-	const CVector2D Box
+	const CVector2D BoxHalfWidthDepth = Box.GetHalfWidthDepth();
 
 	// Calculate XMin and XMax
-	const float XMin
+	const float XMin = BoxPos.GetX() - BoxHalfWidthDepth.GetX();
+	const float XMax = BoxPos.GetX() + BoxHalfWidthDepth.GetX();
 
-	return false;
+	// Calculate ZMin and ZMax
+	const float ZMin = BoxPos.GetY() - BoxHalfWidthDepth.GetY();
+	const float ZMax = BoxPos.GetY() + BoxHalfWidthDepth.GetY();
+
+	return ((PointPos.GetX() <= XMax && PointPos.GetX() >= XMin) && (PointPos.GetY() <= ZMax && PointPos.GetY() >= ZMin));
 }
