@@ -1,5 +1,8 @@
 #pragma once
+
 #include "CCollider.h"
+#include "CCollider_Box.h"
+
 class CCollider_Sphere :
     public CCollider
 {
@@ -22,5 +25,6 @@ public:
 
     // collision functions
     bool SphereToSphere(const CCollider_Sphere& OtherSphere);
+    bool SphereToBox(const class CCollider_Box& Box);
 };
 
