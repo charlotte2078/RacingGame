@@ -19,7 +19,7 @@ CCollider_Point::~CCollider_Point()
 }
 
 // Returns true if the point is colliding with the box.
-bool CCollider_Point::PointToBox(const CCollider_Box& Box)
+bool CCollider_Point::PointToBox(const CCollider_Box& Box) const
 {
 	// Collision if point is within the box bounds.
 	const CVector2D BoxPos = Box.GetPosition();

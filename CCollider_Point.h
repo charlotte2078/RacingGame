@@ -16,6 +16,6 @@ public:
     ~CCollider_Point();
 
     // Collision methods
-    bool PointToBox(const class CCollider_Box& Box);
+    bool PointToBox(const class CCollider_Box& Box) const;
 };
 
