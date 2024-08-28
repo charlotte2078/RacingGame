@@ -31,7 +31,7 @@ public:
     CVector2D GetHalfWidthDepth() const;
 
     // Collision functions
-    bool BoxToSphere(const class CCollider_Sphere& Sphere);
-    bool BoxToPoint(const class CCollider_Point& Point);
+    bool BoxToSphere(const class CCollider_Sphere& Sphere) const;
+    bool BoxToPoint(const class CCollider_Point& Point) const;
 };
 
