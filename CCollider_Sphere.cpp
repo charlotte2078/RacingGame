@@ -41,5 +41,5 @@ bool CCollider_Sphere::SphereToSphere(const CCollider_Sphere& OtherSphere) const
 
 bool CCollider_Sphere::SphereToBox(const CCollider_Box& Box)
 {
-	
+	return Box.BoxToSphere(*this);
 }
