@@ -21,6 +21,6 @@ public:
     float GetRadius() const;
 
     // collision functions
-    bool SphereToSphere(CCollider_Sphere);
+    bool SphereToSphere(const CCollider_Sphere& OtherSphere);
 };
 

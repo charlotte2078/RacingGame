@@ -30,7 +30,7 @@ float CCollider_Sphere::GetRadius() const
 }
 
 // Checks for collisions between two sphere colliders. Returns true if there is a collision.
-bool CCollider_Sphere::SphereToSphere(CCollider_Sphere OtherSphere)
+bool CCollider_Sphere::SphereToSphere(const CCollider_Sphere& OtherSphere)
 {
 	// Collision if the distance between two positions is less than the sum of the radii.
 	const float SquareDistance = GetPosition().SquareDistance(OtherSphere.GetPosition());
