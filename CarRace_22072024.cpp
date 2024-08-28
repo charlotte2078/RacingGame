@@ -976,7 +976,7 @@ void CPlayerCar::Reset()
 	mFacingVec = mFacingVec = { sin(mInitialRotation * kDegreesToRadians), cos(mInitialRotation * kDegreesToRadians) };
 }
 
-void main()
+int main()
 {
 
 	// Create a 3D engine (using TLX engine here) and open a window for it
@@ -1072,7 +1072,7 @@ void main()
 		}
 
 		// collision test
-		if (TankBoxColliderTest.BoxToPoint(CarPointColliderTest))
+		if (CarPointColliderTest.PointToBox(TankBoxColliderTest))
 		{
 			CarTest->SetSkin(npcCarSkinName);
 		}
