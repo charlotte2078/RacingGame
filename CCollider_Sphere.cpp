@@ -39,7 +39,14 @@ bool CCollider_Sphere::SphereToSphere(const CCollider_Sphere& OtherSphere) const
 	return SquareDistance < RadiiSumSquared;
 }
 
-bool CCollider_Sphere::SphereToBox(const CCollider_Box& Box)
+// Returns true if the sphere is colliding with the box.
+bool CCollider_Sphere::SphereToBox(const CCollider_Box& Box) const
 {
 	return Box.BoxToSphere(*this);
+}
+
+// Returns true if the sphere is colliding with the point.
+bool CCollider_Sphere::SphereToPoint(const CCollider_Point& Point) const
+{
+	return Point.PointToSphere(*this);
 }
