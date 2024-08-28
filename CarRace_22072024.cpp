@@ -1073,7 +1073,7 @@ int main()
 		}
 
 		// collision test - sphere to box
-		if (CarPointColliderTest.PointToSphere(TankSphereColliderTest))
+		if (TankSphereColliderTest.SphereToPoint(CarPointColliderTest))
 		{
 			CarTest->SetSkin(npcCarSkinName);
 		}
