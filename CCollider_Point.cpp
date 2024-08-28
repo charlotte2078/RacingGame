@@ -36,3 +36,13 @@ bool CCollider_Point::PointToBox(const CCollider_Box& Box) const
 
 	return ((PointPos.GetX() <= XMax && PointPos.GetX() >= XMin) && (PointPos.GetY() <= ZMax && PointPos.GetY() >= ZMin));
 }
+
+// Returns true if the point is colliding with the sphere
+bool CCollider_Point::PointToSphere(const CCollider_Sphere& Sphere) const
+{
+	// Collision if the distance between the point and the centre of the sphere is less than the radius.
+	const float SquareDist = GetPosition().SquareDistance(Sphere.GetPosition());
+	const float Radius = Sphere.GetRadius();
+
+	return (SquareDist < (Radius * Radius));
+}
