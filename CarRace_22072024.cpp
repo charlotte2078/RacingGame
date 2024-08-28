@@ -1035,12 +1035,13 @@ int main()
 
 	// Testing box colliders
 	Model* TankTest = waterTankMesh->CreateModel(-10.0f, 0.0f, -25.0f);
-	CVector2D TestWidthDepth(20.0f, 50.0f);
-	CCollider_Box TankBoxColliderTest(TestWidthDepth, crossMesh, TankTest);
+	//CVector2D TestWidthDepth(20.0f, 50.0f);
+	//CCollider_Box TankBoxColliderTest(TestWidthDepth, crossMesh, TankTest);
+	CCollider_Sphere TankSphereColliderTest(10.0f, crossMesh, TankTest);
 
 	Model* CarTest = carMesh->CreateModel();
-	CCollider_Sphere CarSphereColliderTest(kCarRadius, crossMesh, CarTest);
-	//CCollider_Point CarPointColliderTest(crossMesh, CarTest);
+	//CCollider_Sphere CarSphereColliderTest(kCarRadius, crossMesh, CarTest);
+	CCollider_Point CarPointColliderTest(crossMesh, CarTest);
 	const float TestCarSpeed = 10.0f;
 	const float TestCarRotate = 90.0f;
 	Camera* CarTestCam = myEngine->CreateCamera(ManualCamera);
@@ -1072,7 +1073,7 @@ int main()
 		}
 
 		// collision test - sphere to box
-		if (TankBoxColliderTest.BoxToSphere(CarSphereColliderTest))
+		if (CarPointColliderTest.PointToSphere(TankSphereColliderTest))
 		{
 			CarTest->SetSkin(npcCarSkinName);
 		}
