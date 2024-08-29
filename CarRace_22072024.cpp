@@ -1048,6 +1048,11 @@ int main()
 	CarTestCam->AttachToParent(CarTest);
 	CarTestCam->RotateX(20.0f);
 
+	// Test
+	CVector2D Epic = { 20.0f, 50.0f };
+
+	std::cout << Epic.GetX() << " " << Epic.GetY();
+
 	// Main game loop
 	while (myEngine->IsRunning())
 	{
