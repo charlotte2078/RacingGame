@@ -13,6 +13,8 @@
 #include "CWallSection_LI.h"
 #include "CCheckpoint_LI.h"
 
+#include "CHoverCar.h"
+
 using namespace tle;
 
 //////////////////// STATES SETUP //////////////////////////////////////////
@@ -1009,7 +1011,7 @@ int main()
 	IModel* floor = floorMesh->CreateModel();
 
 	// Camera for testing
-	//Camera* TestCam = myEngine->CreateCamera(FPSCamera);
+	Camera* TestCam = myEngine->CreateCamera(FPSCamera);
 
 	// Wall section testing
 	CVector2D WallPosition1(-10, 56); // no rotation
@@ -1033,25 +1035,29 @@ int main()
 	//Mesh* CubeMesh = myEngine->LoadMesh("Cube.fbx");
 	//Model* TestCube = CubeMesh->CreateModel();
 
-	// Testing box colliders
-	Model* TankTest = waterTankMesh->CreateModel(-10.0f, 0.0f, -25.0f);
-	//CVector2D TestWidthDepth(20.0f, 50.0f);
-	//CCollider_Box TankBoxColliderTest(TestWidthDepth, crossMesh, TankTest);
-	CCollider_Sphere TankSphereColliderTest(10.0f, crossMesh, TankTest);
+	//// Testing box colliders
+	//Model* TankTest = waterTankMesh->CreateModel(-10.0f, 0.0f, -25.0f);
+	////CVector2D TestWidthDepth(20.0f, 50.0f);
+	////CCollider_Box TankBoxColliderTest(TestWidthDepth, crossMesh, TankTest);
+	//CCollider_Sphere TankSphereColliderTest(10.0f, crossMesh, TankTest);
 
-	Model* CarTest = carMesh->CreateModel();
-	//CCollider_Sphere CarSphereColliderTest(kCarRadius, crossMesh, CarTest);
-	CCollider_Point CarPointColliderTest(crossMesh, CarTest);
-	const float TestCarSpeed = 10.0f;
-	const float TestCarRotate = 90.0f;
-	Camera* CarTestCam = myEngine->CreateCamera(ManualCamera);
-	CarTestCam->AttachToParent(CarTest);
-	CarTestCam->RotateX(20.0f);
+	//Model* CarTest = carMesh->CreateModel();
+	////CCollider_Sphere CarSphereColliderTest(kCarRadius, crossMesh, CarTest);
+	//CCollider_Point CarPointColliderTest(crossMesh, CarTest);
+	//const float TestCarSpeed = 10.0f;
+	//const float TestCarRotate = 90.0f;
+	//Camera* CarTestCam = myEngine->CreateCamera(ManualCamera);
+	//CarTestCam->AttachToParent(CarTest);
+	//CarTestCam->RotateX(20.0f);
 
-	// Test
-	CVector2D Epic = { 20.0f, 50.0f };
+	//// Test
+	//CVector2D Epic = { 20.0f, 50.0f };
+	//std::cout << Epic.GetX() << " " << Epic.GetY();
 
-	std::cout << Epic.GetX() << " " << Epic.GetY();
+	// Testing HoverCar constructor
+	CHoverCar HoverCarTest1(dummyMesh, carMesh, { 0.0f, 0.0f }, 0.0f);
+	CHoverCar HoverCarTest2(dummyMesh, carMesh, { 20.0f, 0.0f }, 90.0f);
+	CHoverCar HoverCarTest3(dummyMesh, carMesh, { 0.0f, 50.0f }, 270.0f);
 
 	// Main game loop
 	while (myEngine->IsRunning())
@@ -1062,30 +1068,30 @@ int main()
 		const float DeltaTime = myEngine->FrameTime();
 
 		// Game logic!
-		if (myEngine->KeyHeld(Key_W))
-		{
-			CarTest->MoveLocalZ(TestCarSpeed * DeltaTime);
-		}
+		//if (myEngine->KeyHeld(Key_W))
+		//{
+		//	CarTest->MoveLocalZ(TestCarSpeed * DeltaTime);
+		//}
 
-		if (myEngine->KeyHeld(Key_A))
-		{
-			CarTest->RotateY(-TestCarRotate * DeltaTime);
-		}
+		//if (myEngine->KeyHeld(Key_A))
+		//{
+		//	CarTest->RotateY(-TestCarRotate * DeltaTime);
+		//}
 
-		if (myEngine->KeyHeld(Key_D))
-		{
-			CarTest->RotateY(TestCarRotate * DeltaTime);
-		}
+		//if (myEngine->KeyHeld(Key_D))
+		//{
+		//	CarTest->RotateY(TestCarRotate * DeltaTime);
+		//}
 
-		// collision test - sphere to box
-		if (TankSphereColliderTest.SphereToPoint(CarPointColliderTest))
-		{
-			CarTest->SetSkin(npcCarSkinName);
-		}
-		else
-		{
-			CarTest->SetSkin("sp02_02.jpg");
-		}
+		//// collision test - sphere to box
+		//if (TankSphereColliderTest.SphereToPoint(CarPointColliderTest))
+		//{
+		//	CarTest->SetSkin(npcCarSkinName);
+		//}
+		//else
+		//{
+		//	CarTest->SetSkin("sp02_02.jpg");
+		//}
 
 		// Quit game
 		if (myEngine->KeyHit(Key_Escape))
