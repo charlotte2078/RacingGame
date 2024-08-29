@@ -11,14 +11,14 @@ protected:
 public:
 	// constructors
 	CLevelItem();
-	CLevelItem(const CVector2D&, const float&);
+	CLevelItem(const CVector2D& NewPos, const float& NewRot);
 
 	// destructors
 	~CLevelItem();
 
 	// setters
-	void SetPosition(const CVector2D&);
-	void SetRotationY(const float&);
+	void SetPosition(const CVector2D& NewPos);
+	void SetRotationY(const float& NewRot);
 
 	// getters
 	CVector2D GetPosition() const;

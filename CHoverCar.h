@@ -8,6 +8,11 @@ using namespace tle;
 
 class CHoverCar
 {
+protected: 
+	Model* CarDummy;
+	Model* CarModel;
+	CVector2D InitialPos;
+
 //protected:
 //	Model* mDummyModel;
 //	Model* mModel;
