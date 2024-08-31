@@ -3,12 +3,14 @@
 #include <TL-Engine11.h>
 #include <vector>
 #include "CVector2D.h"
+#include "CCollider_Sphere.h"
 
 using namespace tle;
 
 // Global car constants
 const int CarDefaultHealth = 100;
 const float CarDefaultRotationSpeed = 90.0f;
+const float CarDefaultRadius = 3.0f;
 
 class CHoverCar
 {
@@ -18,6 +20,7 @@ protected:
 	Model* CarModel;
 	CVector2D InitialPos;
 	float InitialRotation;
+	CCollider_Sphere SphereCollider;
 
 	// These change
 	CVector2D FacingVec;

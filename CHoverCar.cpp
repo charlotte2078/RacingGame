@@ -29,7 +29,8 @@ CHoverCar::CHoverCar() :
 	RotationSpeed(CarDefaultRotationSpeed),
 	InitialPos({0.0f, 0.0f}),
 	FacingVec({0.0f, 1.0f}),
-	MomentumVec({0.0f, 0.0f})
+	MomentumVec({0.0f, 0.0f}),
+	SphereCollider()
 {
 }
 
@@ -48,6 +49,9 @@ CHoverCar::CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const CVector2D& Pos, const
 	// Create car model and attach it to dummy
 	CarModel = CarMesh->CreateModel();
 	CarModel->AttachToParent(CarDummy);
+
+	// Initialise the sphere collider
+	SphereCollider = CCollider_Sphere(CarDefaultRadius, DummyMesh, CarDummy);
 
 	// Calculate Facing Vector
 	UpdateFacingVec();
