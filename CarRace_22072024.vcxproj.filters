@@ -13,6 +13,7 @@
     <ClCompile Include="CCheckpoint_LI.cpp" />
     <ClCompile Include="CTank_LI.cpp" />
     <ClCompile Include="CCollider_Point.cpp" />
+    <ClCompile Include="CHoverCar_Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CVector2D.h" />
@@ -26,5 +27,6 @@
     <ClInclude Include="CCheckpoint_LI.h" />
     <ClInclude Include="CTank_LI.h" />
     <ClInclude Include="CCollider_Point.h" />
+    <ClInclude Include="CHoverCar_Player.h" />
   </ItemGroup>
 </Project>

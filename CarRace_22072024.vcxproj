@@ -110,6 +110,7 @@
     <ClCompile Include="CCollider_Sphere.cpp" />
     <ClCompile Include="CCross.cpp" />
     <ClCompile Include="CHoverCar.cpp" />
+    <ClCompile Include="CHoverCar_Player.cpp" />
     <ClCompile Include="CLevelItem.cpp" />
     <ClCompile Include="CTank_LI.cpp" />
     <ClCompile Include="CVector2D.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="CCollider_Sphere.h" />
     <ClInclude Include="CCross.h" />
     <ClInclude Include="CHoverCar.h" />
+    <ClInclude Include="CHoverCar_Player.h" />
     <ClInclude Include="CLevelItem.h" />
     <ClInclude Include="CTank_LI.h" />
     <ClInclude Include="CVector2D.h" />
