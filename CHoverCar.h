@@ -45,6 +45,7 @@ public:
 	CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const CVector2D& Pos, const float& Rot);
 
 	// Destructors
+	~CHoverCar();
 
 	// Getters
 

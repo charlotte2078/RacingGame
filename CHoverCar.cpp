@@ -56,3 +56,8 @@ CHoverCar::CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const CVector2D& Pos, const
 	// Calculate Facing Vector
 	UpdateFacingVec();
 }
+
+// Destructor - does nothing
+CHoverCar::~CHoverCar()
+{
+}
