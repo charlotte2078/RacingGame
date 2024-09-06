@@ -38,13 +38,13 @@ private:
 
 	// private methods
 	CVector2D CalculateThrust(const float& ThrustFactor);
-	void CalculateNewMomentum(const float&, const float&);
-	void MoveByMomentum(const float&);
-	void UpdateFacingVector();
 	CVector2D CalculateDrag();
-	void ProcessBoost(const bool&, const float&);
-	void Bobble(const float&);
-	void ProcessRotation(const bool&, const bool&, const float&);
+	void CalculateNewMomentum(const float& DeltaTime, const float& ThrustFactor);
+	void MoveByMomentum(const float& DeltaTime);
+	//void UpdateFacingVector(); - moved into CHoverCar
+	void ProcessBoost(const bool& BoostKeyPress, const float& DeltaTime);
+	void Bobble(const float& DeltaTime);
+	/*void ProcessRotation(const bool&, const bool&, const float&);
 	void Tilt(const float&, const bool&, const bool&);
 	void CheckHealth();
 	void Lift(const float&, const float&);
@@ -55,6 +55,6 @@ private:
 	void TanksCollision(std::vector <IModel*>, const SVector2D&, EGameState&);
 	void NpcCollision(const CNpcCar&, const SVector2D&, EGameState&);
 	void TakeDamage();
-	void TakeDamageCheckEndGame(EGameState&);
+	void TakeDamageCheckEndGame(EGameState&);*/
 };
 
