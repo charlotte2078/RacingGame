@@ -35,6 +35,7 @@ const float kModelScale = 0.3f; // in metres/TL-Engine unit
 const float kKmPerHourFactor = 3.6f; // to convert from m/s to km/h
 
 // car constants
+// MOVED TO CHoverCar_Player.h
 const int kCarHealthMinBoost = 30;
 const int kCarDefaultHealth = 100;
 const float kCarDefaultRotationSpeed = 90.0f;
@@ -49,6 +50,7 @@ const float kCarBoostWarningTime = 1.0f;
 const float kCarBounceCoefficient = 0.8f;
 
 // car bobble/tilt/lift constants
+// MOVED TO CHoverCar.h
 const float kCarMinY = 0.0f;
 const float kCarMaxY = 0.3f;
 const float kCarBobbleSpeed = 0.2f;

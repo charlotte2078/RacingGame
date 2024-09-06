@@ -1,6 +1,20 @@
 #pragma once
 #include "CHoverCar.h"
 
+// Global constants for player cars
+// Boost constants
+const int CarMinHealthForBoost = 30;
+const float CarMaxBoostTime = 3.0f;
+const float CarBoostMaxMultiplier = 1.5f;
+const float CarDragMaxMultiplier = 2.0f;
+const float CarMaxThrustMagnitude = 100.0f;
+const float CarBoostMaxCooldownTime = 5.0f;
+const float CarBoostWarningTime = 1.0f;
+const float CarBounceCoefficient = 0.8f;
+
+// Movement constants
+const float CarDragCoefficient = 1.5f;
+
 class CHoverCar_Player :
     public CHoverCar
 {

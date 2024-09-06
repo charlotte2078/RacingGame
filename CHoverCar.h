@@ -12,6 +12,22 @@ const int CarDefaultHealth = 100;
 const float CarDefaultRotationSpeed = 90.0f;
 const float CarDefaultRadius = 3.0f;
 
+// Global car bobble (Up/down in Y direction)
+const float CarBobbleMinY = 0.0f;
+const float CarBobbleMaxY = 0.3f;
+const float CarBobbleSpeed = 0.2f;
+
+// Global car tilt constants (Tilting = leaning as turning)
+const float CarTiltSpeed = 3.5f;		// degrees/sec
+const float CarTiltReturnSpeed = 5.0f;	// degrees/sec
+const float CarTiltLimit = 5.0f;		// degrees
+
+// Global car lift constants (Lifting = pivoting as movement speed picks up)
+const float CarLiftSpeed = 8.0f;		// degrees/sec
+const float CarLiftReturnSpeed = 4.0f;	// degrees/sec
+const float CarLiftUpperLimit = 5.0f;	// degrees
+const float CarLiftLowerLimit = -2.0f;	// degrees
+
 class CHoverCar
 {
 protected: 
