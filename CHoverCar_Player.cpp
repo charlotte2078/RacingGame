@@ -184,3 +184,23 @@ void CHoverCar_Player::Lift(const float& DeltaTime, const float& ThrustFactor)
 	}
 }
 
+// Reduces player health by 1. Calls CheckHealth()
+void CHoverCar_Player::TakeDamage()
+{
+	Health--;
+
+	CheckHealth();
+}
+
+// Checks player health to see if player is alive and if they can boost
+void CHoverCar_Player::CheckHealth()
+{
+	if (Health < 0)
+	{
+		IsAlive = false;
+	}
+	else if (Health < CarMinHealthForBoost)
+	{
+		CanBoost = false;
+	}
+}

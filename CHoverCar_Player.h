@@ -47,14 +47,14 @@ private:
 	void ProcessRotation(const bool& LeftKeyPress, const bool& RightKeyPress, const float& DeltaTime);
 	void Tilt(const float& DeltaTime, const bool& RightKeyPress, const bool& LeftKeyPress);
 	void Lift(const float& DeltaTime, const float& ThrustFactor);
-	/*void CheckHealth();
-	void CheckWaypoints();
+	void CheckHealth();
+	void TakeDamage();
+	/*void CheckWaypoints();
 	void CheckpointCollision(std::vector <SCheckpoint>&, const float&, EGameState&);
 	void CheckpointStrutsCollision(std::vector <SCheckpoint>&, const SVector2D&, EGameState&);
 	void WallCollision(std::vector <SBoxCollider>&, const SVector2D&, EGameState&);
 	void TanksCollision(std::vector <IModel*>, const SVector2D&, EGameState&);
 	void NpcCollision(const CNpcCar&, const SVector2D&, EGameState&);
-	void TakeDamage();
 	void TakeDamageCheckEndGame(EGameState&);*/
 };
 
