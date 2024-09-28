@@ -108,4 +108,45 @@ void CHoverCar_Player::Bobble(const float& DeltaTime)
 	}
 }
 
+// The car rotates left/right when the player presses the left/right keys
+void CHoverCar_Player::ProcessRotation(const bool& LeftKeyPress, const bool& RightKeyPress, const float& DeltaTime)
+{
+	if (LeftKeyPress)
+	{
+		CarDummy->RotateY(-CarDefaultRotationSpeed * DeltaTime);
+	}
+
+	if (RightKeyPress)
+	{
+		CarDummy->RotateY(CarDefaultRotationSpeed * DeltaTime);
+	}
+}
+
+// The car tilts slowly left/right when the player steers left/right
+void CHoverCar_Player::Tilt(const float& DeltaTime, const bool& RightKeyPress, const bool& LeftKeyPress)
+{
+	// Steering right tilt
+	if (RightKeyPress && TiltAngle >= -CarTiltLimit)
+	{
+		CarModel->RotateZ(-CarTiltSpeed * DeltaTime);
+		TiltAngle -= CarTiltSpeed * DeltaTime;
+	}
+	else if (TiltAngle <= 0.0f)
+	{
+		CarModel->RotateZ(CarTiltReturnSpeed * DeltaTime);
+		TiltAngle += CarTiltReturnSpeed * DeltaTime;
+	}
+
+	// Steering left tilt
+	if (LeftKeyPress && TiltAngle <= CarTiltLimit)
+	{
+		CarModel->RotateZ(CarTiltSpeed * DeltaTime);
+		TiltAngle += CarTiltSpeed * DeltaTime;
+	}
+	else if (TiltAngle >= 0.0f)
+	{
+		CarModel->RotateZ(-CarTiltReturnSpeed * DeltaTime);
+		TiltAngle -= CarTiltReturnSpeed * DeltaTime;
+	}
+}
 
