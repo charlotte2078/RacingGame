@@ -150,3 +150,37 @@ void CHoverCar_Player::Tilt(const float& DeltaTime, const bool& RightKeyPress, c
 	}
 }
 
+// The car leans up slightly at the front when accelerating, and back slightly when decelerating
+void CHoverCar_Player::Lift(const float& DeltaTime, const float& ThrustFactor)
+{
+	if (ThrustFactor > 0.0f)
+	{
+		if (LiftAngle <= CarLiftUpperLimit)
+		{
+			CarModel->RotateX(CarLiftSpeed * DeltaTime);
+			LiftAngle += CarLiftSpeed * DeltaTime;
+		}
+	}
+	else if (ThrustFactor < 0.0f)
+	{
+		if (LiftAngle >= CarLiftLowerLimit)
+		{
+			CarModel->RotateX(-CarLiftSpeed * DeltaTime);
+			LiftAngle -= CarLiftSpeed * DeltaTime;
+		}
+	}
+	else // thrustFactor == 0.0f
+	{
+		if (LiftAngle >= 0.0f)
+		{
+			CarModel->RotateX(-CarLiftReturnSpeed * DeltaTime);
+			LiftAngle -= CarLiftReturnSpeed * DeltaTime;
+		}
+		else if (LiftAngle <= 0.0f)
+		{
+			CarModel->RotateX(CarLiftReturnSpeed * DeltaTime);
+			LiftAngle += CarLiftReturnSpeed * DeltaTime;
+		}
+	}
+}
+

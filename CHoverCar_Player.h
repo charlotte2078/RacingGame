@@ -46,8 +46,8 @@ private:
 	void Bobble(const float& DeltaTime);
 	void ProcessRotation(const bool& LeftKeyPress, const bool& RightKeyPress, const float& DeltaTime);
 	void Tilt(const float& DeltaTime, const bool& RightKeyPress, const bool& LeftKeyPress);
+	void Lift(const float& DeltaTime, const float& ThrustFactor);
 	/*void CheckHealth();
-	void Lift(const float&, const float&);
 	void CheckWaypoints();
 	void CheckpointCollision(std::vector <SCheckpoint>&, const float&, EGameState&);
 	void CheckpointStrutsCollision(std::vector <SCheckpoint>&, const SVector2D&, EGameState&);
