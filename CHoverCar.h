@@ -44,6 +44,7 @@ protected:
 	int Health;
 	float RotationSpeed;
 	int CheckpointCounter;
+	int LapCounter;
 
 	// Yet to add
 	// std::vector <SWaypoint> mWaypointsVec;

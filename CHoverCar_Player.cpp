@@ -214,8 +214,13 @@ void CHoverCar_Player::CheckpointCollision(std::vector<CCheckpoint_LI>& Checkpoi
 		CheckpointsVec.at(CheckpointCounter).MakeCrossAppear();
 
 		// Increase checkpoint counter
+		CheckpointCounter++;
 
 		// If completed a lap, reset checkpoint counter to 0 and increase lap counter.
+		if (CheckpointCounter == CheckpointsVec.size())
+		{
+			
+		}
 	}
 }
 //void CPlayerCar::CheckpointCollision(std::vector <SCheckpoint>& cpVec, const float& numLaps, EGameState& gameState)
