@@ -269,6 +269,52 @@ CHoverCar_Player::~CHoverCar_Player()
 {
 }
 
+// Calls all movement and collision functions for the player car in the appropriate order
+void CHoverCar_Player::MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, 
+	const bool& BoostKeyPress, const float& ThrustFactor, std::vector<CCheckpoint_LI>& CPVec, const float& NumLaps)
+{
+	const CVector2D OldCarPos = { CarDummy->GetX(), CarDummy->GetZ() };
+
+	// Base movement
+	ProcessRotation(LeftKeyPress, RightKeyPress, DeltaTime);
+	UpdateFacingVec();
+	ProcessBoost(BoostKeyPress, DeltaTime);
+	CalculateNewMomentum(DeltaTime, ThrustFactor);
+	MoveByMomentum(DeltaTime);
+	Bobble(DeltaTime);
+	Tilt(DeltaTime, RightKeyPress, LeftKeyPress);
+	Lift(DeltaTime, ThrustFactor);
+
+	// Collisions
+	CheckpointCollision(CPVec, NumLaps);
+}
+
+//// Calls all movement and collision functions for the player car in the appropriate order
+//void CPlayerCar::MovementEachFrame(const float& deltaTime, const bool& leftKeyPress, const bool& rightKeyPress,
+//	const bool& boostKeyPress, const float& thrustFactor, std::vector <SCheckpoint>& cpVec, const float& numLaps,
+//	EGameState& gameState, std::vector <SBoxCollider>& wallColliders, std::vector <IModel*> tanksVec,
+//	const CNpcCar& npcCar)
+//{
+//	const SVector2D oldCarPos = { mDummyModel->GetX(),mDummyModel->GetZ() };
+//
+//	// base movement
+//	ProcessRotation(leftKeyPress, rightKeyPress, deltaTime);
+//	UpdateFacingVector();
+//	ProcessBoost(boostKeyPress, deltaTime);
+//	CalculateNewMomentum(deltaTime, thrustFactor);
+//	MoveByMomentum(deltaTime);
+//	Bobble(deltaTime);
+//	Tilt(deltaTime, rightKeyPress, leftKeyPress);
+//	Lift(deltaTime, thrustFactor);
+//
+//	// collisions
+//	WallCollision(wallColliders, oldCarPos, gameState);
+//	CheckpointCollision(cpVec, numLaps, gameState);
+//	CheckpointStrutsCollision(cpVec, oldCarPos, gameState);
+//	TanksCollision(tanksVec, oldCarPos, gameState);
+//	NpcCollision(npcCar, oldCarPos, gameState);
+//}
+
 
 //void CPlayerCar::CheckpointCollision(std::vector <SCheckpoint>& cpVec, const float& numLaps, EGameState& gameState)
 //{
