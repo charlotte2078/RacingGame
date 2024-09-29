@@ -43,6 +43,7 @@ protected:
 	CVector2D MomentumVec;
 	int Health;
 	float RotationSpeed;
+	int CheckpointCounter;
 
 	// Yet to add
 	// std::vector <SWaypoint> mWaypointsVec;

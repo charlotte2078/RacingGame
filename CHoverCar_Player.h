@@ -1,6 +1,8 @@
 #pragma once
 #include "CHoverCar.h"
 
+#include "CCheckpoint_LI.h"
+
 // Global constants for player cars
 // Boost constants
 const int CarMinHealthForBoost = 30;
@@ -49,6 +51,9 @@ private:
 	void Lift(const float& DeltaTime, const float& ThrustFactor);
 	void CheckHealth();
 	void TakeDamage();
+
+	void CheckpointCollision(std::vector <CCheckpoint_LI>& CheckpointsVec, const float& NumLaps);
+
 	/*void CheckWaypoints();
 	void CheckpointCollision(std::vector <SCheckpoint>&, const float&, EGameState&);
 	void CheckpointStrutsCollision(std::vector <SCheckpoint>&, const SVector2D&, EGameState&);
@@ -56,5 +61,29 @@ private:
 	void TanksCollision(std::vector <IModel*>, const SVector2D&, EGameState&);
 	void NpcCollision(const CNpcCar&, const SVector2D&, EGameState&);
 	void TakeDamageCheckEndGame(EGameState&);*/
+
+public:
+	//// constructors
+	//CPlayerCar();
+	//CPlayerCar(IMesh*, IMesh*, const SVector2D&, const float&);
+
+	//// destructor
+	//~CPlayerCar();
+
+	//// getters
+	//bool GetIsAlive() const { return mIsAlive; };
+	//bool GetIsBoosting() const { return mIsBoosting; };
+	//float GetBoostTimer() const { return mBoostTimer; };
+	//float GetBoostCooldownTimer() const { return mBoostCooldownTimer; };
+	//bool GetBoostIsCooldown() const { return mIsBoostCooldown; };
+
+	//// other public methods
+	//void MovementEachFrame(const float&, const bool&, const bool&, const bool&, const float&,
+	//	std::vector <SCheckpoint>&, const float&,
+	//	EGameState&, std::vector <SBoxCollider>&, std::vector <IModel*>, const CNpcCar&);
+	//void Reset();
+
+	// Other Public Methods
+
 };
 

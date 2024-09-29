@@ -26,8 +26,8 @@ public:
 	~CCross();
 
 	// setters
-	void SetLifeTimer(const float&);
-	void SetVisibility(const bool&);
+	void SetLifeTimer(const float& NewTimer);
+	void SetVisibility(const bool& NewVisibility);
 
 	// getters
 	float GetLifeTimer() const;

@@ -30,7 +30,8 @@ CHoverCar::CHoverCar() :
 	InitialPos({0.0f, 0.0f}),
 	FacingVec({0.0f, 1.0f}),
 	MomentumVec({0.0f, 0.0f}),
-	SphereCollider()
+	SphereCollider(),
+	CheckpointCounter(0)
 {
 }
 
@@ -40,7 +41,8 @@ CHoverCar::CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const CVector2D& Pos, const
 	InitialRotation(Rot),
 	Health(CarDefaultHealth),
 	RotationSpeed(CarDefaultRotationSpeed),
-	MomentumVec({0.0f, 0.0f})
+	MomentumVec({0.0f, 0.0f}),
+	CheckpointCounter(0)
 {
 	// Create dummy model in the correct position and rotation
 	CarDummy = DummyMesh->CreateModel();

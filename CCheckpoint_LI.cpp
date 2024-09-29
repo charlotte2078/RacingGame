@@ -25,4 +25,16 @@ CCheckpoint_LI::CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float
 	CheckpointCross.MoveToHiddenHeight();
 }
 
+CCollider_Box CCheckpoint_LI::GetTriggerZone()
+{
+	return TriggerZone;
+}
+
+// Makes the checkpoint's cross appear and starts its life timer.
+void CCheckpoint_LI::MakeCrossAppear()
+{
+	CheckpointCross.SetLifeTimer(CrossLifeTimer);
+	CheckpointCross.MoveToVisibleHeight();
+}
+
 

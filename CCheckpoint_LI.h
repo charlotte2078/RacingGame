@@ -28,5 +28,11 @@ public:
 	CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float& CPRot, Mesh* CrossMesh);
 
 	// Destructors
+
+	// Getters
+	CCollider_Box GetTriggerZone();
+
+	// Other public methods
+	void MakeCrossAppear();
 };
 

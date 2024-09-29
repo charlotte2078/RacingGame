@@ -204,3 +204,43 @@ void CHoverCar_Player::CheckHealth()
 		CanBoost = false;
 	}
 }
+
+// Check for collisions with <counter> checkpoint (point to box)
+void CHoverCar_Player::CheckpointCollision(std::vector<CCheckpoint_LI>& CheckpointsVec, const float& NumLaps)
+{
+	if (SphereCollider.SphereToBox(CheckpointsVec.at(CheckpointCounter).GetTriggerZone()))
+	{
+		// Make cross appear
+		CheckpointsVec.at(CheckpointCounter).MakeCrossAppear();
+
+		// Increase checkpoint counter
+
+		// If completed a lap, reset checkpoint counter to 0 and increase lap counter.
+	}
+}
+//void CPlayerCar::CheckpointCollision(std::vector <SCheckpoint>& cpVec, const float& numLaps, EGameState& gameState)
+//{
+//	if (PointToBoxXZ(mDummyModel, cpVec.at(mCheckpointCounter).model, cpVec.at(mCheckpointCounter).width, cpVec.at(mCheckpointCounter).depth))
+//	{
+//		// make cross appear
+//		cpVec.at(mCheckpointCounter).cross.lifeTimer = kCrossLifeTimer;
+//		cpVec.at(mCheckpointCounter).cross.model->SetY(kCrossVisibleHeight);
+//		cpVec.at(mCheckpointCounter).cross.isVisible = true;
+//
+//		// increase checkpoint counter
+//		mCheckpointCounter++;
+//
+//		// reset checkpoint counter to 0 when a lap completes and increase lap counter.
+//		if (mCheckpointCounter == cpVec.size())
+//		{
+//			mLapCounter++;
+//			mCheckpointCounter = 0;
+//
+//			// check for finishing the race
+//			if (mLapCounter == numLaps)
+//			{
+//				gameState = gRaceOver;
+//			}
+//		}
+//	}
+//}

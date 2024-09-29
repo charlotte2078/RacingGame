@@ -51,10 +51,12 @@ void CCross::AttachToCheckpoint(Model* ParentCP)
 void CCross::MoveToHiddenHeight()
 {
 	CrossModel->SetLocalY(CrossHiddenHeight);
+	bIsVisible = false;
 }
 
 // Changes local Y position to reveal cross above ground.
 void CCross::MoveToVisibleHeight()
 {
 	CrossModel->SetLocalY(CrossVisibleHeight);
+	bIsVisible = true;
 }
