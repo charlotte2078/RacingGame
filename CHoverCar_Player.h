@@ -63,12 +63,12 @@ private:
 	void TakeDamageCheckEndGame(EGameState&);*/
 
 public:
-	//// constructors
-	//CPlayerCar();
-	//CPlayerCar(IMesh*, IMesh*, const SVector2D&, const float&);
+	// Constructors
+	CHoverCar_Player();
+	CHoverCar_Player(IMesh* DummyMesh, IMesh* CarMesh, const CVector2D& InitialPos, const float& InitialRot);
 
-	//// destructor
-	//~CPlayerCar();
+	// Destructor
+	~CHoverCar_Player();
 
 	//// getters
 	//bool GetIsAlive() const { return mIsAlive; };

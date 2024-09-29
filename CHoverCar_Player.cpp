@@ -230,6 +230,46 @@ void CHoverCar_Player::CheckpointCollision(std::vector<CCheckpoint_LI>& Checkpoi
 		}
 	}
 }
+
+// Defualt constructor - Do not use
+CHoverCar_Player::CHoverCar_Player() :
+	IsAlive(true),
+	CanBoost(true),
+	IsBoosting(true),
+	IsBoostCooldown(false),
+	BoostMultiplier(1.0f),
+	BoostTimer(0.0f),
+	BoostCooldownTimer(0.0f),
+	DragMultiplier(1.0f),
+	IsMovingUp(true),
+	TiltAngle(0.0f),
+	LiftAngle(0.0f)
+{
+}
+
+// Constructor with meshes and initial position and rotation passed in.
+CHoverCar_Player::CHoverCar_Player(IMesh* DummyMesh, IMesh* CarMesh, const CVector2D& InitialPos, const float& InitialRot) :
+	CHoverCar(DummyMesh, CarMesh, InitialPos, InitialRot),
+	IsAlive(true),
+	CanBoost(true),
+	IsBoosting(true),
+	IsBoostCooldown(false),
+	BoostMultiplier(1.0f),
+	BoostTimer(0.0f),
+	BoostCooldownTimer(0.0f),
+	DragMultiplier(1.0f),
+	IsMovingUp(true),
+	TiltAngle(0.0f),
+	LiftAngle(0.0f)
+{
+}
+
+// Default destructor - does nothing
+CHoverCar_Player::~CHoverCar_Player()
+{
+}
+
+
 //void CPlayerCar::CheckpointCollision(std::vector <SCheckpoint>& cpVec, const float& numLaps, EGameState& gameState)
 //{
 //	if (PointToBoxXZ(mDummyModel, cpVec.at(mCheckpointCounter).model, cpVec.at(mCheckpointCounter).width, cpVec.at(mCheckpointCounter).depth))
