@@ -13,7 +13,7 @@
 #include "CWallSection_LI.h"
 #include "CCheckpoint_LI.h"
 
-#include "CHoverCar.h"
+#include "CHoverCar_Player.h"
 
 using namespace tle;
 
@@ -1056,10 +1056,22 @@ int main()
 	//CVector2D Epic = { 20.0f, 50.0f };
 	//std::cout << Epic.GetX() << " " << Epic.GetY();
 
-	// Testing HoverCar constructor
-	CHoverCar HoverCarTest1(dummyMesh, carMesh, { 0.0f, 0.0f }, 0.0f);
-	CHoverCar HoverCarTest2(dummyMesh, carMesh, { 20.0f, 0.0f }, 90.0f);
-	CHoverCar HoverCarTest3(dummyMesh, carMesh, { 0.0f, 50.0f }, 270.0f);
+	//// Testing HoverCar constructor
+	//CHoverCar HoverCarTest1(dummyMesh, carMesh, { 0.0f, 0.0f }, 0.0f);
+	//CHoverCar HoverCarTest2(dummyMesh, carMesh, { 20.0f, 0.0f }, 90.0f);
+	//CHoverCar HoverCarTest3(dummyMesh, carMesh, { 0.0f, 50.0f }, 270.0f);
+
+	// Testing player car collision with checkpoints - need a vec of checkpoints and a moveable player car.
+	std::vector<CCheckpoint_LI> CPVec;
+	CPVec.push_back(CP1);
+	CPVec.push_back(CP2);
+	CPVec.push_back(CP3);
+	const int TotalLaps = 1;
+	const EKeyCode Forwards = Key_W;
+	const EKeyCode Backwards = Key_S;
+	const EKeyCode Left = Key_A;
+	const EKeyCode Right = Key_D;
+	CHoverCar_Player PlayerCar();
 
 	// Main game loop
 	while (myEngine->IsRunning())

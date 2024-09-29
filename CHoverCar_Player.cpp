@@ -219,7 +219,14 @@ void CHoverCar_Player::CheckpointCollision(std::vector<CCheckpoint_LI>& Checkpoi
 		// If completed a lap, reset checkpoint counter to 0 and increase lap counter.
 		if (CheckpointCounter == CheckpointsVec.size())
 		{
-			
+			LapCounter++;
+			CheckpointCounter = 0;
+
+			// Check for finishing the race
+			if (LapCounter == NumLaps)
+			{
+				// RACE OVER - ADD LATER
+			}
 		}
 	}
 }
