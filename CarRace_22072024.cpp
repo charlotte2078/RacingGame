@@ -1013,7 +1013,7 @@ int main()
 	IModel* floor = floorMesh->CreateModel();
 
 	// Camera for testing
-	Camera* TestCam = myEngine->CreateCamera(FPSCamera);
+	Camera* TestCam = myEngine->CreateCamera(ManualCamera);
 
 	// Wall section testing
 	CVector2D WallPosition1(-10, 56); // no rotation
@@ -1071,7 +1071,8 @@ int main()
 	const EKeyCode Backwards = Key_S;
 	const EKeyCode Left = Key_A;
 	const EKeyCode Right = Key_D;
-	CHoverCar_Player PlayerCar();
+	const EKeyCode Boost = Key_Space;
+	CHoverCar_Player PlayerCar(dummyMesh, carMesh, {0.0f, 0.0f}, 0.0f);
 
 	// Main game loop
 	while (myEngine->IsRunning())
@@ -1082,30 +1083,40 @@ int main()
 		const float DeltaTime = myEngine->FrameTime();
 
 		// Game logic!
-		//if (myEngine->KeyHeld(Key_W))
-		//{
-		//	CarTest->MoveLocalZ(TestCarSpeed * DeltaTime);
-		//}
+		//check for key presses
+		bool leftRotateKeyPress = false;
+		bool rightRotateKeyPress = false;
 
-		//if (myEngine->KeyHeld(Key_A))
-		//{
-		//	CarTest->RotateY(-TestCarRotate * DeltaTime);
-		//}
+		// car rotation control
+		if (myEngine->KeyHeld(Left))		leftRotateKeyPress = true;
+		if (myEngine->KeyHeld(Right))		rightRotateKeyPress = true;
 
-		//if (myEngine->KeyHeld(Key_D))
-		//{
-		//	CarTest->RotateY(TestCarRotate * DeltaTime);
-		//}
+		// car movement
+		float thrustFactor = 0.0f;
+		if (myEngine->KeyHeld(Forwards))
+		{
+			if (myEngine->KeyHeld(Backwards))
+			{
+				thrustFactor = 0.5f;
+			}
+			else
+			{
+				thrustFactor = 1.0f;
+			}
+		}
+		else if (myEngine->KeyHeld(Backwards))
+		{
+			thrustFactor = -0.5f;
+		}
 
-		//// collision test - sphere to box
-		//if (TankSphereColliderTest.SphereToPoint(CarPointColliderTest))
-		//{
-		//	CarTest->SetSkin(npcCarSkinName);
-		//}
-		//else
-		//{
-		//	CarTest->SetSkin("sp02_02.jpg");
-		//}
+		// process car boost
+		bool boostKeyPress = false;
+		if (myEngine->KeyHeld(Boost))
+		{
+			boostKeyPress = true;
+		}
+
+		PlayerCar.MovementEachFrame(DeltaTime, leftRotateKeyPress, rightRotateKeyPress, boostKeyPress, thrustFactor, CPVec, TotalLaps);
 
 		// Quit game
 		if (myEngine->KeyHit(Key_Escape))

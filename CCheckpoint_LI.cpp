@@ -23,6 +23,8 @@ CCheckpoint_LI::CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float
 	// Attach cross to checkpoint and hide it
 	CheckpointCross.AttachToCheckpoint(CheckpointModel);
 	CheckpointCross.MoveToHiddenHeight();
+
+
 }
 
 CCollider_Box CCheckpoint_LI::GetTriggerZone()
