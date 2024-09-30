@@ -23,5 +23,8 @@ public:
 
 	// Getters
 	CVector2D GetPosition() const;
+
+	// Other public functions
+	void AttachToBase(Model* BaseModel);
 };
 

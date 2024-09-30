@@ -30,4 +30,10 @@ CVector2D CCollider::GetPosition() const
 	return CVector2D(ColliderCentre->GetX(), ColliderCentre->GetZ());
 }
 
+// Attaches the collider to the model passed in.
+void CCollider::AttachToBase(Model* BaseModel)
+{
+	ColliderCentre->AttachToParent(BaseModel);
+}
+
 
