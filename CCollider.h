@@ -13,6 +13,7 @@ protected:
 public:
 	// Constructors
 	CCollider();
+	CCollider(Mesh* DummyMesh);
 	CCollider(Mesh* DummyMesh, Model* BaseObject);
 
 	// Destructors

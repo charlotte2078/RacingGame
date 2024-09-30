@@ -18,6 +18,7 @@ private:
 public:
     // Constructors
     CCollider_Box();
+    CCollider_Box(const CVector2D& NewWidthDepth, Mesh* DummyMesh);
     CCollider_Box(const CVector2D& NewWidthDepth, Mesh* DummyMesh, Model* BaseObject);
 
     // Destructor

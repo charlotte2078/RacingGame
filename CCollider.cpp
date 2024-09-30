@@ -6,6 +6,12 @@ CCollider::CCollider() :
 {
 }
 
+// Creates the collider dummy
+CCollider::CCollider(Mesh* DummyMesh)
+{
+	ColliderCentre = DummyMesh->CreateModel();
+}
+
 // Creates the collider dummy and attaches it to the base object.
 CCollider::CCollider(Mesh* DummyMesh, Model* BaseObject)
 {

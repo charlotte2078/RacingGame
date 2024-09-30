@@ -9,7 +9,40 @@ CCollider_Box::CCollider_Box()
 	}
 }
 
-// Constructor with WidthDepth passed in
+// Constructor with WidthDepth and DummyMesh passed in.
+CCollider_Box::CCollider_Box(const CVector2D& NewWidthDepth, Mesh* DummyMesh) :
+	WidthDepth(NewWidthDepth),
+	CCollider(DummyMesh)
+{
+	// Calculate half width and depth.
+	//HalfWidthDepth = NewWD * 0.5f;
+	HalfWidthDepth.SetX(0.5f * NewWidthDepth.GetX());
+	HalfWidthDepth.SetY(0.5f * NewWidthDepth.GetY());
+
+	for (int i = 0; i < NumBoxCorners; i++)
+	{
+		// Create corner dummy models, attach to central dummy model, then move to correct local position.
+		CornersArray[i] = DummyMesh->CreateModel();
+		CornersArray[i]->AttachToParent(ColliderCentre);
+
+		// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
+	}
+
+	// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
+	CornersArray[0]->SetLocalX(-HalfWidthDepth.GetX());
+	CornersArray[0]->SetLocalZ(HalfWidthDepth.GetY());
+
+	CornersArray[1]->SetLocalX(HalfWidthDepth.GetX());
+	CornersArray[1]->SetLocalZ(HalfWidthDepth.GetY());
+
+	CornersArray[2]->SetLocalX(-HalfWidthDepth.GetX());
+	CornersArray[2]->SetLocalZ(-HalfWidthDepth.GetY());
+
+	CornersArray[3]->SetLocalX(HalfWidthDepth.GetX());
+	CornersArray[3]->SetLocalZ(-HalfWidthDepth.GetY());
+}
+
+// Constructor with WidthDepth, DummyMesh, and the object to attach it to passed in.
 CCollider_Box::CCollider_Box(const CVector2D& NewWD, Mesh* DummyMesh, Model* BaseObject) :
 	WidthDepth(NewWD),
 	CCollider(DummyMesh, BaseObject)
