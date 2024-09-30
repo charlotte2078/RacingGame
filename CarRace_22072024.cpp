@@ -1029,9 +1029,9 @@ int main()
 	CVector2D CheckpointPos2(25, 56); // 0 degree rotation
 	CVector2D CheckpointPos3(100, 100); // 45 degree rotation
 
-	CCheckpoint_LI CP1(checkpointMesh, CheckpointPos1, 90.0f, crossMesh);
-	CCheckpoint_LI CP2(checkpointMesh, CheckpointPos2, 0.0f, crossMesh);
-	CCheckpoint_LI CP3(checkpointMesh, CheckpointPos3, 45.0f, crossMesh);
+	CCheckpoint_LI CP1(checkpointMesh, CheckpointPos1, 90.0f, crossMesh, crossMesh);
+	CCheckpoint_LI CP2(checkpointMesh, CheckpointPos2, 0.0f, crossMesh, crossMesh);
+	CCheckpoint_LI CP3(checkpointMesh, CheckpointPos3, 45.0f, crossMesh, crossMesh);
 
 	//// Testing box collider using a cube mesh !
 	//Mesh* CubeMesh = myEngine->LoadMesh("Cube.fbx");

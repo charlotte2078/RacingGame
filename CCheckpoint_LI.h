@@ -25,7 +25,7 @@ private:
 public:
 	// Constructors
 	CCheckpoint_LI();
-	CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float& CPRot, Mesh* CrossMesh);
+	CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float& CPRot, Mesh* CrossMesh, Mesh* DummyMesh);
 
 	// Destructors
 
