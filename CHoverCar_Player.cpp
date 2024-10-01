@@ -236,7 +236,19 @@ void CHoverCar_Player::WallCollision(std::vector<CWallSection_LI>& WallsVec, con
 {
 	for (int i = 0; i < WallsVec.size(); i++)
 	{
-		// Get wall
+		CCollider_Box WallCollider = WallsVec.at(i).GetWallCollider();
+		
+		if (SphereCollider.SphereToBox(WallCollider))
+		{
+			// car takes damage
+
+			// set pos to old pos
+			CarDummy->SetX(OldCarPos.GetX());
+			CarDummy->SetZ(OldCarPos.GetY());
+
+			// reverse momentum 
+			MomentumVec = MomentumVec * -10.0f;
+		}
 	}
 	
 	//for (int i = 0; i < wallColliders.size(); i++)
@@ -308,7 +320,8 @@ CHoverCar_Player::~CHoverCar_Player()
 
 // Calls all movement and collision functions for the player car in the appropriate order
 void CHoverCar_Player::MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, 
-	const bool& BoostKeyPress, const float& ThrustFactor, std::vector<CCheckpoint_LI>& CPVec, const float& NumLaps)
+	const bool& BoostKeyPress, const float& ThrustFactor, std::vector<CCheckpoint_LI>& CPVec, const float& NumLaps,
+	std::vector<CWallSection_LI>& WallsVec)
 {
 	const CVector2D OldCarPos = { CarDummy->GetX(), CarDummy->GetZ() };
 
@@ -324,6 +337,7 @@ void CHoverCar_Player::MovementEachFrame(const float& DeltaTime, const bool& Lef
 
 	// Collisions
 	CheckpointCollision(CPVec, NumLaps);
+	WallCollision(WallsVec, OldCarPos);
 }
 
 //// Calls all movement and collision functions for the player car in the appropriate order

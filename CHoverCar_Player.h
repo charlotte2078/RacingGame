@@ -86,6 +86,6 @@ public:
 
 	// Other Public Methods
 	void MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, const bool& BoostKeyPress, const float& ThrustFactor,
-			std::vector <CCheckpoint_LI>& CPVec, const float& NumLaps);
+			std::vector <CCheckpoint_LI>& CPVec, const float& NumLaps, std::vector<CWallSection_LI>& WallsVec);
 };
 

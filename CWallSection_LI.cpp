@@ -75,3 +75,8 @@ CWallSection_LI::CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh
 CWallSection_LI::~CWallSection_LI()
 {
 }
+
+CCollider_Box CWallSection_LI::GetWallCollider()
+{
+	return BoxCollider;
+}

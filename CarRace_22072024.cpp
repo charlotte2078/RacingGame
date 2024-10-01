@@ -1074,6 +1074,12 @@ int main()
 	const EKeyCode Boost = Key_Space;
 	CHoverCar_Player PlayerCar(dummyMesh, carMesh, {0.0f, 0.0f}, 0.0f);
 
+	// testing car collision with walls
+	std::vector<CWallSection_LI> WallsVec;
+	WallsVec.push_back(Wall1);
+	WallsVec.push_back(Wall2);
+	WallsVec.push_back(Wall3);
+
 	// Main game loop
 	while (myEngine->IsRunning())
 	{
@@ -1116,7 +1122,7 @@ int main()
 			boostKeyPress = true;
 		}
 
-		PlayerCar.MovementEachFrame(DeltaTime, leftRotateKeyPress, rightRotateKeyPress, boostKeyPress, thrustFactor, CPVec, TotalLaps);
+		PlayerCar.MovementEachFrame(DeltaTime, leftRotateKeyPress, rightRotateKeyPress, boostKeyPress, thrustFactor, CPVec, TotalLaps, WallsVec);
 
 		// Quit game
 		if (myEngine->KeyHit(Key_Escape))

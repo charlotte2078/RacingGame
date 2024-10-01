@@ -34,5 +34,6 @@ public:
     // setters
 
     // getters
+    CCollider_Box GetWallCollider();
 };
 
