@@ -231,6 +231,43 @@ void CHoverCar_Player::CheckpointCollision(std::vector<CCheckpoint_LI>& Checkpoi
 	}
 }
 
+// Collision between wall and player car.
+void CHoverCar_Player::WallCollision(std::vector<CWallSection_LI>& WallsVec, const CVector2D& OldCarPos)
+{
+	for (int i = 0; i < WallsVec.size(); i++)
+	{
+		// Get wall
+	}
+	
+	//for (int i = 0; i < wallColliders.size(); i++)
+		//	{
+		//		const EBoxSide collisionSide = EnhancedSphereToBoxXZ(mDummyModel, wallColliders.at(i).posXZ, kCarRadius,
+		//			wallColliders.at(i).widthDepth, oldCarPos);
+		//
+		//		if (collisionSide != noSide)
+		//		{
+		//			// car takes damage
+		//			TakeDamageCheckEndGame(gameState);
+		//
+		//			// reverse appropriate momentum component based on collision side
+		//			if (collisionSide == leftSide || collisionSide == rightSide)
+		//			{
+		//				mDummyModel->SetX(oldCarPos.x);
+		//
+		//				// change momentum vector - reverse x momentum
+		//				mMomentumVec.x *= -kCarBounceCoefficient;
+		//			}
+		//			else if (collisionSide == frontSide || collisionSide == backSide)
+		//			{
+		//				mDummyModel->SetZ(oldCarPos.y);
+		//
+		//				// change momentum vector - reverse z momentum
+		//				mMomentumVec.y *= -kCarBounceCoefficient;
+		//			}
+		//		}
+		//	}
+}
+
 // Defualt constructor - Do not use
 CHoverCar_Player::CHoverCar_Player() :
 	IsAlive(true),
@@ -338,6 +375,38 @@ void CHoverCar_Player::MovementEachFrame(const float& DeltaTime, const bool& Lef
 //			if (mLapCounter == numLaps)
 //			{
 //				gameState = gRaceOver;
+//			}
+//		}
+//	}
+//}
+
+//// enhanced collision with walls (enhanced sphere to box)
+//void CPlayerCar::WallCollision(std::vector <SBoxCollider>& wallColliders, const SVector2D& oldCarPos, EGameState& gameState)
+//{
+//	for (int i = 0; i < wallColliders.size(); i++)
+//	{
+//		const EBoxSide collisionSide = EnhancedSphereToBoxXZ(mDummyModel, wallColliders.at(i).posXZ, kCarRadius,
+//			wallColliders.at(i).widthDepth, oldCarPos);
+//
+//		if (collisionSide != noSide)
+//		{
+//			// car takes damage
+//			TakeDamageCheckEndGame(gameState);
+//
+//			// reverse appropriate momentum component based on collision side
+//			if (collisionSide == leftSide || collisionSide == rightSide)
+//			{
+//				mDummyModel->SetX(oldCarPos.x);
+//
+//				// change momentum vector - reverse x momentum
+//				mMomentumVec.x *= -kCarBounceCoefficient;
+//			}
+//			else if (collisionSide == frontSide || collisionSide == backSide)
+//			{
+//				mDummyModel->SetZ(oldCarPos.y);
+//
+//				// change momentum vector - reverse z momentum
+//				mMomentumVec.y *= -kCarBounceCoefficient;
 //			}
 //		}
 //	}

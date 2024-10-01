@@ -2,6 +2,7 @@
 #include "CHoverCar.h"
 
 #include "CCheckpoint_LI.h"
+#include "CWallSection_LI.h"
 
 // Global constants for player cars
 // Boost constants
@@ -53,7 +54,7 @@ private:
 	void TakeDamage();
 
 	void CheckpointCollision(std::vector <CCheckpoint_LI>& CheckpointsVec, const float& NumLaps);
-
+	void WallCollision(std::vector <CWallSection_LI>& WallsVec, const CVector2D& OldCarPos);
 	/*void CheckWaypoints();
 	void CheckpointCollision(std::vector <SCheckpoint>&, const float&, EGameState&);
 	void CheckpointStrutsCollision(std::vector <SCheckpoint>&, const SVector2D&, EGameState&);

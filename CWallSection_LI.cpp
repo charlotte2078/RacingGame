@@ -17,8 +17,9 @@ CWallSection_LI::CWallSection_LI() :
 	}
 }
 
-CWallSection_LI::CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh, const CVector2D& Pos, const float& Rot)  :
-	CLevelItem(Pos, Rot)
+CWallSection_LI::CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh, const CVector2D& Pos, const float& Rot) :
+	CLevelItem(Pos, Rot),
+	BoxCollider({ WallColliderWidth, WallColliderDepth }, DummyMesh)
 {
 	// Create dummy model
 	DummyModel = DummyMesh->CreateModel();
@@ -59,14 +60,15 @@ CWallSection_LI::CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh
 		}
 	}
 
+	// Attach collider to dummy model
+	BoxCollider.AttachToBase(DummyModel);
+	
 	// Move dummy model to pos
 	DummyModel->SetX(PosXZ.GetX());
 	DummyModel->SetZ(PosXZ.GetY());
 
 	// Rotate dummy model by rotation
 	DummyModel->RotateY(RotationY);
-
-	// Initialise box collider - to do later!!!!
 }
 
 // Does nothing
