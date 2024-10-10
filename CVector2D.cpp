@@ -33,20 +33,39 @@ float CVector2D::SquareMagnitude() const
     return X*X + Y*Y;
 }
 
+void CVector2D::operator+=(const CVector2D& Vec)
+{
+    X += Vec.X;
+    Y += Vec.Y;
+}
+
 // Vector addition
-CVector2D CVector2D::operator+(CVector2D const& Vec) const
+CVector2D CVector2D::operator+(const CVector2D& Vec) const
 {
     return CVector2D(X + Vec.X, Y + Vec.Y);
 }
 
+void CVector2D::operator-=(const CVector2D& Vec)
+{
+    X -= Vec.X;
+    Y -= Vec.Y;
+}
+
 // Vector subtraction
-CVector2D CVector2D::operator-(CVector2D const& Vec) const
+CVector2D CVector2D::operator-(const CVector2D& Vec) const
 {
     return CVector2D(X - Vec.X, Y - Vec.Y);
 }
 
 // Scalar multiplication between a vector and a float.
-CVector2D CVector2D::operator*(float const& K) const
+void CVector2D::operator*=(const float& K)
+{
+    X *= K;
+    Y *= K;
+}
+
+// Scalar multiplication between a vector and a float.
+CVector2D CVector2D::operator*(const float& K) const
 {
     return CVector2D(X * K, Y * K);
 }
@@ -54,7 +73,7 @@ CVector2D CVector2D::operator*(float const& K) const
 // Calculates the dot product of two vectors.
 float CVector2D::DotProduct(const CVector2D& OtherVec) const
 {   
-    return (X * OtherVec.GetX() + Y * OtherVec.GetY()) ;
+    return (X * OtherVec.X + Y * OtherVec.Y);
 }
 
 // Reflects current vector in another vector. Returns the result.

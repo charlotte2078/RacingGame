@@ -28,9 +28,12 @@ public:
 	CVector2D Normalise() const;
 
 	// Operators for adding, subtracting, scalar multiplication
-	CVector2D operator+(CVector2D const& Vec) const;
-	CVector2D operator-(CVector2D const& Vec) const;
-	CVector2D operator*(float const& K) const;
+	void operator+=(const CVector2D& Vec);
+	CVector2D operator+(const CVector2D& Vec) const;
+	void operator-=(const CVector2D& Vec);
+	CVector2D operator-(const CVector2D& Vec) const;
+	void operator*=(const float& K);
+	CVector2D operator*(const float& K) const;
 
 	// Other functions interacting with other vectors
 	float DotProduct(const CVector2D& OtherVec) const;
