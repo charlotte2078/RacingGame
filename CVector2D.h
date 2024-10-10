@@ -9,7 +9,7 @@ private:
 public:
 	// Constructors
 	CVector2D(); // Default constructor
-	CVector2D(const float&, const float&);
+	CVector2D(const float& NewX, const float& NewY);
 
 	// Destructors
 	~CVector2D(); // Default destructor
