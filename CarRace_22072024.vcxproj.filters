@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="CarRace_22072024.cpp" />
-    <ClCompile Include="CVector2D.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="CHoverCar.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CCollider_Box.cpp" />
@@ -16,7 +16,7 @@
     <ClCompile Include="CHoverCar_Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CVector2D.h" />
+    <ClInclude Include="Vector2D.h" />
     <ClInclude Include="CHoverCar.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CCollider_Box.h" />
