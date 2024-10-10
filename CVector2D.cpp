@@ -89,10 +89,7 @@ float CVector2D::Distance(const CVector2D& OtherVec) const
 // Returns the distance squared between current point and another point.
 float CVector2D::SquareDistance(const CVector2D& OtherVec) const
 {
-    const float DistX = X - OtherVec.X;
-    const float DistY = Y - OtherVec.Y;
-
-    return DistX * DistX + DistY * DistY;
+    return (*this - OtherVec).SquareMagnitude();
 }
 
 // Returns normalised vector.
