@@ -10,7 +10,7 @@ CCollider_Box::CCollider_Box()
 }
 
 // Constructor with WidthDepth and DummyMesh passed in.
-CCollider_Box::CCollider_Box(const CVector2D& NewWidthDepth, Mesh* DummyMesh) :
+CCollider_Box::CCollider_Box(const Vector2D& NewWidthDepth, Mesh* DummyMesh) :
 	WidthDepth(NewWidthDepth),
 	CCollider(DummyMesh)
 {
@@ -43,7 +43,7 @@ CCollider_Box::CCollider_Box(const CVector2D& NewWidthDepth, Mesh* DummyMesh) :
 }
 
 // Constructor with WidthDepth, DummyMesh, and the object to attach it to passed in.
-CCollider_Box::CCollider_Box(const CVector2D& NewWD, Mesh* DummyMesh, Model* BaseObject) :
+CCollider_Box::CCollider_Box(const Vector2D& NewWD, Mesh* DummyMesh, Model* BaseObject) :
 	WidthDepth(NewWD),
 	CCollider(DummyMesh, BaseObject)
 {

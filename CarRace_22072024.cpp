@@ -1016,18 +1016,18 @@ int main()
 	Camera* TestCam = myEngine->CreateCamera(ManualCamera);
 
 	// Wall section testing
-	CVector2D WallPosition1(-10, 56); // no rotation
-	CVector2D WallPosition2(106, 46); // 90 degree rotation
-	CVector2D WallPosition3(50, 20);
+	Vector2D WallPosition1(-10, 56); // no rotation
+	Vector2D WallPosition2(106, 46); // 90 degree rotation
+	Vector2D WallPosition3(50, 20);
 
 	CWallSection_LI Wall1(dummyMesh, wallMesh, isleMesh, WallPosition1, 0.0f);
 	CWallSection_LI Wall2(dummyMesh, wallMesh, isleMesh, WallPosition2, 90.0f);
 	CWallSection_LI Wall3(dummyMesh, wallMesh, isleMesh, WallPosition3, 50.0f);
 
 	// Checkpoint constructor testing
-	CVector2D CheckpointPos1(10, 120); // 90 degree rotation
-	CVector2D CheckpointPos2(25, 56); // 0 degree rotation
-	CVector2D CheckpointPos3(100, 100); // 45 degree rotation
+	Vector2D CheckpointPos1(10, 120); // 90 degree rotation
+	Vector2D CheckpointPos2(25, 56); // 0 degree rotation
+	Vector2D CheckpointPos3(100, 100); // 45 degree rotation
 
 	CCheckpoint_LI CP1(checkpointMesh, CheckpointPos1, 90.0f, crossMesh, dummyMesh);
 	CCheckpoint_LI CP2(checkpointMesh, CheckpointPos2, 0.0f, crossMesh, dummyMesh);

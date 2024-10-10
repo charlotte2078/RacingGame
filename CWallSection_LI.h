@@ -26,7 +26,7 @@ private:
 public:
     // constructors
     CWallSection_LI();
-    CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh, const CVector2D& Pos, const float& Rot);
+    CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh, const Vector2D& Pos, const float& Rot);
 
     // destructor
     ~CWallSection_LI();

@@ -8,7 +8,7 @@ CLevelItem::CLevelItem() :
 }
 
 // Constructor with parameters passed in
-CLevelItem::CLevelItem(const CVector2D& NewPos, const float& NewRot) :
+CLevelItem::CLevelItem(const Vector2D& NewPos, const float& NewRot) :
 	PosXZ(NewPos),
 	RotationY(NewRot)
 {
@@ -19,7 +19,7 @@ CLevelItem::~CLevelItem()
 {
 }
 
-void CLevelItem::SetPosition(const CVector2D& NewPos)
+void CLevelItem::SetPosition(const Vector2D& NewPos)
 {
 	PosXZ = NewPos;
 }
@@ -29,7 +29,7 @@ void CLevelItem::SetRotationY(const float& NewRot)
 	RotationY = NewRot;
 }
 
-CVector2D CLevelItem::GetPosition() const
+Vector2D CLevelItem::GetPosition() const
 {
 	return PosXZ;
 }

@@ -22,9 +22,9 @@ CCollider_Point::~CCollider_Point()
 bool CCollider_Point::PointToBox(const CCollider_Box& Box) const
 {
 	// Collision if point is within the box bounds.
-	const CVector2D BoxPos = Box.GetPosition();
-	const CVector2D PointPos = GetPosition();
-	const CVector2D BoxHalfWidthDepth = Box.GetHalfWidthDepth();
+	const Vector2D BoxPos = Box.GetPosition();
+	const Vector2D PointPos = GetPosition();
+	const Vector2D BoxHalfWidthDepth = Box.GetHalfWidthDepth();
 
 	// Calculate XMin and XMax
 	const float XMin = BoxPos.GetX() - BoxHalfWidthDepth.GetX();

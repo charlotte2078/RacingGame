@@ -1,13 +1,13 @@
 #include "CHoverCar_Player.h"
 
 // Calculates thrust vector for the frame.
-CVector2D CHoverCar_Player::CalculateThrust(const float& ThrustFactor)
+Vector2D CHoverCar_Player::CalculateThrust(const float& ThrustFactor)
 {
     return (FacingVec * (ThrustFactor * CarMaxThrustMagnitude * BoostMultiplier));
 }
 
 // Calculates drag for the frame (in opposite direction to momentum)
-CVector2D CHoverCar_Player::CalculateDrag()
+Vector2D CHoverCar_Player::CalculateDrag()
 {
 	return (MomentumVec * (-CarDragCoefficient * DragMultiplier));
 }
@@ -15,7 +15,7 @@ CVector2D CHoverCar_Player::CalculateDrag()
 // Calculates new momentum using resultant force, multiplies force by DeltaTime
 void CHoverCar_Player::CalculateNewMomentum(const float& DeltaTime, const float& ThrustFactor)
 {
-	CVector2D ResultantForce = CalculateDrag() + CalculateThrust(ThrustFactor);
+	Vector2D ResultantForce = CalculateDrag() + CalculateThrust(ThrustFactor);
 	MomentumVec = (ResultantForce * DeltaTime) + MomentumVec;
 }
 
@@ -232,7 +232,7 @@ void CHoverCar_Player::CheckpointCollision(std::vector<CCheckpoint_LI>& Checkpoi
 }
 
 // Collision between wall and player car.
-void CHoverCar_Player::WallCollision(std::vector<CWallSection_LI>& WallsVec, const CVector2D& OldCarPos)
+void CHoverCar_Player::WallCollision(std::vector<CWallSection_LI>& WallsVec, const Vector2D& OldCarPos)
 {
 	for (int i = 0; i < WallsVec.size(); i++)
 	{
@@ -297,7 +297,7 @@ CHoverCar_Player::CHoverCar_Player() :
 }
 
 // Constructor with meshes and initial position and rotation passed in.
-CHoverCar_Player::CHoverCar_Player(IMesh* DummyMesh, IMesh* CarMesh, const CVector2D& InitialPos, const float& InitialRot) :
+CHoverCar_Player::CHoverCar_Player(IMesh* DummyMesh, IMesh* CarMesh, const Vector2D& InitialPos, const float& InitialRot) :
 	CHoverCar(DummyMesh, CarMesh, InitialPos, InitialRot),
 	IsAlive(true),
 	CanBoost(true),
@@ -323,7 +323,7 @@ void CHoverCar_Player::MovementEachFrame(const float& DeltaTime, const bool& Lef
 	const bool& BoostKeyPress, const float& ThrustFactor, std::vector<CCheckpoint_LI>& CPVec, const float& NumLaps,
 	std::vector<CWallSection_LI>& WallsVec)
 {
-	const CVector2D OldCarPos = { CarDummy->GetX(), CarDummy->GetZ() };
+	const Vector2D OldCarPos = { CarDummy->GetX(), CarDummy->GetZ() };
 
 	// Base movement
 	ProcessRotation(LeftKeyPress, RightKeyPress, DeltaTime);

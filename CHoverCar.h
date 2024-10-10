@@ -2,7 +2,7 @@
 
 #include <TL-Engine11.h>
 #include <vector>
-#include "CVector2D.h"
+#include "Vector2D.h"
 #include "CCollider_Sphere.h"
 
 using namespace tle;
@@ -34,13 +34,13 @@ protected:
 	// These don't change
 	Model* CarDummy;
 	Model* CarModel;
-	CVector2D InitialPos;
+	Vector2D InitialPos;
 	float InitialRotation;
 	CCollider_Sphere SphereCollider;
 
 	// These change
-	CVector2D FacingVec;
-	CVector2D MomentumVec;
+	Vector2D FacingVec;
+	Vector2D MomentumVec;
 	int Health;
 	float RotationSpeed;
 	int CheckpointCounter;
@@ -60,7 +60,7 @@ protected:
 public:
 	// Constructors
 	CHoverCar();
-	CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const CVector2D& Pos, const float& Rot);
+	CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const Vector2D& Pos, const float& Rot);
 
 	// Destructors
 	~CHoverCar();

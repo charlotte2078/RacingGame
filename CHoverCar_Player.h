@@ -40,8 +40,8 @@ private:
 	bool IsAlive;				//= true;
 
 	// private methods
-	CVector2D CalculateThrust(const float& ThrustFactor);
-	CVector2D CalculateDrag();
+	Vector2D CalculateThrust(const float& ThrustFactor);
+	Vector2D CalculateDrag();
 	void CalculateNewMomentum(const float& DeltaTime, const float& ThrustFactor);
 	void MoveByMomentum(const float& DeltaTime);
 	//void UpdateFacingVector(); - moved into CHoverCar
@@ -54,7 +54,7 @@ private:
 	void TakeDamage();
 
 	void CheckpointCollision(std::vector <CCheckpoint_LI>& CheckpointsVec, const float& NumLaps);
-	void WallCollision(std::vector <CWallSection_LI>& WallsVec, const CVector2D& OldCarPos);
+	void WallCollision(std::vector <CWallSection_LI>& WallsVec, const Vector2D& OldCarPos);
 	/*void CheckWaypoints();
 	void CheckpointCollision(std::vector <SCheckpoint>&, const float&, EGameState&);
 	void CheckpointStrutsCollision(std::vector <SCheckpoint>&, const SVector2D&, EGameState&);
@@ -66,7 +66,7 @@ private:
 public:
 	// Constructors
 	CHoverCar_Player();
-	CHoverCar_Player(IMesh* DummyMesh, IMesh* CarMesh, const CVector2D& InitialPos, const float& InitialRot);
+	CHoverCar_Player(IMesh* DummyMesh, IMesh* CarMesh, const Vector2D& InitialPos, const float& InitialRot);
 
 	// Destructor
 	~CHoverCar_Player();

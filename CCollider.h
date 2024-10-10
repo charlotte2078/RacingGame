@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CVector2D.h"
+#include "Vector2D.h"
 #include <TL-Engine11.h>
 
 using namespace tle;
@@ -22,7 +22,7 @@ public:
 	// Setters
 
 	// Getters
-	CVector2D GetPosition() const;
+	Vector2D GetPosition() const;
 
 	// Other public functions
 	void AttachToBase(Model* BaseModel);

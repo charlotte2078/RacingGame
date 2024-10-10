@@ -17,7 +17,7 @@ CTank_LI::CTank_LI(IMesh* TankMesh) :
 
 // Constructor with tank mesh, position, and rotation passed in
 // Creates tank model at correct position and sinks it
-CTank_LI::CTank_LI(IMesh* TankMesh, const CVector2D& NewPos, const float& NewRot) :
+CTank_LI::CTank_LI(IMesh* TankMesh, const Vector2D& NewPos, const float& NewRot) :
 	SphereCollider(),
 	CLevelItem(NewPos, NewRot)
 {

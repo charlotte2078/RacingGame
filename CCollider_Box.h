@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CCollider.h"
-#include "CVector2D.h"
+#include "Vector2D.h"
 #include "CCollider_Sphere.h"
 #include "CCollider_Point.h"
 
@@ -11,25 +11,25 @@ class CCollider_Box :
     public CCollider
 {
 private:
-    CVector2D WidthDepth;
-    CVector2D HalfWidthDepth;
+    Vector2D WidthDepth;
+    Vector2D HalfWidthDepth;
     Model* CornersArray[NumBoxCorners]; // 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
 
 public:
     // Constructors
     CCollider_Box();
-    CCollider_Box(const CVector2D& NewWidthDepth, Mesh* DummyMesh);
-    CCollider_Box(const CVector2D& NewWidthDepth, Mesh* DummyMesh, Model* BaseObject);
+    CCollider_Box(const Vector2D& NewWidthDepth, Mesh* DummyMesh);
+    CCollider_Box(const Vector2D& NewWidthDepth, Mesh* DummyMesh, Model* BaseObject);
 
     // Destructor
     ~CCollider_Box();
 
     // Setters
-    void SetWidthDepth(const CVector2D&);
+    void SetWidthDepth(const Vector2D&);
 
     // Getters
-    CVector2D GetWidthDepth() const;
-    CVector2D GetHalfWidthDepth() const;
+    Vector2D GetWidthDepth() const;
+    Vector2D GetHalfWidthDepth() const;
 
     // Collision functions
     bool BoxToSphere(const class CCollider_Sphere& Sphere) const;

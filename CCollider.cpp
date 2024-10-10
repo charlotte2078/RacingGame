@@ -25,9 +25,9 @@ CCollider::~CCollider()
 }
 
 // Returns the position of the collider centre (X,Z) as a CVector2D.
-CVector2D CCollider::GetPosition() const
+Vector2D CCollider::GetPosition() const
 {
-	return CVector2D(ColliderCentre->GetX(), ColliderCentre->GetZ());
+	return Vector2D(ColliderCentre->GetX(), ColliderCentre->GetZ());
 }
 
 // Attaches the collider to the model passed in.

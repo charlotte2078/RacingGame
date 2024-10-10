@@ -22,7 +22,7 @@ public:
     // constructors
     CTank_LI();
     CTank_LI(IMesh* TankMesh);
-    CTank_LI(IMesh* TankMesh, const CVector2D& Position, const float& XRotation);
+    CTank_LI(IMesh* TankMesh, const Vector2D& Position, const float& XRotation);
 
     // destructors
     ~CTank_LI();

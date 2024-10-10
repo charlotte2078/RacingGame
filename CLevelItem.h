@@ -1,27 +1,27 @@
 #pragma once
 
-#include "CVector2D.h"
+#include "Vector2D.h"
 
 class CLevelItem
 {
 protected:
-	CVector2D PosXZ;
+	Vector2D PosXZ;
 	float RotationY;
 
 public:
 	// constructors
 	CLevelItem();
-	CLevelItem(const CVector2D& NewPos, const float& NewRot);
+	CLevelItem(const Vector2D& NewPos, const float& NewRot);
 
 	// destructors
 	~CLevelItem();
 
 	// setters
-	void SetPosition(const CVector2D& NewPos);
+	void SetPosition(const Vector2D& NewPos);
 	void SetRotationY(const float& NewRot);
 
 	// getters
-	CVector2D GetPosition() const;
+	Vector2D GetPosition() const;
 	float GetRotationY() const;
 };
 

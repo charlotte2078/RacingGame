@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CLevelItem.h"
-#include "CVector2D.h"
+#include "Vector2D.h"
 #include "CCross.h"
 #include "CCollider_Box.h"
 #include <TL-Engine11.h>
@@ -19,13 +19,13 @@ class CCheckpoint_LI :
 {
 private:
 	IModel* CheckpointModel;
-	CVector2D StrutsPos[NumStrutsPerCheckpoint];
+	Vector2D StrutsPos[NumStrutsPerCheckpoint];
 	CCross CheckpointCross;
 	CCollider_Box TriggerZone;
 public:
 	// Constructors
 	CCheckpoint_LI();
-	CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float& CPRot, Mesh* CrossMesh, Mesh* DummyMesh);
+	CCheckpoint_LI(Mesh* CPMesh, const Vector2D& CPPos, const float& CPRot, Mesh* CrossMesh, Mesh* DummyMesh);
 
 	// Destructors
 

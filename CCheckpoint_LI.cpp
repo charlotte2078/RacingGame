@@ -7,7 +7,7 @@ CCheckpoint_LI::CCheckpoint_LI() :
 }
 
 // Constructor that creates checkpoint at position and rotation with sunken cross.
-CCheckpoint_LI::CCheckpoint_LI(Mesh* CPMesh, const CVector2D& CPPos, const float& CPRot, Mesh* CrossMesh, Mesh* DummyMesh) :
+CCheckpoint_LI::CCheckpoint_LI(Mesh* CPMesh, const Vector2D& CPPos, const float& CPRot, Mesh* CrossMesh, Mesh* DummyMesh) :
 	CLevelItem(CPPos, CPRot),	// initialise position and rotation
 	CheckpointCross(CrossMesh),	// create cross
 	TriggerZone({CpWidth, CpDepth}, DummyMesh)

@@ -37,7 +37,7 @@ CHoverCar::CHoverCar() :
 }
 
 // Constructor with meshes and intial position and rotation passed in.
-CHoverCar::CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const CVector2D& Pos, const float& Rot) :
+CHoverCar::CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const Vector2D& Pos, const float& Rot) :
 	InitialPos(Pos),
 	InitialRotation(Rot),
 	Health(CarDefaultHealth),
