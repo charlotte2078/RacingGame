@@ -36,31 +36,19 @@ float CVector2D::SquareMagnitude() const
 // Vector addition
 CVector2D CVector2D::operator+(CVector2D const& Vec) const
 {
-    CVector2D Res;
-    Res.X = X + Vec.X;
-    Res.Y = Y + Vec.Y;
-    
-    return Res;
+    return CVector2D(X + Vec.X, Y + Vec.Y);
 }
 
 // Vector subtraction
 CVector2D CVector2D::operator-(CVector2D const& Vec) const
 {
-    CVector2D Res;
-    Res.X = X - Vec.X;
-    Res.Y = Y - Vec.Y;
-
-    return Res;
+    return CVector2D(X - Vec.X, Y - Vec.Y);
 }
 
 // Scalar multiplication between a vector and a float.
 CVector2D CVector2D::operator*(float const& K) const
 {
-    CVector2D Res;
-    Res.X = X * K;
-    Res.Y = Y * K;
-    
-    return Res;
+    return CVector2D(X * K, Y * K);
 }
 
 // Calculates the dot product of two vectors.
