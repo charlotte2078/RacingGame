@@ -72,10 +72,8 @@ float CVector2D::DotProduct(const CVector2D& OtherVec) const
 // Reflects current vector in another vector. Returns the result.
 CVector2D CVector2D::ReflectInVector(const CVector2D& OtherVec)
 {
-    CVector2D ThisVec(X, Y);
-    CVector2D OtherVecNormalised = OtherVec.Normalise();
-    const float CoefficientOfReflection = 2.0f * DotProduct(OtherVecNormalised);
-    CVector2D Reflection = ThisVec - (OtherVecNormalised * CoefficientOfReflection);
+    const float CoefficientOfReflection = 2.0f * DotProduct(OtherVec.Normalise());
+    CVector2D Reflection = *this - (OtherVec.Normalise() * CoefficientOfReflection);
     
     return Reflection;
 }
