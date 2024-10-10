@@ -28,14 +28,14 @@ public:
 	CVector2D Normalise() const;
 
 	// Operators for adding, subtracting, scalar multiplication
-	CVector2D operator+(CVector2D const& Vec);
-	CVector2D operator-(CVector2D const& Vec);
-	CVector2D operator*(float const& K);
+	CVector2D operator+(CVector2D const& Vec) const;
+	CVector2D operator-(CVector2D const& Vec) const;
+	CVector2D operator*(float const& K) const;
 
 	// Other functions interacting with other vectors
-	float DotProduct(const CVector2D&) const;
-	CVector2D ReflectInVector(const CVector2D&);
-	float Distance(const CVector2D&) const;
-	float SquareDistance(const CVector2D&) const;
+	float DotProduct(const CVector2D& OtherVec) const;
+	CVector2D ReflectInVector(const CVector2D& OtherVec);
+	float Distance(const CVector2D& OtherVec) const;
+	float SquareDistance(const CVector2D& OtherVec) const;
 };
 

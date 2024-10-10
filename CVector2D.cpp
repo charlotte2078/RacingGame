@@ -34,7 +34,7 @@ float CVector2D::SquareMagnitude() const
 }
 
 // Vector addition
-CVector2D CVector2D::operator+(CVector2D const& Vec)
+CVector2D CVector2D::operator+(CVector2D const& Vec) const
 {
     CVector2D Res;
     Res.X = X + Vec.X;
@@ -44,7 +44,7 @@ CVector2D CVector2D::operator+(CVector2D const& Vec)
 }
 
 // Vector subtraction
-CVector2D CVector2D::operator-(CVector2D const& Vec)
+CVector2D CVector2D::operator-(CVector2D const& Vec) const
 {
     CVector2D Res;
     Res.X = X - Vec.X;
@@ -54,7 +54,7 @@ CVector2D CVector2D::operator-(CVector2D const& Vec)
 }
 
 // Scalar multiplication between a vector and a float.
-CVector2D CVector2D::operator*(float const& K)
+CVector2D CVector2D::operator*(float const& K) const
 {
     CVector2D Res;
     Res.X = X * K;
@@ -69,7 +69,7 @@ float CVector2D::DotProduct(const CVector2D& OtherVec) const
     return (X * OtherVec.GetX() + Y * OtherVec.GetY()) ;
 }
 
-// Reflects vector in another vector. Returns the result.
+// Reflects current vector in another vector. Returns the result.
 CVector2D CVector2D::ReflectInVector(const CVector2D& OtherVec)
 {
     CVector2D ThisVec(X, Y);
@@ -80,14 +80,13 @@ CVector2D CVector2D::ReflectInVector(const CVector2D& OtherVec)
     return Reflection;
 }
 
+// Returns the distance between current point and another point.
 float CVector2D::Distance(const CVector2D& OtherVec) const
 {
-    const float DistX = X - OtherVec.X;
-    const float DistY = Y - OtherVec.Y;
-
-    return sqrt(DistX*DistX + DistY*DistY);
+    return (*this - OtherVec).Magnitude();
 }
 
+// Returns the distance squared between current point and another point.
 float CVector2D::SquareDistance(const CVector2D& OtherVec) const
 {
     const float DistX = X - OtherVec.X;
