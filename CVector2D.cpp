@@ -100,11 +100,7 @@ float CVector2D::SquareDistance(const CVector2D& OtherVec) const
 // Returns normalised vector.
 CVector2D CVector2D::Normalise() const
 {
-    const float Length = Magnitude();
+    const float LengthFraction = 1.0f / Magnitude();
 
-    CVector2D Res;
-    Res.X = X / Length;
-    Res.Y = Y / Length;
-
-    return Res;
+    return this->operator*(LengthFraction);
 }
