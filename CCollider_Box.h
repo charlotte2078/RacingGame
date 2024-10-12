@@ -41,5 +41,8 @@ public:
     // Collision functions
     bool BoxToSphere(const class CCollider_Sphere& Sphere) const;
     bool BoxToPoint(const class CCollider_Point& Point) const;
+
+    // Make sphere collider a friend of box colliders
+    friend class CCollider_Sphere;
 };
 

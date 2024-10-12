@@ -9,7 +9,17 @@ void CCollider_Sphere::UpdateAxis(CCollider_Box& Box)
 	for (int i = 0; i < NumBoxCorners; i++)
 	{
 		// Distance between centre and other centre squared
+		const float CurrentDist = (Box.CornersPositionArray[i] - this->CentrePosition).SquareMagnitude();
+
+		if (CurrentDist < MinDist)
+		{
+			MinDist = CurrentDist;
+			ClosestIndex = i;
+		}
 	}
+
+	// Set axis to that of smallest distance
+	Axis = Box.CornersPositionArray[ClosestIndex] - this->CentrePosition;
 }
 
 // Default constructor - sets Radius to 0.0f
