@@ -18,6 +18,28 @@ void CCollider_Box::MoveCornerPositions()
 	CornersArray[3]->SetLocalZ(-HalfWidthDepth.GetY());
 }
 
+// Update the corners array with current corner positions.
+void CCollider_Box::UpdateCornersPosition()
+{
+	for (int i = 0; i < NumBoxCorners; i++)
+	{
+		CornersPositionArray[i].SetX(CornersArray[i]->GetX());
+		CornersPositionArray[i].SetY(CornersArray[i]->GetZ());
+	}
+}
+
+// Only need to check 2 of the 4 axes for each square, because there are 2 parallel pairs of axes.
+// Check the axis perpendicular to top and right sides.
+// Top: Corner[1] - Corner[2]
+// Right: Corner[2] - Corner[3]
+void CCollider_Box::UpdateAxesArray()
+{
+	for (int i = 0; i < NumBoxAxes; i++)
+	{
+		AxesArray[i] = CornersPositionArray[i + 1] - CornersPositionArray[i + 2];
+	}
+}
+
 // Default constructor
 CCollider_Box::CCollider_Box()
 {

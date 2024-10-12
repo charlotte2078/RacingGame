@@ -9,6 +9,10 @@ class CCollider
 {
 protected:
 	Model* ColliderCentre;
+	Vector2D CentrePosition;
+	bool HasMoved;
+
+	void UpdateCentrePosition();
 
 public:
 	// Constructors

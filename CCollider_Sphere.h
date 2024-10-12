@@ -9,6 +9,9 @@ class CCollider_Sphere :
 {
 private:
     float Radius;
+    Vector2D Axis;
+
+    void UpdateAxis(CCollider_Box& Box);
 
 public:
     // constructors

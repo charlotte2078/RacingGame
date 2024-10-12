@@ -1,5 +1,17 @@
 #include "CCollider_Sphere.h"
 
+// Update the axis used for sphere to box SAT collisions.
+void CCollider_Sphere::UpdateAxis(CCollider_Box& Box)
+{
+	float MinDist = FLT_MAX;
+	int ClosestIndex = -1;
+
+	for (int i = 0; i < NumBoxCorners; i++)
+	{
+		// Distance between centre and other centre squared
+	}
+}
+
 // Default constructor - sets Radius to 0.0f
 CCollider_Sphere::CCollider_Sphere() :
 	Radius(0.0f),

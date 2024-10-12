@@ -6,6 +6,7 @@
 #include "CCollider_Point.h"
 
 const int NumBoxCorners = 4;
+const int NumBoxAxes = 2;
 
 class CCollider_Box :
     public CCollider
@@ -14,8 +15,12 @@ private:
     Vector2D WidthDepth;
     Vector2D HalfWidthDepth;
     Model* CornersArray[NumBoxCorners]; // 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
+    Vector2D CornersPositionArray[NumBoxCorners];
+    Vector2D AxesArray[NumBoxAxes];
 
     void MoveCornerPositions();
+    void UpdateCornersPosition();
+    void UpdateAxesArray();
 
 public:
     // Constructors
