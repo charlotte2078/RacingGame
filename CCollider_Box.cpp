@@ -1,5 +1,23 @@
 #include "CCollider_Box.h"
 
+// Moves corners to their correct local position. Corner models must already
+// be created and attached to the centre dummy.
+void CCollider_Box::MoveCornerPositions()
+{
+	// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
+	CornersArray[0]->SetLocalX(-HalfWidthDepth.GetX());
+	CornersArray[0]->SetLocalZ(HalfWidthDepth.GetY());
+
+	CornersArray[1]->SetLocalX(HalfWidthDepth.GetX());
+	CornersArray[1]->SetLocalZ(HalfWidthDepth.GetY());
+
+	CornersArray[2]->SetLocalX(-HalfWidthDepth.GetX());
+	CornersArray[2]->SetLocalZ(-HalfWidthDepth.GetY());
+
+	CornersArray[3]->SetLocalX(HalfWidthDepth.GetX());
+	CornersArray[3]->SetLocalZ(-HalfWidthDepth.GetY());
+}
+
 // Default constructor
 CCollider_Box::CCollider_Box()
 {
@@ -24,22 +42,9 @@ CCollider_Box::CCollider_Box(const Vector2D& NewWidthDepth, Mesh* DummyMesh) :
 		// Create corner dummy models, attach to central dummy model, then move to correct local position.
 		CornersArray[i] = DummyMesh->CreateModel();
 		CornersArray[i]->AttachToParent(ColliderCentre);
-
-		// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
 	}
 
-	// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
-	CornersArray[0]->SetLocalX(-HalfWidthDepth.GetX());
-	CornersArray[0]->SetLocalZ(HalfWidthDepth.GetY());
-
-	CornersArray[1]->SetLocalX(HalfWidthDepth.GetX());
-	CornersArray[1]->SetLocalZ(HalfWidthDepth.GetY());
-
-	CornersArray[2]->SetLocalX(-HalfWidthDepth.GetX());
-	CornersArray[2]->SetLocalZ(-HalfWidthDepth.GetY());
-
-	CornersArray[3]->SetLocalX(HalfWidthDepth.GetX());
-	CornersArray[3]->SetLocalZ(-HalfWidthDepth.GetY());
+	MoveCornerPositions();
 }
 
 // Constructor with WidthDepth, DummyMesh, and the object to attach it to passed in.
@@ -57,22 +62,9 @@ CCollider_Box::CCollider_Box(const Vector2D& NewWD, Mesh* DummyMesh, Model* Base
 		// Create corner dummy models, attach to central dummy model, then move to correct local position.
 		CornersArray[i] = DummyMesh->CreateModel();
 		CornersArray[i]->AttachToParent(ColliderCentre);
-
-		// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
 	}
 
-	// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
-	CornersArray[0]->SetLocalX(-HalfWidthDepth.GetX());
-	CornersArray[0]->SetLocalZ(HalfWidthDepth.GetY());
-
-	CornersArray[1]->SetLocalX(HalfWidthDepth.GetX());
-	CornersArray[1]->SetLocalZ(HalfWidthDepth.GetY());
-
-	CornersArray[2]->SetLocalX(-HalfWidthDepth.GetX());
-	CornersArray[2]->SetLocalZ(-HalfWidthDepth.GetY());
-
-	CornersArray[3]->SetLocalX(HalfWidthDepth.GetX());
-	CornersArray[3]->SetLocalZ(-HalfWidthDepth.GetY());
+	MoveCornerPositions();
 }
 
 // Destructor
@@ -80,7 +72,7 @@ CCollider_Box::~CCollider_Box()
 {
 }
 
-void CCollider_Box::SetWidthDepth(const CVector2D& NewWD)
+void CCollider_Box::SetWidthDepth(const Vector2D& NewWD)
 {
 	WidthDepth = NewWD;
 
@@ -88,12 +80,12 @@ void CCollider_Box::SetWidthDepth(const CVector2D& NewWD)
 	HalfWidthDepth = WidthDepth * 0.5f;
 }
 
-CVector2D CCollider_Box::GetWidthDepth() const
+Vector2D CCollider_Box::GetWidthDepth() const
 {
 	return WidthDepth;
 }
 
-CVector2D CCollider_Box::GetHalfWidthDepth() const
+Vector2D CCollider_Box::GetHalfWidthDepth() const
 {
 	return HalfWidthDepth;
 }
@@ -105,7 +97,7 @@ bool CCollider_Box::BoxToSphere(const CCollider_Sphere& Sphere) const
 	const float BoxX = ColliderCentre->GetX();
 	const float BoxZ = ColliderCentre->GetZ();
 	const float Radius = Sphere.GetRadius();
-	const CVector2D SpherePos = Sphere.GetPosition();
+	const Vector2D SpherePos = Sphere.GetPosition();
 
 	// Calculate XMin and XMax
 	const float XMin = BoxX - HalfWidthDepth.GetX() - Radius;
@@ -124,7 +116,7 @@ bool CCollider_Box::BoxToPoint(const CCollider_Point& Point) const
 	// Collision if the point is within the box bounds.
 	const float BoxX = ColliderCentre->GetX();
 	const float BoxZ = ColliderCentre->GetZ();
-	const CVector2D PointPos = Point.GetPosition();
+	const Vector2D PointPos = Point.GetPosition();
 
 	// Calculate XMin and XMax
 	const float XMin = BoxX - HalfWidthDepth.GetX();

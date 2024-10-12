@@ -2,8 +2,7 @@
 
 #include <TL-Engine11.h>
 #include <vector>
-#include "Vector2D.h"
-#include "CCollider_Sphere.h"
+#include "CCollider_Box.h"
 
 using namespace tle;
 
@@ -36,7 +35,7 @@ protected:
 	Model* CarModel;
 	Vector2D InitialPos;
 	float InitialRotation;
-	CCollider_Sphere SphereCollider;
+	CCollider_Box BoxCollider;
 
 	// These change
 	Vector2D FacingVec;

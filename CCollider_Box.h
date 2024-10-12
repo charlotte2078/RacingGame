@@ -15,6 +15,8 @@ private:
     Vector2D HalfWidthDepth;
     Model* CornersArray[NumBoxCorners]; // 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
 
+    void MoveCornerPositions();
+
 public:
     // Constructors
     CCollider_Box();
@@ -25,7 +27,7 @@ public:
     ~CCollider_Box();
 
     // Setters
-    void SetWidthDepth(const Vector2D&);
+    void SetWidthDepth(const Vector2D& NewWD);
 
     // Getters
     Vector2D GetWidthDepth() const;

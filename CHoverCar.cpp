@@ -30,7 +30,7 @@ CHoverCar::CHoverCar() :
 	InitialPos({0.0f, 0.0f}),
 	FacingVec({0.0f, 1.0f}),
 	MomentumVec({0.0f, 0.0f}),
-	SphereCollider(),
+	BoxCollider(),
 	CheckpointCounter(0),
 	LapCounter(0)
 {
