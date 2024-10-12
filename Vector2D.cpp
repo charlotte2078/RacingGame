@@ -77,7 +77,7 @@ float Vector2D::DotProduct(const Vector2D& OtherVec) const
 }
 
 // Reflects current vector in another vector. Returns the result.
-Vector2D Vector2D::ReflectInVector(const Vector2D& OtherVec)
+Vector2D Vector2D::ReflectInVector(const Vector2D& OtherVec) const
 {
     const float CoefficientOfReflection = 2.0f * DotProduct(OtherVec.Normalise());
     Vector2D Reflection = *this - (OtherVec.Normalise() * CoefficientOfReflection);
@@ -95,6 +95,11 @@ float Vector2D::Distance(const Vector2D& OtherVec) const
 float Vector2D::SquareDistance(const Vector2D& OtherVec) const
 {
     return (*this - OtherVec).SquareMagnitude();
+}
+
+Vector2D Vector2D::PerpendicularVector() const
+{
+    return Vector2D(-Y, X);
 }
 
 // Returns normalised vector.

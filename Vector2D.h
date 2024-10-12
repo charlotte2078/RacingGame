@@ -37,8 +37,9 @@ public:
 
 	// Other functions interacting with other vectors
 	float DotProduct(const Vector2D& OtherVec) const;
-	Vector2D ReflectInVector(const Vector2D& OtherVec);
+	Vector2D ReflectInVector(const Vector2D& OtherVec) const;
 	float Distance(const Vector2D& OtherVec) const;
 	float SquareDistance(const Vector2D& OtherVec) const;
+	Vector2D PerpendicularVector() const;
 };
 
