@@ -2,6 +2,7 @@
 
 #include "CCollider.h"
 
+// Forward declarations
 class CCollider_Sphere;
 
 const int NumBoxCorners = 4;
@@ -20,6 +21,8 @@ private:
     void MoveCornerPositions();
     void UpdateCornersPosition();
     void UpdateAxesArray();
+    bool CheckCollisionAxisBoxes(const Vector2D& Axis, const CCollider_Box& OtherBox);
+    void GetMinMaxVertexOnAxis(const Vector2D& Axis, float& Min, float& Max);
 
 public:
     // Constructors
@@ -38,7 +41,9 @@ public:
     Vector2D GetHalfWidthDepth() const;
 
     // Collision functions
-    bool BoxToSphere(const class CCollider_Sphere& Sphere) const;
+    bool BoxToSphere(const CCollider_Sphere& Sphere) const;
+    bool SATBoxToSphere(const CCollider_Sphere& Sphere) const;
+    bool SATBoxToBox(CCollider_Box& Box);
 
     // Make sphere collider a friend of box colliders
     friend class CCollider_Sphere;

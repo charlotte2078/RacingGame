@@ -208,48 +208,48 @@ void CHoverCar_Player::CheckHealth()
 // Check for collisions with <counter> checkpoint (point to box)
 void CHoverCar_Player::CheckpointCollision(std::vector<CCheckpoint_LI>& CheckpointsVec, const float& NumLaps)
 {
-	if (SphereCollider.SphereToBox(CheckpointsVec.at(CheckpointCounter).GetTriggerZone()))
-	{
-		// Make cross appear
-		CheckpointsVec.at(CheckpointCounter).MakeCrossAppear();
+	//if (SphereCollider.SphereToBox(CheckpointsVec.at(CheckpointCounter).GetTriggerZone()))
+	//{
+	//	// Make cross appear
+	//	CheckpointsVec.at(CheckpointCounter).MakeCrossAppear();
 
-		// Increase checkpoint counter
-		CheckpointCounter++;
+	//	// Increase checkpoint counter
+	//	CheckpointCounter++;
 
-		// If completed a lap, reset checkpoint counter to 0 and increase lap counter.
-		if (CheckpointCounter == CheckpointsVec.size())
-		{
-			LapCounter++;
-			CheckpointCounter = 0;
+	//	// If completed a lap, reset checkpoint counter to 0 and increase lap counter.
+	//	if (CheckpointCounter == CheckpointsVec.size())
+	//	{
+	//		LapCounter++;
+	//		CheckpointCounter = 0;
 
-			// Check for finishing the race
-			if (LapCounter == NumLaps)
-			{
-				// RACE OVER - ADD LATER
-			}
-		}
-	}
+	//		// Check for finishing the race
+	//		if (LapCounter == NumLaps)
+	//		{
+	//			// RACE OVER - ADD LATER
+	//		}
+	//	}
+	//}
 }
 
 // Collision between wall and player car.
 void CHoverCar_Player::WallCollision(std::vector<CWallSection_LI>& WallsVec, const Vector2D& OldCarPos)
 {
-	for (int i = 0; i < WallsVec.size(); i++)
-	{
-		CCollider_Box WallCollider = WallsVec.at(i).GetWallCollider();
-		
-		if (SphereCollider.SphereToBox(WallCollider))
-		{
-			// car takes damage
+	//for (int i = 0; i < WallsVec.size(); i++)
+	//{
+	//	CCollider_Box WallCollider = WallsVec.at(i).GetWallCollider();
+	//	
+	//	if (SphereCollider.SphereToBox(WallCollider))
+	//	{
+	//		// car takes damage
 
-			// set pos to old pos
-			CarDummy->SetX(OldCarPos.GetX());
-			CarDummy->SetZ(OldCarPos.GetY());
+	//		// set pos to old pos
+	//		CarDummy->SetX(OldCarPos.GetX());
+	//		CarDummy->SetZ(OldCarPos.GetY());
 
-			// reverse momentum 
-			MomentumVec = MomentumVec * -10.0f;
-		}
-	}
+	//		// reverse momentum 
+	//		MomentumVec = MomentumVec * -10.0f;
+	//	}
+	//}
 	
 	//for (int i = 0; i < wallColliders.size(); i++)
 		//	{

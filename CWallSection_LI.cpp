@@ -80,3 +80,13 @@ CCollider_Box CWallSection_LI::GetWallCollider()
 {
 	return BoxCollider;
 }
+
+Model* CWallSection_LI::GetDummyModel()
+{
+	return DummyModel;
+}
+
+void CWallSection_LI::ChangeHasMoved()
+{
+	BoxCollider.UpdateHasMoved();
+}

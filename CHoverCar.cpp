@@ -54,8 +54,8 @@ CHoverCar::CHoverCar(Mesh* DummyMesh, Mesh* CarMesh, const Vector2D& Pos, const 
 	CarModel = CarMesh->CreateModel();
 	CarModel->AttachToParent(CarDummy);
 
-	// Initialise the sphere collider
-	SphereCollider = CCollider_Sphere(CarDefaultRadius, DummyMesh, CarDummy);
+	//// Initialise the sphere collider
+	//SphereCollider = CCollider_Sphere(CarDefaultRadius, DummyMesh, CarDummy);
 
 	// Calculate Facing Vector
 	UpdateFacingVec();

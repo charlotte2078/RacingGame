@@ -139,3 +139,90 @@ bool CCollider_Box::BoxToSphere(const CCollider_Sphere& Sphere) const
 
 	return ((SpherePos.GetX() <= XMax && SpherePos.GetX() >= XMin) && (SpherePos.GetY() <= ZMax && SpherePos.GetY() >= ZMin));
 }
+
+bool CCollider_Box::SATBoxToSphere(const CCollider_Sphere& Sphere) const
+{
+	
+	
+	return false;
+}
+
+bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox)
+{
+	// Update box positions if necessary
+	UpdateCornersPosition();
+	OtherBox.UpdateCornersPosition();
+
+	// Check each axis of first box for collision
+	for (int i = 0; i < NumBoxAxes; i++)
+	{
+		if (!CheckCollisionAxisBoxes(AxesArray[i], OtherBox))
+		{
+			return false;
+		}
+	}
+
+	// Check each axis of second box for collision
+	for (int i = 0; i < NumBoxAxes; i++)
+	{
+		if (!OtherBox.CheckCollisionAxisBoxes(AxesArray[i], *this))
+		{
+			return false;
+		}
+	}
+
+	// Must be colliding if reach this point
+	// Check that the collision data axis is in the same direction that we want it for resolution
+
+	return true;
+}
+
+bool CCollider_Box::CheckCollisionAxisBoxes(const Vector2D& Axis, const CCollider_Box& OtherBox)
+{
+	// Get Min/Max points on current axis from each box
+	float Min1, Max1, Min2, Max2;
+	GetMinMaxVertexOnAxis(Axis, Min1, Max1);
+	GetMinMaxVertexOnAxis(Axis, Min2, Max2);
+
+	// Overlap test 
+	// First way (A < C AND B > C)
+	// Second way (C < A AND D > A)
+	if ((Min1 <= Min2 && Max1 >= Min2) || (Min2 <= Min1 && Max2 >= Min1))
+	{
+		//// If they are overlapping, update collision data.
+		//Data.UpdateData(Axis, Min1, Max1, Min2, Max2);
+
+		/*Vector2D NormalDirection(CentrePosition - OtherBox.CentrePosition);
+		if (NormalDirection.DotProduct(Data.mNormal) < 0.0f)
+		{
+			Data.mNormal.Reverse();
+		}*/
+
+		return true;
+	}
+
+	return false;
+}
+
+void CCollider_Box::GetMinMaxVertexOnAxis(const Vector2D& Axis, float& Min, float& Max)
+{
+	// Assume initial min/max
+	Min = CornersPositionArray[0].DotProduct(Axis);
+	Max = Min;
+
+	// Loop through remaining vertices to find min/max
+	for (int i = 1; i < NumBoxCorners; i++)
+	{
+		float Projection = CornersPositionArray[i].DotProduct(Axis);
+
+		if (Projection < Min)
+		{
+			Min = Projection;
+		}
+
+		if (Projection > Max)
+		{
+			Max = Projection;
+		}
+	}
+}
