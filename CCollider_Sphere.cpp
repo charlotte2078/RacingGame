@@ -4,23 +4,28 @@
 // Update the axis used for sphere to box SAT collisions.
 void CCollider_Sphere::UpdateAxis(CCollider_Box& Box)
 {
-	float MinDist = FLT_MAX;
-	int ClosestIndex = -1;
-
-	for (int i = 0; i < NumBoxCorners; i++)
+	if (HasMoved)
 	{
-		// Distance between centre and other centre squared
-		const float CurrentDist = (Box.CornersPositionArray[i] - this->CentrePosition).SquareMagnitude();
+		UpdateCentrePosition();
 
-		if (CurrentDist < MinDist)
+		float MinDist = FLT_MAX;
+		int ClosestIndex = -1;
+
+		for (int i = 0; i < NumBoxCorners; i++)
 		{
-			MinDist = CurrentDist;
-			ClosestIndex = i;
-		}
-	}
+			// Distance between centre and other centre squared
+			const float CurrentDist = (Box.CornersPositionArray[i] - this->CentrePosition).SquareMagnitude();
 
-	// Set axis to that of smallest distance
-	Axis = Box.CornersPositionArray[ClosestIndex] - this->CentrePosition;
+			if (CurrentDist < MinDist)
+			{
+				MinDist = CurrentDist;
+				ClosestIndex = i;
+			}
+		}
+
+		// Set axis to that of smallest distance
+		Axis = Box.CornersPositionArray[ClosestIndex] - this->CentrePosition;
+	}
 }
 
 // Default constructor - sets Radius to 0.0f

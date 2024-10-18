@@ -24,6 +24,7 @@ public:
 	~CCollider();
 
 	// Setters
+	void UpdateHasMoved();
 
 	// Getters
 	Vector2D GetPosition() const;

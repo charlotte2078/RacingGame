@@ -22,10 +22,17 @@ void CCollider_Box::MoveCornerPositions()
 // Update the corners array with current corner positions.
 void CCollider_Box::UpdateCornersPosition()
 {
-	for (int i = 0; i < NumBoxCorners; i++)
+	if (HasMoved)
 	{
-		CornersPositionArray[i].SetX(CornersArray[i]->GetX());
-		CornersPositionArray[i].SetY(CornersArray[i]->GetZ());
+		UpdateCentrePosition();
+
+		for (int i = 0; i < NumBoxCorners; i++)
+		{
+			CornersPositionArray[i].SetX(CornersArray[i]->GetX());
+			CornersPositionArray[i].SetY(CornersArray[i]->GetZ());
+		}
+
+		UpdateAxesArray();
 	}
 }
 

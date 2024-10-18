@@ -35,12 +35,16 @@ CCollider::CCollider(Mesh* DummyMesh, Model* BaseObject)
 	ColliderCentre->AttachToParent(BaseObject);
 
 	HasMoved = true;
-	UpdateCentrePosition();
 }
 
 // Destructor - does nothing
 CCollider::~CCollider()
 {
+}
+
+void CCollider::UpdateHasMoved()
+{
+	HasMoved = true;
 }
 
 // Returns the position of the collider centre (X,Z) as a CVector2D.
