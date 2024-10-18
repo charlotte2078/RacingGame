@@ -1,9 +1,8 @@
 #pragma once
 
 #include "CCollider.h"
-#include "Vector2D.h"
-#include "CCollider_Sphere.h"
-#include "CCollider_Point.h"
+
+class CCollider_Sphere;
 
 const int NumBoxCorners = 4;
 const int NumBoxAxes = 2;
@@ -40,9 +39,7 @@ public:
 
     // Collision functions
     bool BoxToSphere(const class CCollider_Sphere& Sphere) const;
-    bool BoxToPoint(const class CCollider_Point& Point) const;
 
     // Make sphere collider a friend of box colliders
     friend class CCollider_Sphere;
 };
-

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CCollider.h"
-#include "CCollider_Box.h"
-#include "CCollider_Point.h"
+
+class CCollider_Box;
 
 class CCollider_Sphere :
     public CCollider
@@ -29,7 +29,5 @@ public:
 
     // collision functions
     bool SphereToSphere(const CCollider_Sphere& OtherSphere) const;
-    bool SphereToBox(const class CCollider_Box& Box) const;
-    bool SphereToPoint(const class CCollider_Point& Point) const;
-};
 
+};
