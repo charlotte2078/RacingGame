@@ -3,20 +3,14 @@
 // Update CentrePosition if the collider has moved.
 void CCollider::UpdateCentrePosition()
 {
-	if (HasMoved)
-	{
-		CentrePosition.SetX(ColliderCentre->GetX());
-		CentrePosition.SetY(ColliderCentre->GetZ());
-
-		HasMoved = false;
-	}
+	CentrePosition.X = ColliderCentre->GetX();
+	CentrePosition.Y = ColliderCentre->GetZ();
 }
 
 // Default constructor - do not use
 CCollider::CCollider() :
 	ColliderCentre(nullptr),
-	CentrePosition(),
-	HasMoved(false)
+	CentrePosition()
 {
 }
 
@@ -24,7 +18,6 @@ CCollider::CCollider() :
 CCollider::CCollider(Mesh* DummyMesh)
 {
 	ColliderCentre = DummyMesh->CreateModel();
-	HasMoved = true;
 	UpdateCentrePosition();
 }
 
@@ -33,18 +26,11 @@ CCollider::CCollider(Mesh* DummyMesh, Model* BaseObject)
 {
 	ColliderCentre = DummyMesh->CreateModel();
 	ColliderCentre->AttachToParent(BaseObject);
-
-	HasMoved = true;
 }
 
 // Destructor - does nothing
 CCollider::~CCollider()
 {
-}
-
-void CCollider::UpdateHasMoved()
-{
-	HasMoved = true;
 }
 
 // Returns the position of the collider centre (X,Z) as a CVector2D.

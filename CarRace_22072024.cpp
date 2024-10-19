@@ -51,33 +51,35 @@ int main()
 	// floor setup
 	Model* floor = floorMesh->CreateModel();
 
+	IFont* myFont = myEngine->LoadFont("Comic Sans MS", 36);
+
 	// Camera for testing
 	Camera* TestCam = myEngine->CreateCamera(ManualCamera);
 
-	// Wall section testing
-	Vector2D WallPosition1(-10, 56); // no rotation
-	Vector2D WallPosition2(106, 46); // 90 degree rotation
-	Vector2D WallPosition3(50, 20);
+	// Box colliders for testing
+	CCollider_Box MoveableCollider({ 10.0f, 10.0f }, crossMesh);
+	TestCam->AttachToParent(MoveableCollider.GetCentre());
+	MoveableCollider.GetCentre()->MoveZ(-50.0f);
+	CCollider_Box StationaryCollider({ 20.0f, 10.0f }, crossMesh);
 
-	CWallSection_LI Wall1(dummyMesh, wallMesh, isleMesh, WallPosition1, 0.0f);
-	CWallSection_LI Wall2(dummyMesh, wallMesh, isleMesh, WallPosition2, 90.0f);
-	CWallSection_LI Wall3(dummyMesh, wallMesh, isleMesh, WallPosition3, 50.0f);
+	//// Wall section testing
+	//Vector2D WallPosition1(-10, 56); // no rotation
+	//Vector2D WallPosition2(106, 46); // 90 degree rotation
+	//Vector2D WallPosition3(50, 20);
 
-	// Checkpoint constructor testing
-	Vector2D CheckpointPos1(10, 120); // 90 degree rotation
-	Vector2D CheckpointPos2(25, 56); // 0 degree rotation
-	Vector2D CheckpointPos3(100, 100); // 45 degree rotation
+	//CWallSection_LI Wall1(dummyMesh, wallMesh, isleMesh, WallPosition1, 0.0f);
+	//CWallSection_LI Wall2(dummyMesh, wallMesh, isleMesh, WallPosition2, 90.0f);
+	//CWallSection_LI Wall3(dummyMesh, wallMesh, isleMesh, WallPosition3, 50.0f);
 
-	CCheckpoint_LI CP1(checkpointMesh, CheckpointPos1, 90.0f, crossMesh, dummyMesh);
-	CCheckpoint_LI CP2(checkpointMesh, CheckpointPos2, 0.0f, crossMesh, dummyMesh);
-	CCheckpoint_LI CP3(checkpointMesh, CheckpointPos3, 45.0f, crossMesh, dummyMesh);
+	//// Checkpoint constructor testing
+	//Vector2D CheckpointPos1(10, 120); // 90 degree rotation
+	//Vector2D CheckpointPos2(25, 56); // 0 degree rotation
+	//Vector2D CheckpointPos3(100, 100); // 45 degree rotation
 
-	// Testing box collider using a moveable wall !
-	CWallSection_LI MoveableWall(dummyMesh, wallMesh, isleMesh, { 0.0f, 0.0f }, 0.0f);
-	TestCam->AttachToParent(MoveableWall.GetDummyModel());
-	CCollider_Box MoveableCollider = MoveableWall.GetWallCollider();
+	//CCheckpoint_LI CP1(checkpointMesh, CheckpointPos1, 90.0f, crossMesh, dummyMesh);
+	//CCheckpoint_LI CP2(checkpointMesh, CheckpointPos2, 0.0f, crossMesh, dummyMesh);
+	//CCheckpoint_LI CP3(checkpointMesh, CheckpointPos3, 45.0f, crossMesh, dummyMesh);
 
-	IFont* myFont = myEngine->LoadFont("Comic Sans MS", 36);
 
 	//// Testing box colliders
 	//Model* TankTest = waterTankMesh->CreateModel(-10.0f, 0.0f, -25.0f);
@@ -100,10 +102,10 @@ int main()
 	//CHoverCar HoverCarTest3(dummyMesh, carMesh, { 0.0f, 50.0f }, 270.0f);
 
 	// Testing player car collision with checkpoints - need a vec of checkpoints and a moveable player car.
-	std::vector<CCheckpoint_LI> CPVec;
-	CPVec.push_back(CP1);
-	CPVec.push_back(CP2);
-	CPVec.push_back(CP3);
+	//std::vector<CCheckpoint_LI> CPVec;
+	//CPVec.push_back(CP1);
+	//CPVec.push_back(CP2);
+	//CPVec.push_back(CP3);
 	const int TotalLaps = 1;
 	const EKeyCode Forwards = Key_W;
 	const EKeyCode Backwards = Key_S;
@@ -111,12 +113,6 @@ int main()
 	const EKeyCode Right = Key_D;
 	const EKeyCode Boost = Key_Space;
 	//CHoverCar_Player PlayerCar(dummyMesh, carMesh, {0.0f, 0.0f}, 0.0f);
-
-	// testing car collision with walls
-	std::vector<CWallSection_LI> WallsVec;
-	WallsVec.push_back(Wall1);
-	WallsVec.push_back(Wall2);
-	WallsVec.push_back(Wall3);
 
 	// Main game loop
 	while (myEngine->IsRunning())
@@ -129,34 +125,25 @@ int main()
 		// Testing collisions between two box colliders
 		if (myEngine->KeyHeld(Forwards))
 		{
-			MoveableWall.GetDummyModel()->MoveZ(DeltaTime * 20.0f);
-			MoveableWall.ChangeHasMoved();
+			MoveableCollider.GetCentre()->MoveZ(DeltaTime * 20.0f);
 		}
 		if (myEngine->KeyHeld(Backwards))
 		{
-			MoveableWall.GetDummyModel()->MoveZ(-DeltaTime * 20.0f);
-			MoveableWall.ChangeHasMoved();
+			MoveableCollider.GetCentre()->MoveZ(-DeltaTime * 20.0f);
 		}
 		if (myEngine->KeyHeld(Left))
 		{
-			MoveableWall.GetDummyModel()->MoveX(-DeltaTime * 20.0f);
-			MoveableWall.ChangeHasMoved();
+			MoveableCollider.GetCentre()->MoveX(-DeltaTime * 20.0f);
 		}
 		if (myEngine->KeyHeld(Right))
 		{
-			MoveableWall.GetDummyModel()->MoveX(DeltaTime * 20.0f);
-			MoveableWall.ChangeHasMoved();
+			MoveableCollider.GetCentre()->MoveX(DeltaTime * 20.0f);
 		}
 
-		// check collisions
-		for (int i = 0; i < WallsVec.size(); i++)
+		// Test collisions
+		if (MoveableCollider.SATBoxToBox(StationaryCollider))
 		{
-			CCollider_Box CurrentCollider = WallsVec.at(i).GetWallCollider();
-
-			if (MoveableCollider.SATBoxToBox(CurrentCollider))
-			{
-				myFont->Draw("Collision detected!!!!", 10, 20, kBlack);
-			}
+			myFont->Draw("collision detected", 10, 10, Black);
 		}
 
 		//// Game logic!

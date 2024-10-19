@@ -22,8 +22,8 @@ void CHoverCar_Player::CalculateNewMomentum(const float& DeltaTime, const float&
 // Moves the car using its momentum vector multiplied by DeltaTime
 void CHoverCar_Player::MoveByMomentum(const float& DeltaTime)
 {
-	CarDummy->MoveX(MomentumVec.GetX() * DeltaTime);
-	CarDummy->MoveZ(MomentumVec.GetY() * DeltaTime);
+	CarDummy->MoveX(MomentumVec.X * DeltaTime);
+	CarDummy->MoveZ(MomentumVec.Y * DeltaTime);
 }
 
 // Changes boost timers and multipliers. If the player can boost and they press the boost key,

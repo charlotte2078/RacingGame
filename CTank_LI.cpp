@@ -21,7 +21,7 @@ CTank_LI::CTank_LI(IMesh* TankMesh, const Vector2D& NewPos, const float& NewRot)
 	SphereCollider(),
 	CLevelItem(NewPos, NewRot)
 {
-	TankModel = TankMesh->CreateModel(PosXZ.GetX(), TankSinkHeight, PosXZ.GetY());
+	TankModel = TankMesh->CreateModel(PosXZ.X, TankSinkHeight, PosXZ.Y);
 	TankModel->RotateX(NewRot);
 }
 

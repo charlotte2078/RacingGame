@@ -18,7 +18,7 @@ CCheckpoint_LI::CCheckpoint_LI(Mesh* CPMesh, const Vector2D& CPPos, const float&
 	CCollider_Box TriggerZone;*/
 
 	// Create checpoint model at correct position. Attach the Box collider to the Model. Then rotate.
-	CheckpointModel = CPMesh->CreateModel(PosXZ.GetX(), 0.0f, PosXZ.GetY());
+	CheckpointModel = CPMesh->CreateModel(PosXZ.X, 0.0f, PosXZ.Y);
 	TriggerZone.AttachToBase(CheckpointModel);
 	CheckpointModel->RotateY(CPRot);
 

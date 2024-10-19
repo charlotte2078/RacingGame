@@ -4,8 +4,8 @@
 void CHoverCar::MoveToInitialPosRot()
 {
 	// Position
-	CarDummy->SetX(InitialPos.GetX());
-	CarDummy->SetZ(InitialPos.GetY());
+	CarDummy->SetX(InitialPos.X);
+	CarDummy->SetZ(InitialPos.Y);
 	
 	// Rotation
 	CarDummy->ResetOrientation();

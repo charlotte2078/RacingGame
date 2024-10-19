@@ -35,9 +35,5 @@ public:
 
     // getters
     CCollider_Box GetWallCollider();
-
-    // TEMPORARY!!!!!!! REMOVE LATER
-    Model* GetDummyModel();
-    void ChangeHasMoved();
 };
 

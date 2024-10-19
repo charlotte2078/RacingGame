@@ -5,35 +5,39 @@
 // be created and attached to the centre dummy.
 void CCollider_Box::MoveCornerPositions()
 {
-	// 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
-	CornersArray[0]->SetLocalX(-HalfWidthDepth.GetX());
-	CornersArray[0]->SetLocalZ(HalfWidthDepth.GetY());
+	// 0 = top left; 1 = top right; 2 = bottom right; 3 = bottom left
+	CornersArray[0]->SetLocalX(-HalfWidthDepth.X);
+	CornersArray[0]->SetLocalZ(HalfWidthDepth.Y);
 
-	CornersArray[1]->SetLocalX(HalfWidthDepth.GetX());
-	CornersArray[1]->SetLocalZ(HalfWidthDepth.GetY());
+	CornersArray[1]->SetLocalX(HalfWidthDepth.X);
+	CornersArray[1]->SetLocalZ(HalfWidthDepth.Y);
 
-	CornersArray[2]->SetLocalX(-HalfWidthDepth.GetX());
-	CornersArray[2]->SetLocalZ(-HalfWidthDepth.GetY());
+	CornersArray[2]->SetLocalX(HalfWidthDepth.X);
+	CornersArray[2]->SetLocalZ(-HalfWidthDepth.Y);
 
-	CornersArray[3]->SetLocalX(HalfWidthDepth.GetX());
-	CornersArray[3]->SetLocalZ(-HalfWidthDepth.GetY());
+	CornersArray[3]->SetLocalX(-HalfWidthDepth.X);
+	CornersArray[3]->SetLocalZ(-HalfWidthDepth.Y);
+
+	// Set up corners position array
+	for (int i = 0; i < NumBoxCorners; i++)
+	{
+		CornersPositionArray[i].X = CornersArray[i]->GetX();
+		CornersPositionArray[i].Y = CornersArray[i]->GetZ();
+	}
 }
 
 // Update the corners array with current corner positions.
 void CCollider_Box::UpdateCornersPosition()
 {
-	if (HasMoved)
+	UpdateCentrePosition();
+
+	for (int i = 0; i < NumBoxCorners; i++)
 	{
-		UpdateCentrePosition();
-
-		for (int i = 0; i < NumBoxCorners; i++)
-		{
-			CornersPositionArray[i].SetX(CornersArray[i]->GetX());
-			CornersPositionArray[i].SetY(CornersArray[i]->GetZ());
-		}
-
-		UpdateAxesArray();
+		CornersPositionArray[i].X = CornersArray[i]->GetX();
+		CornersPositionArray[i].Y = CornersArray[i]->GetZ();
 	}
+
+	UpdateAxesArray();
 }
 
 // Only need to check 2 of the 4 axes for each square, because there are 2 parallel pairs of axes.
@@ -64,8 +68,8 @@ CCollider_Box::CCollider_Box(const Vector2D& NewWidthDepth, Mesh* DummyMesh) :
 {
 	// Calculate half width and depth.
 	//HalfWidthDepth = NewWD * 0.5f;
-	HalfWidthDepth.SetX(0.5f * NewWidthDepth.GetX());
-	HalfWidthDepth.SetY(0.5f * NewWidthDepth.GetY());
+	HalfWidthDepth.X = 0.5f * NewWidthDepth.X;
+	HalfWidthDepth.Y = 0.5f * NewWidthDepth.Y;
 
 	for (int i = 0; i < NumBoxCorners; i++)
 	{
@@ -84,8 +88,8 @@ CCollider_Box::CCollider_Box(const Vector2D& NewWD, Mesh* DummyMesh, Model* Base
 {
 	// Calculate half width and depth.
 	//HalfWidthDepth = NewWD * 0.5f;
-	HalfWidthDepth.SetX(0.5f * NewWD.GetX());
-	HalfWidthDepth.SetY(0.5f * NewWD.GetY());
+	HalfWidthDepth.X = 0.5f * NewWD.X;
+	HalfWidthDepth.Y = 0.5f * NewWD.Y;
 	
 	for (int i = 0; i < NumBoxCorners; i++)
 	{
@@ -130,14 +134,14 @@ bool CCollider_Box::BoxToSphere(const CCollider_Sphere& Sphere) const
 	const Vector2D SpherePos = Sphere.GetPosition();
 
 	// Calculate XMin and XMax
-	const float XMin = BoxX - HalfWidthDepth.GetX() - Radius;
-	const float XMax = BoxX + HalfWidthDepth.GetX() + Radius;
+	const float XMin = BoxX - HalfWidthDepth.X - Radius;
+	const float XMax = BoxX + HalfWidthDepth.X + Radius;
 
 	// Calculate ZMin and ZMax
-	const float ZMin = BoxZ - HalfWidthDepth.GetY() - Radius;
-	const float ZMax = BoxZ + HalfWidthDepth.GetY() + Radius;
+	const float ZMin = BoxZ - HalfWidthDepth.Y - Radius;
+	const float ZMax = BoxZ + HalfWidthDepth.Y + Radius;
 
-	return ((SpherePos.GetX() <= XMax && SpherePos.GetX() >= XMin) && (SpherePos.GetY() <= ZMax && SpherePos.GetY() >= ZMin));
+	return ((SpherePos.X <= XMax && SpherePos.X >= XMin) && (SpherePos.Y <= ZMax && SpherePos.Y >= ZMin));
 }
 
 bool CCollider_Box::SATBoxToSphere(const CCollider_Sphere& Sphere) const
@@ -177,12 +181,17 @@ bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox)
 	return true;
 }
 
-bool CCollider_Box::CheckCollisionAxisBoxes(const Vector2D& Axis, const CCollider_Box& OtherBox)
+Model* CCollider_Box::GetCentre()
+{
+	return ColliderCentre;
+}
+
+bool CCollider_Box::CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box& OtherBox)
 {
 	// Get Min/Max points on current axis from each box
 	float Min1, Max1, Min2, Max2;
 	GetMinMaxVertexOnAxis(Axis, Min1, Max1);
-	GetMinMaxVertexOnAxis(Axis, Min2, Max2);
+	OtherBox.GetMinMaxVertexOnAxis(Axis, Min2, Max2);
 
 	// Overlap test 
 	// First way (A < C AND B > C)

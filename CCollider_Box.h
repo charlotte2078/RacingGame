@@ -14,14 +14,14 @@ class CCollider_Box :
 private:
     Vector2D WidthDepth;
     Vector2D HalfWidthDepth;
-    Model* CornersArray[NumBoxCorners]; // 0 = top left; 1 = top right; 2 = bottom left; 3 = bottom right
+    Model* CornersArray[NumBoxCorners]; // 0 = top left; 1 = top right; 2 = bottom right; 3 = bottom left
     Vector2D CornersPositionArray[NumBoxCorners];
     Vector2D AxesArray[NumBoxAxes];
 
     void MoveCornerPositions();
     void UpdateCornersPosition();
     void UpdateAxesArray();
-    bool CheckCollisionAxisBoxes(const Vector2D& Axis, const CCollider_Box& OtherBox);
+    bool CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box& OtherBox);
     void GetMinMaxVertexOnAxis(const Vector2D& Axis, float& Min, float& Max);
 
 public:
@@ -44,6 +44,9 @@ public:
     bool BoxToSphere(const CCollider_Sphere& Sphere) const;
     bool SATBoxToSphere(const CCollider_Sphere& Sphere) const;
     bool SATBoxToBox(CCollider_Box& Box);
+
+    // REMOVE LATER!!!!
+    Model* GetCentre();
 
     // Make sphere collider a friend of box colliders
     friend class CCollider_Sphere;

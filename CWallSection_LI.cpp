@@ -64,8 +64,8 @@ CWallSection_LI::CWallSection_LI(Mesh* DummyMesh, Mesh* WallMesh, Mesh* IsleMesh
 	BoxCollider.AttachToBase(DummyModel);
 	
 	// Move dummy model to pos
-	DummyModel->SetX(PosXZ.GetX());
-	DummyModel->SetZ(PosXZ.GetY());
+	DummyModel->SetX(PosXZ.X);
+	DummyModel->SetZ(PosXZ.Y);
 
 	// Rotate dummy model by rotation
 	DummyModel->RotateY(RotationY);
@@ -79,14 +79,4 @@ CWallSection_LI::~CWallSection_LI()
 CCollider_Box CWallSection_LI::GetWallCollider()
 {
 	return BoxCollider;
-}
-
-Model* CWallSection_LI::GetDummyModel()
-{
-	return DummyModel;
-}
-
-void CWallSection_LI::ChangeHasMoved()
-{
-	BoxCollider.UpdateHasMoved();
 }

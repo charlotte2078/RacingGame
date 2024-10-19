@@ -10,7 +10,6 @@ class CCollider
 protected:
 	Model* ColliderCentre;
 	Vector2D CentrePosition;
-	bool HasMoved;
 
 	void UpdateCentrePosition();
 
@@ -24,7 +23,6 @@ public:
 	~CCollider();
 
 	// Setters
-	void UpdateHasMoved();
 
 	// Getters
 	Vector2D GetPosition() const;

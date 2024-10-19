@@ -2,25 +2,16 @@
 
 class Vector2D
 {
-private:
+public:
 	float X; // = 0.0f using defualt constructor
 	float Y; // = 0.0f using default constructor
 
-public:
 	// Constructors
 	Vector2D(); // Default constructor
 	Vector2D(const float& NewX, const float& NewY);
 
 	// Destructors
 	~Vector2D(); // Default destructor
-
-	// Getters
-	float GetX() const { return X; }
-	float GetY() const { return Y; }
-
-	// Setters
-	void SetX(const float NewX) { X = NewX; }
-	void SetY(const float NewY) { Y = NewY; }
 
 	// Magnitude functions
 	float Magnitude() const;
