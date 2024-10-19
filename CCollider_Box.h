@@ -4,6 +4,7 @@
 
 // Forward declarations
 class CCollider_Sphere;
+class CollisionData;
 
 const int NumBoxCorners = 4;
 const int NumBoxAxes = 2;
@@ -21,7 +22,7 @@ private:
     void MoveCornerPositions();
     void UpdateCornersPosition();
     void UpdateAxesArray();
-    bool CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box& OtherBox);
+    bool CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box& OtherBox, CollisionData& ColData);
     void GetMinMaxVertexOnAxis(const Vector2D& Axis, float& Min, float& Max);
 
 public:
@@ -43,7 +44,7 @@ public:
     // Collision functions
     bool BoxToSphere(const CCollider_Sphere& Sphere) const;
     bool SATBoxToSphere(const CCollider_Sphere& Sphere) const;
-    bool SATBoxToBox(CCollider_Box& Box);
+    bool SATBoxToBox(CCollider_Box& Box, CollisionData& ColData);
 
     // REMOVE LATER!!!!
     Model* GetCentre();

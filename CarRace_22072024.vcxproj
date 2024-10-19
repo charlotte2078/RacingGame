@@ -111,6 +111,7 @@
     <ClCompile Include="CHoverCar.cpp" />
     <ClCompile Include="CHoverCar_Player.cpp" />
     <ClCompile Include="CLevelItem.cpp" />
+    <ClCompile Include="CollisionData.cpp" />
     <ClCompile Include="CTank_LI.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="CWallSection_LI.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="CHoverCar.h" />
     <ClInclude Include="CHoverCar_Player.h" />
     <ClInclude Include="CLevelItem.h" />
+    <ClInclude Include="CollisionData.h" />
     <ClInclude Include="CTank_LI.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="CWallSection_LI.h" />

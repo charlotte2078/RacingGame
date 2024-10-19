@@ -21,6 +21,13 @@ Vector2D::~Vector2D()
 {
 }
 
+// Swaps the direction of the current vector
+void Vector2D::Reverse()
+{
+    X = -X;
+    Y = -Y;
+}
+
 // Calculates the magnitude of a vector
 float Vector2D::Magnitude() const
 {

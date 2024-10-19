@@ -1,5 +1,6 @@
 #include "CCollider_Box.h"
 #include "CCollider_Sphere.h"
+#include "CollisionData.h"
 
 // Moves corners to their correct local position. Corner models must already
 // be created and attached to the centre dummy.
@@ -151,7 +152,7 @@ bool CCollider_Box::SATBoxToSphere(const CCollider_Sphere& Sphere) const
 	return false;
 }
 
-bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox)
+bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox, CollisionData& ColData)
 {
 	// Update box positions if necessary
 	UpdateCornersPosition();
@@ -160,7 +161,7 @@ bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox)
 	// Check each axis of first box for collision
 	for (int i = 0; i < NumBoxAxes; i++)
 	{
-		if (!CheckCollisionAxisBoxes(AxesArray[i], OtherBox))
+		if (!CheckCollisionAxisBoxes(AxesArray[i], OtherBox, ColData))
 		{
 			return false;
 		}
@@ -169,7 +170,7 @@ bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox)
 	// Check each axis of second box for collision
 	for (int i = 0; i < NumBoxAxes; i++)
 	{
-		if (!OtherBox.CheckCollisionAxisBoxes(AxesArray[i], *this))
+		if (!OtherBox.CheckCollisionAxisBoxes(AxesArray[i], *this, ColData))
 		{
 			return false;
 		}
@@ -177,6 +178,15 @@ bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox)
 
 	// Must be colliding if reach this point
 	// Check that the collision data axis is in the same direction that we want it for resolution
+	// Direction for resolution is outwards from the other box
+	Vector2D NormalDirection(CentrePosition - OtherBox.CentrePosition);
+	if (NormalDirection.DotProduct(ColData.Normal) < 0.0f)
+	{
+		ColData.Normal.Reverse();
+	}
+
+	// Normalise penetration and normal of collision data
+	
 
 	return true;
 }
@@ -186,7 +196,7 @@ Model* CCollider_Box::GetCentre()
 	return ColliderCentre;
 }
 
-bool CCollider_Box::CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box& OtherBox)
+bool CCollider_Box::CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box& OtherBox, CollisionData& ColData)
 {
 	// Get Min/Max points on current axis from each box
 	float Min1, Max1, Min2, Max2;
@@ -198,9 +208,10 @@ bool CCollider_Box::CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box&
 	// Second way (C < A AND D > A)
 	if ((Min1 <= Min2 && Max1 >= Min2) || (Min2 <= Min1 && Max2 >= Min1))
 	{
-		//// If they are overlapping, update collision data.
-		//Data.UpdateData(Axis, Min1, Max1, Min2, Max2);
+		// If they are overlapping, update collision data.
+		ColData.UpdateData(Axis, Min1, Max1, Min2, Max2);
 
+		
 		/*Vector2D NormalDirection(CentrePosition - OtherBox.CentrePosition);
 		if (NormalDirection.DotProduct(Data.mNormal) < 0.0f)
 		{

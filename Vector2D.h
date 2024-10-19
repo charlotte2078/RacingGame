@@ -13,6 +13,9 @@ public:
 	// Destructors
 	~Vector2D(); // Default destructor
 
+	// Reverse function
+	void Reverse();
+
 	// Magnitude functions
 	float Magnitude() const;
 	float SquareMagnitude() const;

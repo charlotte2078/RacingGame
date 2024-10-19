@@ -30,4 +30,3 @@ public:
 	// Other public functions
 	void AttachToBase(Model* BaseModel);
 };
-
