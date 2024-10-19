@@ -7,12 +7,10 @@
 #include <fstream>		// for reading in level files
 #include <vector>		// std::vector for storing level items
 
-//#include "CVector2D.h"
-//#include "CLevelItem.h"
 #include "CTank_LI.h"
 #include "CWallSection_LI.h"
 #include "CCheckpoint_LI.h"
-
+#include "CollisionData.h"
 #include "CHoverCar_Player.h"
 
 using namespace tle;
@@ -59,8 +57,12 @@ int main()
 	// Box colliders for testing
 	CCollider_Box MoveableCollider({ 10.0f, 10.0f }, crossMesh);
 	TestCam->AttachToParent(MoveableCollider.GetCentre());
+	TestCam->SetLocalPosition(0.0f, 60.0f, 0.0f);
+	TestCam->RotateX(90.0f);
 	MoveableCollider.GetCentre()->MoveZ(-50.0f);
+	CollisionData MyData;
 	CCollider_Box StationaryCollider({ 20.0f, 10.0f }, crossMesh);
+	StationaryCollider.GetCentre()->RotateY(30.0f);
 
 	//// Wall section testing
 	//Vector2D WallPosition1(-10, 56); // no rotation
@@ -140,10 +142,16 @@ int main()
 			MoveableCollider.GetCentre()->MoveX(DeltaTime * 20.0f);
 		}
 
+		MyData.ResetData();
+
 		// Test collisions
-		if (MoveableCollider.SATBoxToBox(StationaryCollider))
+		if (MoveableCollider.SATBoxToBox(StationaryCollider, MyData))
 		{
 			myFont->Draw("collision detected", 10, 10, Black);
+
+			// collision resolution
+			MoveableCollider.GetCentre()->MoveX(MyData.Penetration * MyData.Normal.X);
+			MoveableCollider.GetCentre()->MoveZ(MyData.Penetration * MyData.Normal.Y);
 		}
 
 		//// Game logic!

@@ -186,7 +186,7 @@ bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox, CollisionData& ColData)
 	}
 
 	// Normalise penetration and normal of collision data
-	
+	ColData.NormaliseData();
 
 	return true;
 }
@@ -211,7 +211,6 @@ bool CCollider_Box::CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box&
 		// If they are overlapping, update collision data.
 		ColData.UpdateData(Axis, Min1, Max1, Min2, Max2);
 
-		
 		/*Vector2D NormalDirection(CentrePosition - OtherBox.CentrePosition);
 		if (NormalDirection.DotProduct(Data.mNormal) < 0.0f)
 		{
