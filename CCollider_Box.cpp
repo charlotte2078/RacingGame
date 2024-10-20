@@ -170,7 +170,7 @@ bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox, CollisionData& ColData)
 	// Check each axis of second box for collision
 	for (int i = 0; i < NumBoxAxes; i++)
 	{
-		if (!OtherBox.CheckCollisionAxisBoxes(AxesArray[i], *this, ColData))
+		if (!OtherBox.CheckCollisionAxisBoxes(OtherBox.AxesArray[i], *this, ColData))
 		{
 			return false;
 		}
@@ -210,12 +210,6 @@ bool CCollider_Box::CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box&
 	{
 		// If they are overlapping, update collision data.
 		ColData.UpdateData(Axis, Min1, Max1, Min2, Max2);
-
-		/*Vector2D NormalDirection(CentrePosition - OtherBox.CentrePosition);
-		if (NormalDirection.DotProduct(Data.mNormal) < 0.0f)
-		{
-			Data.mNormal.Reverse();
-		}*/
 
 		return true;
 	}

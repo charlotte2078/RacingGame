@@ -55,14 +55,14 @@ int main()
 	Camera* TestCam = myEngine->CreateCamera(ManualCamera);
 
 	// Box colliders for testing
-	CCollider_Box MoveableCollider({ 10.0f, 10.0f }, crossMesh);
+	CCollider_Box MoveableCollider({ 40.0f, 30.0f }, crossMesh);
 	TestCam->AttachToParent(MoveableCollider.GetCentre());
 	TestCam->SetLocalPosition(0.0f, 60.0f, 0.0f);
 	TestCam->RotateX(90.0f);
 	MoveableCollider.GetCentre()->MoveZ(-50.0f);
 	CollisionData MyData;
-	CCollider_Box StationaryCollider({ 20.0f, 10.0f }, crossMesh);
-	StationaryCollider.GetCentre()->RotateY(30.0f);
+	CCollider_Box StationaryCollider({ 50.0f, 70.0f }, crossMesh);
+	StationaryCollider.GetCentre()->RotateY(50.0f);
 
 	//// Wall section testing
 	//Vector2D WallPosition1(-10, 56); // no rotation
