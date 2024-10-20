@@ -1,4 +1,7 @@
 #include "CHoverCar_Player.h"
+#include "CCheckpoint_LI.h"
+#include "CWallSection_LI.h"
+#include "CollisionData.h"
 
 // Calculates thrust vector for the frame.
 Vector2D CHoverCar_Player::CalculateThrust(const float& ThrustFactor)

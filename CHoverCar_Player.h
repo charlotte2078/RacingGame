@@ -1,8 +1,10 @@
 #pragma once
+
 #include "CHoverCar.h"
 
-#include "CCheckpoint_LI.h"
-#include "CWallSection_LI.h"
+class CCheckpoint_LI;
+class CWallSection_LI;
+class CollisionData;
 
 // Global constants for player cars
 // Boost constants
@@ -35,6 +37,9 @@ private:
 	bool IsMovingUp;			//= true;
 	float TiltAngle;			//= 0.0f;
 	float LiftAngle;			//= 0.0f;
+
+	// Collision
+	CollisionData Data;
 
 	// Health
 	bool IsAlive;				//= true;
