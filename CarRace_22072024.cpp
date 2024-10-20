@@ -55,14 +55,19 @@ int main()
 	Camera* TestCam = myEngine->CreateCamera(ManualCamera);
 
 	// Box colliders for testing
-	CCollider_Box MoveableCollider({ 40.0f, 30.0f }, crossMesh);
+	CCollider_Box MoveableCollider({ 10.0f, 10.0f }, crossMesh);
 	TestCam->AttachToParent(MoveableCollider.GetCentre());
 	TestCam->SetLocalPosition(0.0f, 60.0f, 0.0f);
 	TestCam->RotateX(90.0f);
 	MoveableCollider.GetCentre()->MoveZ(-50.0f);
 	CollisionData MyData;
-	CCollider_Box StationaryCollider({ 50.0f, 70.0f }, crossMesh);
-	StationaryCollider.GetCentre()->RotateY(50.0f);
+	/*CCollider_Box StationaryCollider({ 50.0f, 70.0f }, crossMesh);
+	StationaryCollider.GetCentre()->RotateY(50.0f);*/
+
+	// Sphere collider for testing
+	Model* TestTank = waterTankMesh->CreateModel(0.0f, 0.0f, -70.0f);
+	CCollider_Sphere SphereCollider(10.0f, crossMesh, TestTank);
+	
 
 	//// Wall section testing
 	//Vector2D WallPosition1(-10, 56); // no rotation
@@ -142,12 +147,23 @@ int main()
 			MoveableCollider.GetCentre()->MoveX(DeltaTime * 20.0f);
 		}
 
+		/*MyData.ResetData();*/
+
+		//// Test collisions
+		//if (MoveableCollider.SATBoxToBox(StationaryCollider, MyData))
+		//{
+		//	myFont->Draw("box collision detected", 10, 10, Black);
+
+		//	// collision resolution
+		//	MoveableCollider.GetCentre()->MoveX(MyData.Penetration * MyData.Normal.X);
+		//	MoveableCollider.GetCentre()->MoveZ(MyData.Penetration * MyData.Normal.Y);
+		//}
+
 		MyData.ResetData();
 
-		// Test collisions
-		if (MoveableCollider.SATBoxToBox(StationaryCollider, MyData))
+		if (MoveableCollider.SATBoxToSphere(SphereCollider, MyData))
 		{
-			myFont->Draw("collision detected", 10, 10, Black);
+			myFont->Draw("sphere collision detected", 10, 10, Black);
 
 			// collision resolution
 			MoveableCollider.GetCentre()->MoveX(MyData.Penetration * MyData.Normal.X);

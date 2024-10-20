@@ -2,6 +2,7 @@
 
 #include "CHoverCar.h"
 
+// Forward declarations
 class CCheckpoint_LI;
 class CWallSection_LI;
 class CollisionData;
@@ -39,7 +40,7 @@ private:
 	float LiftAngle;			//= 0.0f;
 
 	// Collision
-	CollisionData Data;
+	//CollisionData Data;
 
 	// Health
 	bool IsAlive;				//= true;

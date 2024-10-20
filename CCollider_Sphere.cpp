@@ -2,6 +2,8 @@
 #include "CCollider_Box.h"
 
 // Update the axis used for sphere to box SAT collisions.
+// Axis to use is from the centre of the circle to the closest point on the
+// box. Axis IS normalised at this stage.
 void CCollider_Sphere::UpdateAxis(CCollider_Box& Box)
 {
 	UpdateCentrePosition();
@@ -23,6 +25,26 @@ void CCollider_Sphere::UpdateAxis(CCollider_Box& Box)
 
 	// Set axis to that of smallest distance
 	Axis = Box.CornersPositionArray[ClosestIndex] - this->CentrePosition;
+	Axis = Axis.Normalise();
+}
+
+void CCollider_Sphere::GetMinMaxVertexOnAxisSphere(const Vector2D& Axis, float& Min, float& Max)
+{
+	Vector2D RadiusAlongAxis = Axis * Radius;
+
+	Vector2D MaxPoint = CentrePosition + RadiusAlongAxis;
+	Vector2D MinPoint = CentrePosition - RadiusAlongAxis;
+
+	Max = MaxPoint.DotProduct(Axis);
+	Min = MinPoint.DotProduct(Axis);
+
+	// Check values are correct way around, swap if not.
+	if (Min > Max)
+	{
+		float temp = Min;
+		Min = Max;
+		Max = temp;
+	}
 }
 
 // Default constructor - sets Radius to 0.0f
@@ -52,6 +74,11 @@ void CCollider_Sphere::SetRadius(const float& NewRad)
 float CCollider_Sphere::GetRadius() const
 {
 	return Radius;
+}
+
+Model* CCollider_Sphere::GetCentre()
+{
+	return ColliderCentre;
 }
 
 // Checks for collisions between two sphere colliders. Returns true if there is a collision.

@@ -21,9 +21,14 @@ private:
 
     void MoveCornerPositions();
     void UpdateCornersPosition();
+
+    // SAT Box-to-box collisions
     void UpdateAxesArray();
     bool CheckCollisionAxisBoxes(const Vector2D& Axis, CCollider_Box& OtherBox, CollisionData& ColData);
     void GetMinMaxVertexOnAxis(const Vector2D& Axis, float& Min, float& Max);
+
+    // SAT Box-to-sphere collisions
+    bool CheckCollisionAxisShapeCircle(const Vector2D& Axis, CCollider_Sphere& Sphere, CollisionData& ColData);
 
 public:
     // Constructors
@@ -43,7 +48,7 @@ public:
 
     // Collision functions
     bool BoxToSphere(const CCollider_Sphere& Sphere) const;
-    bool SATBoxToSphere(const CCollider_Sphere& Sphere) const;
+    bool SATBoxToSphere(CCollider_Sphere& Sphere, CollisionData& ColData);
     bool SATBoxToBox(CCollider_Box& Box, CollisionData& ColData);
 
     // REMOVE LATER!!!!

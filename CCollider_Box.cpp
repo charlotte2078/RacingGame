@@ -145,11 +145,39 @@ bool CCollider_Box::BoxToSphere(const CCollider_Sphere& Sphere) const
 	return ((SpherePos.X <= XMax && SpherePos.X >= XMin) && (SpherePos.Y <= ZMax && SpherePos.Y >= ZMin));
 }
 
-bool CCollider_Box::SATBoxToSphere(const CCollider_Sphere& Sphere) const
+// Determines if a Shape and a Circle are colliding. Returns true if they are.
+// Inputs: Shape, Circle, Collision data. All passed by reference as their axes and vertices will be updated.
+// Outputs: Returns trueif Shape and Circle are colliding.
+// Collision Data is updated with the normal pointing from the Circle to the Shape.
+bool CCollider_Box::SATBoxToSphere(CCollider_Sphere& Sphere, CollisionData& Data)
 {
-	
-	
-	return false;
+	// Udpate vertices positions of polygon and centre position of circle
+	UpdateCornersPosition();
+	Sphere.UpdateCentrePosition();
+
+	// Update axes of polygon
+	UpdateAxesArray();
+
+	// Check each axis for collision. If any return false then there is no collision.
+	for (int i = 0; i < NumBoxAxes; i++)
+	{
+		if (!CheckCollisionAxisShapeCircle(AxesArray[i], Sphere, Data))
+		{
+			return false;
+		}
+	}
+
+	// Update axis of circle
+	Sphere.UpdateAxis(*this);
+
+	// Check axis for collision
+	if (!CheckCollisionAxisShapeCircle(Sphere.Axis, Sphere, Data))
+	{
+		return false;
+	}
+
+	// Must be colliding if reach this point!
+	return true;
 }
 
 bool CCollider_Box::SATBoxToBox(CCollider_Box& OtherBox, CollisionData& ColData)
@@ -238,4 +266,36 @@ void CCollider_Box::GetMinMaxVertexOnAxis(const Vector2D& Axis, float& Min, floa
 			Max = Projection;
 		}
 	}
+}
+
+// Using this video for outline of implementation https://youtu.be/vWs33LVrs74?si=OyFbAbT5qoq8Um0w
+bool CCollider_Box::CheckCollisionAxisShapeCircle(const Vector2D& Axis, CCollider_Sphere& Sphere, CollisionData& ColData)
+{
+	// point A = min on shape 1, point B = max on shape 1.
+	// point C = min on shape 2, point D = max on shape 2.
+
+	// get A,B,C,D
+	float Min1, Max1, Min2, Max2;
+	GetMinMaxVertexOnAxis(Axis, Min1, Max1);
+	Sphere.GetMinMaxVertexOnAxisSphere(Axis, Min2, Max2);
+
+	// Overlap test 
+	// First way (A < C AND B > C)
+	// Second way (C < A AND D > A)
+	if ((Min1 <= Min2 && Max1 >= Min2) || (Min2 <= Min1 && Max2 >= Min1))
+	{
+		// If they are overlapping, update collision data.
+		// The normal points from the circle to the shape.
+		ColData.UpdateData(Axis, Min1, Max1, Min2, Max2);
+
+		Vector2D NormalDirection(CentrePosition - Sphere.CentrePosition);
+		if (NormalDirection.DotProduct(ColData.Normal) < 0.0f)
+		{
+			ColData.Normal.Reverse();
+		}
+
+		return true;
+	}
+
+	return false;
 }
