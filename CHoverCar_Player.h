@@ -1,11 +1,11 @@
 #pragma once
 
 #include "CHoverCar.h"
+#include "CollisionData.h"
 
 // Forward declarations
 class CCheckpoint_LI;
 class CWallSection_LI;
-class CollisionData;
 
 // Global constants for player cars
 // Boost constants
@@ -47,7 +47,7 @@ private:
 	bool CameraIsAttached;		//= false;
 
 	// Collision
-	//CollisionData Data;
+	CollisionData Data;
 
 	// Health
 	bool IsAlive;				//= true;
@@ -66,6 +66,9 @@ private:
 	void CheckHealth();
 	void TakeDamage();
 	void RotateCamera(Camera* PlayerCam);
+
+	// For collision testing purposes
+	void ReverseMomentum();
 
 	void CheckpointCollision(std::vector <CCheckpoint_LI>& CheckpointsVec, const float& NumLaps);
 	void WallCollision(std::vector <CWallSection_LI>& WallsVec, const Vector2D& OldCarPos);
@@ -102,6 +105,9 @@ public:
 	void AttachCamera(Camera* PlayerCam);
 	void DetachCamera(Camera* PlayerCam);
 	void MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, const bool& BoostKeyPress, const float& ThrustFactor);
+
+	bool TestBoxCollision(CCollider_Box& OtherBox);
+	bool TestSphereCollision(CCollider_Sphere& OtherSphere);
 
 	// 21/10/24 - void MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, const bool& BoostKeyPress, const float& ThrustFactor,
 	// std::vector <CCheckpoint_LI>& CPVec, const float& NumLaps, std::vector<CWallSection_LI>& WallsVec);

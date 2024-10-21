@@ -79,10 +79,13 @@ int main()
 
 
 	//// Testing box colliders
-	//Model* TankTest = waterTankMesh->CreateModel(-10.0f, 0.0f, -25.0f);
+	Model* TankTest = waterTankMesh->CreateModel(-10.0f, 0.0f, -25.0f);
 	////CVector2D TestWidthDepth(20.0f, 50.0f);
-	////CCollider_Box TankBoxColliderTest(TestWidthDepth, crossMesh, TankTest);
-	//CCollider_Sphere TankSphereColliderTest(10.0f, crossMesh, TankTest);
+	//CCollider_Box TankBoxColliderTest(TestWidthDepth, crossMesh, TankTest);
+	CCollider_Sphere TankSphereColliderTest(10.0f, crossMesh, TankTest);
+
+	CCollider_Box TestBoxCollider({ 20.0f, 20.0f }, crossMesh);
+	TestBoxCollider.GetCentre()->MoveZ(50.0f);
 
 	//Model* CarTest = carMesh->CreateModel();
 	////CCollider_Sphere CarSphereColliderTest(kCarRadius, crossMesh, CarTest);
@@ -119,31 +122,8 @@ int main()
 
 		const float DeltaTime = myEngine->FrameTime();
 
-		//// Testing collisions between two box colliders
-		//if (myEngine->KeyHeld(Forwards))
-		//{
-		//	MoveableCollider.GetCentre()->MoveZ(DeltaTime * 20.0f);
-		//}
-		//if (myEngine->KeyHeld(Backwards))
-		//{
-		//	MoveableCollider.GetCentre()->MoveZ(-DeltaTime * 20.0f);
-		//}
-		//if (myEngine->KeyHeld(Left))
-		//{
-		//	MoveableCollider.GetCentre()->MoveX(-DeltaTime * 20.0f);
-		//}
-		//if (myEngine->KeyHeld(Right))
-		//{
-		//	MoveableCollider.GetCentre()->MoveX(DeltaTime * 20.0f);
-		//}
-		//if (myEngine->KeyHeld(Key_E))
-		//{
-		//	MoveableCollider.GetCentre()->RotateY(DeltaTime * 30.0f);
-		//}
-		//if (myEngine->KeyHeld(Key_Q))
-		//{
-		//	MoveableCollider.GetCentre()->RotateY(-DeltaTime * 30.0f);
-		//}
+		// Testing collisions with player car and the stationary box collider
+
 
 		/*MyData.ResetData();*/
 
@@ -203,6 +183,17 @@ int main()
 		}
 
 		PlayerCar.MovementEachFrame(DeltaTime, leftRotateKeyPress, rightRotateKeyPress, boostKeyPress, thrustFactor);
+		
+		// Check for collisions
+		if (PlayerCar.TestSphereCollision(TankSphereColliderTest))
+		{
+			myFont->Draw("sphere collision detected", 10, 10, Black);
+		}
+
+		if (PlayerCar.TestBoxCollision(TestBoxCollider))
+		{
+			myFont->Draw("box collision detected", 10, 10, Black);
+		}
 
 		// Quit game
 		if (myEngine->KeyHit(Key_Escape))

@@ -214,6 +214,11 @@ void CHoverCar_Player::CheckHealth()
 	}
 }
 
+void CHoverCar_Player::ReverseMomentum()
+{
+	MomentumVec.Reverse();
+}
+
 // Check for collisions with <counter> checkpoint (point to box)
 void CHoverCar_Player::CheckpointCollision(std::vector<CCheckpoint_LI>& CheckpointsVec, const float& NumLaps)
 {
@@ -371,6 +376,40 @@ void CHoverCar_Player::MovementEachFrame(const float& DeltaTime, const bool& Lef
 	// Collisions
 	//CheckpointCollision(CPVec, NumLaps);
 	//WallCollision(WallsVec, OldCarPos);
+}
+
+bool CHoverCar_Player::TestBoxCollision(CCollider_Box& OtherBox)
+{
+	if (BoxCollider.SATBoxToBox(OtherBox, Data))
+	{
+		// Resolve collision
+		CarDummy->MoveX(Data.Penetration * Data.Normal.X);
+		CarDummy->MoveZ(Data.Penetration * Data.Normal.Y);
+
+		// Reverse momentum
+		ReverseMomentum();
+
+		return true;
+	}
+
+	return false;
+}
+
+bool CHoverCar_Player::TestSphereCollision(CCollider_Sphere& OtherSphere)
+{
+	if (BoxCollider.SATBoxToSphere(OtherSphere, Data))
+	{
+		// Resolve collision
+		CarDummy->MoveX(Data.Penetration * Data.Normal.X);
+		CarDummy->MoveZ(Data.Penetration * Data.Normal.Y);
+
+		// Reverse momentum
+		ReverseMomentum();
+
+		return true;
+	}
+
+	return false;
 }
 
 //// Calls all movement and collision functions for the player car in the appropriate order
