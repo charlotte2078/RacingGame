@@ -9,7 +9,8 @@ using namespace tle;
 // Global car constants
 const int CarDefaultHealth = 100;
 const float CarDefaultRotationSpeed = 90.0f;
-const float CarDefaultRadius = 3.0f;
+const Vector2D CarDefaultWidthDepth = { 4.461f, 12.922f };
+//const float CarDefaultRadius = 3.0f;
 
 // Global car bobble (Up/down in Y direction)
 const float CarBobbleMinY = 0.0f;

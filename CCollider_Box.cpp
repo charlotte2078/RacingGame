@@ -176,6 +176,9 @@ bool CCollider_Box::SATBoxToSphere(CCollider_Sphere& Sphere, CollisionData& Data
 		return false;
 	}
 
+	// Normalise our data
+	Data.NormaliseData();
+
 	// Must be colliding if reach this point!
 	return true;
 }
