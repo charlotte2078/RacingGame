@@ -21,6 +21,11 @@ const float CarBounceCoefficient = 0.8f;
 // Movement constants
 const float CarDragCoefficient = 1.5f;
 
+// Camera constants
+const float CarCameraLocalY = 10.0f;
+const float CarCameraLocalZ = -20.0f;
+const float CarCameraXRotation = 15.0f;
+
 class CHoverCar_Player :
     public CHoverCar
 {
@@ -38,6 +43,8 @@ private:
 	bool IsMovingUp;			//= true;
 	float TiltAngle;			//= 0.0f;
 	float LiftAngle;			//= 0.0f;
+
+	bool CameraIsAttached;		//= false;
 
 	// Collision
 	//CollisionData Data;
@@ -58,6 +65,7 @@ private:
 	void Lift(const float& DeltaTime, const float& ThrustFactor);
 	void CheckHealth();
 	void TakeDamage();
+	void RotateCamera(Camera* PlayerCam);
 
 	void CheckpointCollision(std::vector <CCheckpoint_LI>& CheckpointsVec, const float& NumLaps);
 	void WallCollision(std::vector <CWallSection_LI>& WallsVec, const Vector2D& OldCarPos);
@@ -91,7 +99,11 @@ public:
 	//void Reset();
 
 	// Other Public Methods
-	void MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, const bool& BoostKeyPress, const float& ThrustFactor,
-			std::vector <CCheckpoint_LI>& CPVec, const float& NumLaps, std::vector<CWallSection_LI>& WallsVec);
+	void AttachCamera(Camera* PlayerCam);
+	void DetachCamera(Camera* PlayerCam);
+	void MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, const bool& BoostKeyPress, const float& ThrustFactor);
+
+	// 21/10/24 - void MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, const bool& BoostKeyPress, const float& ThrustFactor,
+	// std::vector <CCheckpoint_LI>& CPVec, const float& NumLaps, std::vector<CWallSection_LI>& WallsVec);
 };
 

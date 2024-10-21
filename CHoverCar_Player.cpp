@@ -195,6 +195,12 @@ void CHoverCar_Player::TakeDamage()
 	CheckHealth();
 }
 
+void CHoverCar_Player::RotateCamera(Camera* PlayerCam)
+{
+	PlayerCam->ResetOrientation();
+	PlayerCam->RotateX(CarCameraXRotation);
+}
+
 // Checks player health to see if player is alive and if they can boost
 void CHoverCar_Player::CheckHealth()
 {
@@ -295,7 +301,8 @@ CHoverCar_Player::CHoverCar_Player() :
 	DragMultiplier(1.0f),
 	IsMovingUp(true),
 	TiltAngle(0.0f),
-	LiftAngle(0.0f)
+	LiftAngle(0.0f),
+	CameraIsAttached(false)
 {
 }
 
@@ -312,7 +319,8 @@ CHoverCar_Player::CHoverCar_Player(IMesh* DummyMesh, IMesh* CarMesh, const Vecto
 	DragMultiplier(1.0f),
 	IsMovingUp(true),
 	TiltAngle(0.0f),
-	LiftAngle(0.0f)
+	LiftAngle(0.0f),
+	CameraIsAttached(false)
 {
 }
 
@@ -321,12 +329,34 @@ CHoverCar_Player::~CHoverCar_Player()
 {
 }
 
+void CHoverCar_Player::AttachCamera(Camera* PlayerCam)
+{
+	if (!CameraIsAttached)
+	{
+		PlayerCam->AttachToParent(CarDummy);
+		CameraIsAttached = true;
+
+		// set local position and rotation
+		PlayerCam->SetLocalY(CarCameraLocalY);
+		PlayerCam->SetLocalZ(CarCameraLocalZ);
+		RotateCamera(PlayerCam);
+	}
+}
+
+void CHoverCar_Player::DetachCamera(Camera* PlayerCam)
+{
+	if (CameraIsAttached)
+	{
+		PlayerCam->DetachFromParent();
+		CameraIsAttached = false;
+	}
+}
+
 // Calls all movement and collision functions for the player car in the appropriate order
 void CHoverCar_Player::MovementEachFrame(const float& DeltaTime, const bool& LeftKeyPress, const bool& RightKeyPress, 
-	const bool& BoostKeyPress, const float& ThrustFactor, std::vector<CCheckpoint_LI>& CPVec, const float& NumLaps,
-	std::vector<CWallSection_LI>& WallsVec)
+	const bool& BoostKeyPress, const float& ThrustFactor)
 {
-	const Vector2D OldCarPos = { CarDummy->GetX(), CarDummy->GetZ() };
+	//const Vector2D OldCarPos = { CarDummy->GetX(), CarDummy->GetZ() };
 
 	// Base movement
 	ProcessRotation(LeftKeyPress, RightKeyPress, DeltaTime);
@@ -339,8 +369,8 @@ void CHoverCar_Player::MovementEachFrame(const float& DeltaTime, const bool& Lef
 	Lift(DeltaTime, ThrustFactor);
 
 	// Collisions
-	CheckpointCollision(CPVec, NumLaps);
-	WallCollision(WallsVec, OldCarPos);
+	//CheckpointCollision(CPVec, NumLaps);
+	//WallCollision(WallsVec, OldCarPos);
 }
 
 //// Calls all movement and collision functions for the player car in the appropriate order

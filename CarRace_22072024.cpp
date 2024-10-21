@@ -55,31 +55,9 @@ int main()
 	// Camera for testing
 	Camera* TestCam = myEngine->CreateCamera(ManualCamera);
 
-	// Box colliders for testing
-	CCollider_Box MoveableCollider({ 10.0f, 10.0f }, crossMesh);
-	TestCam->AttachToParent(MoveableCollider.GetCentre());
-	TestCam->SetLocalPosition(0.0f, 60.0f, 0.0f);
-	TestCam->RotateX(90.0f);
-	MoveableCollider.GetCentre()->MoveZ(-50.0f);
-	CollisionData MyData;
-	/*CCollider_Box StationaryCollider({ 50.0f, 70.0f }, crossMesh);
-	StationaryCollider.GetCentre()->RotateY(50.0f);*/
-
-	// Sphere collider for testing
-	Model* TestTank = waterTankMesh->CreateModel(0.0f, 0.0f, -200.0f);
-
-	const float TestRadius = 40.0f;
-	CCollider_Sphere SphereCollider(TestRadius, crossMesh, TestTank);
-	
-	// create visible circle boundary for purpose of testing
-	Model* CircleBoundary[12];
-	for (int i = 0; i < 12; i++)
-	{
-		CircleBoundary[i] = crossMesh->CreateModel();
-		CircleBoundary[i]->AttachToParent(SphereCollider.GetCentre());
-		CircleBoundary[i]->SetLocalX(TestRadius * sin(i * 30 * gDegreesToRadians));
-		CircleBoundary[i]->SetLocalZ(TestRadius * cos(i * 30 * gDegreesToRadians));
-	}
+	// Testing car movement without any collisions
+	CHoverCar_Player PlayerCar(dummyMesh, carMesh, { 0.0f, 0.0f }, 0.0f);
+	PlayerCar.AttachCamera(TestCam);
 
 	//// Wall section testing
 	//Vector2D WallPosition1(-10, 56); // no rotation
@@ -141,31 +119,31 @@ int main()
 
 		const float DeltaTime = myEngine->FrameTime();
 
-		// Testing collisions between two box colliders
-		if (myEngine->KeyHeld(Forwards))
-		{
-			MoveableCollider.GetCentre()->MoveZ(DeltaTime * 20.0f);
-		}
-		if (myEngine->KeyHeld(Backwards))
-		{
-			MoveableCollider.GetCentre()->MoveZ(-DeltaTime * 20.0f);
-		}
-		if (myEngine->KeyHeld(Left))
-		{
-			MoveableCollider.GetCentre()->MoveX(-DeltaTime * 20.0f);
-		}
-		if (myEngine->KeyHeld(Right))
-		{
-			MoveableCollider.GetCentre()->MoveX(DeltaTime * 20.0f);
-		}
-		if (myEngine->KeyHeld(Key_E))
-		{
-			MoveableCollider.GetCentre()->RotateY(DeltaTime * 30.0f);
-		}
-		if (myEngine->KeyHeld(Key_Q))
-		{
-			MoveableCollider.GetCentre()->RotateY(-DeltaTime * 30.0f);
-		}
+		//// Testing collisions between two box colliders
+		//if (myEngine->KeyHeld(Forwards))
+		//{
+		//	MoveableCollider.GetCentre()->MoveZ(DeltaTime * 20.0f);
+		//}
+		//if (myEngine->KeyHeld(Backwards))
+		//{
+		//	MoveableCollider.GetCentre()->MoveZ(-DeltaTime * 20.0f);
+		//}
+		//if (myEngine->KeyHeld(Left))
+		//{
+		//	MoveableCollider.GetCentre()->MoveX(-DeltaTime * 20.0f);
+		//}
+		//if (myEngine->KeyHeld(Right))
+		//{
+		//	MoveableCollider.GetCentre()->MoveX(DeltaTime * 20.0f);
+		//}
+		//if (myEngine->KeyHeld(Key_E))
+		//{
+		//	MoveableCollider.GetCentre()->RotateY(DeltaTime * 30.0f);
+		//}
+		//if (myEngine->KeyHeld(Key_Q))
+		//{
+		//	MoveableCollider.GetCentre()->RotateY(-DeltaTime * 30.0f);
+		//}
 
 		/*MyData.ResetData();*/
 
@@ -179,52 +157,52 @@ int main()
 		//	MoveableCollider.GetCentre()->MoveZ(MyData.Penetration * MyData.Normal.Y);
 		//}
 
-		MyData.ResetData();
+		//MyData.ResetData();
 
-		if (MoveableCollider.SATBoxToSphere(SphereCollider, MyData))
+		//if (MoveableCollider.SATBoxToSphere(SphereCollider, MyData))
+		//{
+		//	myFont->Draw("sphere collision detected", 10, 10, Black);
+
+		//	// collision resolution
+		//	MoveableCollider.GetCentre()->MoveX(MyData.Penetration * MyData.Normal.X);
+		//	MoveableCollider.GetCentre()->MoveZ(MyData.Penetration * MyData.Normal.Y);
+		//}
+
+		// Game logic!
+		//check for key presses
+		bool leftRotateKeyPress = false;
+		bool rightRotateKeyPress = false;
+
+		// car rotation control
+		if (myEngine->KeyHeld(Left))		leftRotateKeyPress = true;
+		if (myEngine->KeyHeld(Right))		rightRotateKeyPress = true;
+
+		// car movement
+		float thrustFactor = 0.0f;
+		if (myEngine->KeyHeld(Forwards))
 		{
-			myFont->Draw("sphere collision detected", 10, 10, Black);
-
-			// collision resolution
-			MoveableCollider.GetCentre()->MoveX(MyData.Penetration * MyData.Normal.X);
-			MoveableCollider.GetCentre()->MoveZ(MyData.Penetration * MyData.Normal.Y);
+			if (myEngine->KeyHeld(Backwards))
+			{
+				thrustFactor = 0.5f;
+			}
+			else
+			{
+				thrustFactor = 1.0f;
+			}
+		}
+		else if (myEngine->KeyHeld(Backwards))
+		{
+			thrustFactor = -0.5f;
 		}
 
-		//// Game logic!
-		////check for key presses
-		//bool leftRotateKeyPress = false;
-		//bool rightRotateKeyPress = false;
+		// process car boost
+		bool boostKeyPress = false;
+		if (myEngine->KeyHeld(Boost))
+		{
+			boostKeyPress = true;
+		}
 
-		//// car rotation control
-		//if (myEngine->KeyHeld(Left))		leftRotateKeyPress = true;
-		//if (myEngine->KeyHeld(Right))		rightRotateKeyPress = true;
-
-		//// car movement
-		//float thrustFactor = 0.0f;
-		//if (myEngine->KeyHeld(Forwards))
-		//{
-		//	if (myEngine->KeyHeld(Backwards))
-		//	{
-		//		thrustFactor = 0.5f;
-		//	}
-		//	else
-		//	{
-		//		thrustFactor = 1.0f;
-		//	}
-		//}
-		//else if (myEngine->KeyHeld(Backwards))
-		//{
-		//	thrustFactor = -0.5f;
-		//}
-
-		//// process car boost
-		//bool boostKeyPress = false;
-		//if (myEngine->KeyHeld(Boost))
-		//{
-		//	boostKeyPress = true;
-		//}
-
-		//PlayerCar.MovementEachFrame(DeltaTime, leftRotateKeyPress, rightRotateKeyPress, boostKeyPress, thrustFactor, CPVec, TotalLaps, WallsVec);
+		PlayerCar.MovementEachFrame(DeltaTime, leftRotateKeyPress, rightRotateKeyPress, boostKeyPress, thrustFactor);
 
 		// Quit game
 		if (myEngine->KeyHit(Key_Escape))
