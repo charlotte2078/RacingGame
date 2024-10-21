@@ -17,6 +17,7 @@ using namespace tle;
 
 const int gDisplayX = 1280;
 const int gDisplayY = 720;
+const float gDegreesToRadians = 3.1415927f / 180.0f;
 
 int main()
 {
@@ -65,9 +66,20 @@ int main()
 	StationaryCollider.GetCentre()->RotateY(50.0f);*/
 
 	// Sphere collider for testing
-	Model* TestTank = waterTankMesh->CreateModel(0.0f, 0.0f, -70.0f);
-	CCollider_Sphere SphereCollider(10.0f, crossMesh, TestTank);
+	Model* TestTank = waterTankMesh->CreateModel(0.0f, 0.0f, -200.0f);
+
+	const float TestRadius = 40.0f;
+	CCollider_Sphere SphereCollider(TestRadius, crossMesh, TestTank);
 	
+	// create visible circle boundary for purpose of testing
+	Model* CircleBoundary[12];
+	for (int i = 0; i < 12; i++)
+	{
+		CircleBoundary[i] = crossMesh->CreateModel();
+		CircleBoundary[i]->AttachToParent(SphereCollider.GetCentre());
+		CircleBoundary[i]->SetLocalX(TestRadius * sin(i * 30 * gDegreesToRadians));
+		CircleBoundary[i]->SetLocalZ(TestRadius * cos(i * 30 * gDegreesToRadians));
+	}
 
 	//// Wall section testing
 	//Vector2D WallPosition1(-10, 56); // no rotation
@@ -145,6 +157,14 @@ int main()
 		if (myEngine->KeyHeld(Right))
 		{
 			MoveableCollider.GetCentre()->MoveX(DeltaTime * 20.0f);
+		}
+		if (myEngine->KeyHeld(Key_E))
+		{
+			MoveableCollider.GetCentre()->RotateY(DeltaTime * 30.0f);
+		}
+		if (myEngine->KeyHeld(Key_Q))
+		{
+			MoveableCollider.GetCentre()->RotateY(-DeltaTime * 30.0f);
 		}
 
 		/*MyData.ResetData();*/
