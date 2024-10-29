@@ -1,5 +1,5 @@
 // CarRace_22072024.cpp: A program using the TL-Engine
-// Charlotte Cleary G21107528
+// Charlotte Cleary
 
 #include <TL-Engine11.h>	// TL-Engine include file and namespace
 #include <sstream>		// for text on screen
